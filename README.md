@@ -29,6 +29,11 @@ If the player above does not load, watch the clip here: [docs/img/demo.mp4](docs
   <sub>The decision twin (Braess shortcut cell): pick (blue), pack (green), charge / dock (yellow) stations and an AMR.</sub>
 </p>
 
+<p align="center">
+  <img src="docs/img/opener.jpg" width="720" alt="Laplace CRT opener (MU-TH-UR style)"><br>
+  <sub>The Three.js front end opens on a Nostromo / MU-TH-UR-style CRT boot screen.</sub>
+</p>
+
 ## Architecture
 
 <p align="center"><img src="docs/img/architecture.svg" width="900" alt="Laplace architecture"></p>
