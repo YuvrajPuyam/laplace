@@ -1,10 +1,10 @@
-# Laplace tool API (FROZEN) — the agent's entire world
+# Laplace tool API (FROZEN), the agent's entire world
 
 These eight tools are the only interface between the agent and reality. They
 double as the MCP server (`laplace-env`) tool definitions, so signatures here
 are written exactly as they will be exposed. All requests/responses are JSON.
 Errors are structured, never prose-only: `{"error": {"code": "...", "message":
-"...", "details": {...}}}` — the agent is expected to read and recover.
+"...", "details": {...}}}`, the agent is expected to read and recover.
 
 Conventions: `config_hash` always means the 12-hex canonical hash (Contract
 B.1). Budgets are engine-enforced per question episode; exceeding them returns
@@ -13,7 +13,7 @@ B.1). Budgets are engine-enforced per question episode; exceeding them returns
 ---
 
 ## 1. `get_scene_summary`
-**Purpose:** orient the agent. No metrics — the agent must not get performance
+**Purpose:** orient the agent. No metrics, the agent must not get performance
 numbers without spending rollouts.
 
 ```
@@ -43,7 +43,7 @@ errors:  validation_error (details = JSON-Schema violations, per-path),
          unknown_base, patch_path_not_editable
 ```
 Patch semantics: dot-paths replace values wholesale (arrays replaced, not
-merged). Defaults from Contract A are filled before hashing — semantically
+merged). Defaults from Contract A are filled before hashing, semantically
 identical configs always hash identically.
 
 ## 3. `run_rollouts`
@@ -63,7 +63,7 @@ returns: {
 errors:  budget_exhausted (partial results returned for completed work),
          unknown_config
 ```
-Seeds are allocated by the engine from the episode's seed sequence — the agent
+Seeds are allocated by the engine from the episode's seed sequence, the agent
 never picks seeds (prevents cherry-picking, guarantees CRN pairing).
 
 ## 4. `compare_configs`
@@ -79,15 +79,15 @@ returns: {
   "n_pairs": int,
   "mean_a": number, "mean_b": number,
   "ci90_a": [number, number],    // ABSOLUTE 90% CI of config a's metric (full per-arm
-  "ci90_b": [number, number],    // across-seed variance) — use for an absolute metric claim
+  "ci90_b": [number, number],    // across-seed variance), use for an absolute metric claim
   "diff_mean": number,           // b - a
-  "ci95_diff": [number, number], // CIs of the paired DIFFERENCE (CRN-narrowed) — NOT
+  "ci95_diff": [number, number], // CIs of the paired DIFFERENCE (CRN-narrowed), NOT
   "ci90_diff": [number, number], // valid as an absolute bound on a single config
   "p_value": number,             // paired t (Wilcoxon fallback when n<15 or
                                  // normality clearly violated; method reported)
   "method": "paired_t" | "wilcoxon",
   "effect_size_d": number,
-  "warnings": [string]           // e.g. "orders_abandoned >5% in hash_b —
+  "warnings": [string]           // e.g. "orders_abandoned >5% in hash_b -
                                  // throughput comparison may be invalid"
 }
 errors:  insufficient_pairs (need >=5 common seeds), unknown_metric

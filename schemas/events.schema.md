@@ -1,8 +1,8 @@
-# Event log format (Contract B.2) — FROZEN
+# Event log format (Contract B.2), FROZEN
 
-One parquet file per rollout. This single format has **four consumers** — metrics
+One parquet file per rollout. This single format has **four consumers**, metrics
 computation, the Isaac/Three.js replay renderer, the live rollout board, and
-side-by-side comparison — so it is never forked and never extended silently.
+side-by-side comparison, so it is never forked and never extended silently.
 
 ## Columns
 
@@ -16,15 +16,15 @@ side-by-side comparison — so it is never forked and never extended silently.
 | `payload` | string (JSON) | Event-specific fields per the enum table; compact JSON, no nesting beyond one level |
 
 Rows are strictly ordered by `t`, ties broken by a monotonically increasing
-implicit row index (stable sort — determinism requires it).
+implicit row index (stable sort, determinism requires it).
 
-## Event enum (CLOSED — adding an event requires a schema_version bump)
+## Event enum (CLOSED, adding an event requires a schema_version bump)
 
 | event | entity_type | required payload | emitted when |
 |---|---|---|---|
 | `order_arrived` | order | `{"pick": "P1", "pack": "K2"}` | Poisson arrival; pack chosen by policy at arrival time |
 | `task_assigned` | order | `{"amr": "amr_03"}` | Nearest-idle-AMR allocation fires |
-| `amr_depart_edge` | amr | `{"edge": "A3_15->A3_16", "speed_mps": 1.5, "order": "ord_000142" \| null}` | AMR begins traversing an edge. **Replay key event** — see sufficiency rule |
+| `amr_depart_edge` | amr | `{"edge": "A3_15->A3_16", "speed_mps": 1.5, "order": "ord_000142" \| null}` | AMR begins traversing an edge. **Replay key event**, see sufficiency rule |
 | `amr_enter_queue` | amr | `{"at": "P1", "kind": "station" \| "edge", "pos": 2}` | AMR blocked: station slots full or edge at capacity. `pos` = queue index (0-based) |
 | `amr_exit_queue` | amr | `{"at": "P1"}` | AMR unblocked |
 | `service_start` | amr | `{"station": "P1", "order": "ord_000142", "slot": 0}` | Slot acquired |
@@ -55,6 +55,6 @@ no AMR ever teleports more than `speed_mps × Δt` between consecutive samples.
 
 ## Size discipline
 
-Target < 5 MB per 480-min rollout at default scale. If exceeded, drop nothing —
+Target < 5 MB per 480-min rollout at default scale. If exceeded, drop nothing -
 reduce by coarsening only `amr_depart_edge` granularity (multi-edge legs with a
 `path` payload) behind a schema_version bump. Do not silently sample.

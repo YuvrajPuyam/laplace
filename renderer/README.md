@@ -1,7 +1,7 @@
-# renderer/ — WS6: the Omniverse digital twin (domain-extensible)
+# renderer/, WS6: the Omniverse digital twin (domain-extensible)
 
 The twin is built in three layers so it can be **retargeted to a new domain**
-(hospital, factory, airport, traffic grid…) by writing one small adapter — the
+(hospital, factory, airport, traffic grid…) by writing one small adapter, the
 Isaac rendering code never changes.
 
 ```
@@ -14,26 +14,26 @@ Isaac rendering code never changes.
 
 ## The three layers
 
-1. **`twin_scene.py` — the contract.** `TwinScene` = nodes, lanes, props,
+1. **`twin_scene.py`, the contract.** `TwinScene` = nodes, lanes, props,
    agents, cameras, floor bounds, **plus an embedded asset catalog**. Plain
    dataclasses, JSON round-trip, zero third-party imports. This is the only
    thing both environments share. Because the catalog travels inside the
-   scene, the renderer is fully domain-agnostic — hand it a hospital scene and
+   scene, the renderer is fully domain-agnostic, hand it a hospital scene and
    it renders a hospital.
 
-2. **`domains/<name>.py` — a domain pack.** `to_scene(config) -> TwinScene`
+2. **`domains/<name>.py`, a domain pack.** `to_scene(config) -> TwinScene`
    plus a `CATALOG` (type → asset). Runs in the main env; the warehouse pack
    imports the sim's navgraph so geometry can never drift from the simulator.
    **Adding a domain = a new file here + a catalog. Nothing downstream
    changes.** `domains/REGISTRY` lists them by name.
 
-3. **`build_stage.py` — the Isaac builder.** Runs in the Isaac venv (`D:\iv`).
+3. **`build_stage.py`, the Isaac builder.** Runs in the Isaac venv (`D:\iv`).
    `TwinScene JSON → USD stage` (floor, lane markings, station props, agent
    prims, lights, camera) → headless RTX still. Imports **no** sim and **no**
-   domain code — only `twin_scene` + `catalog`.
+   domain code, only `twin_scene` + `catalog`.
 
 `catalog.py` is the fidelity/swap point: v1 uses clean primitives (boxes with
-PBR colors — fast on an 8 GB laptop, no downloads). Point a type at a `usd`
+PBR colors, fast on an 8 GB laptop, no downloads). Point a type at a `usd`
 reference instead of a `prim` to drop in real NVIDIA warehouse/robot assets;
 nothing else changes.
 
@@ -81,7 +81,7 @@ python -m renderer.encode_mp4 --frames-dir renderer/out/frames `
 
 The side-by-side Braess hero (baseline flowing vs. shortcut clogging on the
 same seed) = run steps 1-3 twice (with and without the shortcut patch) and
-composite — pending.
+composite, pending.
 
 ## To add a new domain (the whole checklist)
 
@@ -91,7 +91,7 @@ composite — pending.
 3. `python -m renderer.export_scene --domain <your_domain> --scenario … --out scene.json`
 4. Render with the **unchanged** `build_stage.py`.
 
-A `TwinScene` can also be hand-authored as JSON with no domain pack at all —
+A `TwinScene` can also be hand-authored as JSON with no domain pack at all -
 useful for one-off scenes or non-simulated twins. Unknown asset types fall
 back to generic primitives, so a scene never has a silent gap.
 
@@ -100,6 +100,6 @@ back to generic primitives, so a scene never has a silent gap.
 - ✅ scene contract, warehouse pack, Isaac stage builder, RTX still
 - ✅ event-log replay driver (animate agent prims over time → MP4 clip)
 - ⬜ side-by-side Braess replay (baseline vs shortcut, same seed)
-- ⬜ real USD assets via catalog `usd` refs (cloud GPU for the money shots) — **B**
-- ⬜ path-traced lighting + final hero renders (cloud GPU) — **C**
+- ⬜ real USD assets via catalog `usd` refs (cloud GPU for the money shots), **B**
+- ⬜ path-traced lighting + final hero renders (cloud GPU), **C**
 - ⬜ PhysX validation pass for the finalist config (Tier-1, cloud GPU)

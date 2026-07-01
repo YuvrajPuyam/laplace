@@ -1,8 +1,8 @@
-# sim/ — WS1 Tier-0 simulator
+# sim/, WS1 Tier-0 simulator
 
 Implements the world model of spec §3.1 against frozen Contracts A and B.
 This file is the **modeling-decision log**: choices the contracts left open,
-made concrete here. Sim dynamics choices are Yuv's call (CLAUDE.md) — each
+made concrete here. Sim dynamics choices are Yuv's call (CLAUDE.md), each
 item below is a proposal that stands until overruled.
 
 ## Decisions the contracts left open
@@ -16,7 +16,7 @@ item below is a proposal that stands until overruled.
    capacity-1 shortcut contend. `one_way: true` restricts traversal to the
    stated from->to direction.
 3. **Queued AMRs hold no capacity.** An AMR blocked on a full edge or
-   station waits at the tail node, occupying nothing — so the network cannot
+   station waits at the tail node, occupying nothing, so the network cannot
    deadlock (every edge drains in finite time). This matches the schema's
    "entrants beyond capacity queue at the tail node".
 4. **Routing is computed per leg** (dispatch time), not per edge.
@@ -50,7 +50,7 @@ item below is a proposal that stands until overruled.
   end, matching Contract B.1's "still incomplete"). Conservation:
   arrived = completed + abandoned, always.
 - The `sim_end` payload's `orders_abandoned` counts ALL orders incomplete at
-  sim end (warmup included) — it is informational; the metric is computed
+  sim end (warmup included), it is informational; the metric is computed
   from order events over the window.
 - **deadhead_pct** = % of travel distance while not *carrying*: legs toward
   a pick (before that order's pick `service_start`) plus charge legs.

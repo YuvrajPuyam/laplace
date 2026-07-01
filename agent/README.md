@@ -1,4 +1,4 @@
-# agent/ — WS3: the Claude tool-use loop
+# agent/, WS3: the Claude tool-use loop
 
 `laplace ask "<question>" --scenario <id>` runs one episode: the agent gets
 the eight laplace-env tools (via the MCP server, spawned as a subprocess per
@@ -8,7 +8,7 @@ server-side; this package only carries the loop, the system prompt
 
 ## Auth
 
-Runs on the **Claude Agent SDK** over the local Claude Code runtime — whatever
+Runs on the **Claude Agent SDK** over the local Claude Code runtime, whatever
 login Claude Code has (currently Yuv's Max subscription OAuth; no API key in
 the repo). Swap path if/when eval volume outgrows Max limits: implement a
 second runner against the raw Messages API behind the same `EpisodeResult`
@@ -22,14 +22,14 @@ interface; WS4 depends only on that interface + trace.jsonl.
   flaky). Auth vars are kept.
 - `allowed_tools` = exactly the eight; common built-ins are explicitly
   disallowed. The agent must not be able to read the repo (it could find
-  eval/dev scenario definitions or the sim source — that's information the
+  eval/dev scenario definitions or the sim source, that's information the
   real system wouldn't have).
 - Dev work uses `eval/dev_scenarios/` ONLY. The held-out suite is never run
   through prompt-development iterations (CLAUDE.md non-negotiable #4).
 
 ## Artifacts per episode
 
-- `runs/agent_<scenario>_<stamp>.trace.jsonl` — full client-side transcript
+- `runs/agent_<scenario>_<stamp>.trace.jsonl`, full client-side transcript
   (assistant text, thinking, tool calls/results, result message).
-- `runs/<episode_id>/trace.jsonl` — engine-side tool-call ledger (WS5 streams
+- `runs/<episode_id>/trace.jsonl`, engine-side tool-call ledger (WS5 streams
   this), plus `report.json` when a report is accepted.

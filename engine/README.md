@@ -1,10 +1,10 @@
-# engine/ — WS2: tool API, budget ledger, episode lifecycle
+# engine/, WS2: tool API, budget ledger, episode lifecycle
 
 Implements the eight frozen tools (schemas/tools.md) once, in
 [tools.py](tools.py), and exposes them over two transports:
 
-- **HTTP** — [api.py](api.py), FastAPI. `uvicorn engine.api:app --port 8000`
-- **MCP (`laplace-env`)** — [mcp_server.py](mcp_server.py), JSON-RPC 2.0 over
+- **HTTP**, [api.py](api.py), FastAPI. `uvicorn engine.api:app --port 8000`
+- **MCP (`laplace-env`)**, [mcp_server.py](mcp_server.py), JSON-RPC 2.0 over
   stdio, dependency-free. `claude mcp add laplace-env -- python -m engine.mcp_server`
   One server process = one episode (lazy-started; see module docstring for
   `LAPLACE_*` env vars).
@@ -13,7 +13,7 @@ Implements the eight frozen tools (schemas/tools.md) once, in
 
 - **Seeds**: the agent never picks them. `run_rollouts` targets indices
   `[s, s+n)` of the episode seed sequence where `s` is the smallest index any
-  requested config is missing — every config in a call gets the SAME seed
+  requested config is missing, every config in a call gets the SAME seed
   list (CRN pairing), and configs that already covered those seeds are free
   cache hits. Repeating a call extends the sequence (more evidence).
 - **Budgets**: rollouts debited per simulation actually executed; if the
@@ -32,13 +32,13 @@ Implements the eight frozen tools (schemas/tools.md) once, in
 ## Contract frictions flagged (Yuv to rule; nothing changed silently)
 
 1. `compare_configs` responses include a `call_id` not present in the frozen
-   return schema — tools.md §8 *requires* reports to cite "a compare_configs
+   return schema, tools.md §8 *requires* reports to cite "a compare_configs
    call id", so an id has to be surfaced to the agent somewhere.
 2. Spec §6.4 reports per-config `ci90`, but no tool returns per-config CIs
    (only diff CIs). The report validator recomputes per-config stats from
    stored results to keep grounding checkable; surfacing per-config CIs in a
    tool response would be cleaner.
-3. There is no `report.schema.json` in `schemas/` — §6.4 lives only in the
+3. There is no `report.schema.json` in `schemas/`, §6.4 lives only in the
    spec. The validator implements it in Python ([report.py](report.py));
    freezing it as a schema file is pending.
 
