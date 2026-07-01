@@ -1,0 +1,13 @@
+{
+  "_comment": "Example propose_config call body: the Braess lever — opening an attractive capacity-1 shortcut between aisles 3 and 4 at position 15.",
+  "base": "baseline_small",
+  "patch": {
+    "layout.extra_edges": [
+      { "from": "A3_15", "to": "A4_15", "bidirectional": true }
+    ],
+    "layout.edge_overrides": [
+      { "edge": "A3_15->A4_15", "capacity": 1 }
+    ]
+  },
+  "label": "open cross-aisle A3<->A4 @15 (cap 1)"
+}

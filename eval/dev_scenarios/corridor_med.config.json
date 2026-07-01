@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "corridor_med",
+  "layout": {
+    "grid": {
+      "aisles": 5,
+      "aisle_length_m": 30,
+      "cross_aisles": [
+        15
+      ]
+    },
+    "extra_edges": [],
+    "edge_overrides": []
+  },
+  "stations": {
+    "pick": [
+      {
+        "id": "P1",
+        "node": "A1_15",
+        "slots": 1,
+        "service_lognorm": [
+          -0.7,
+          0.3
+        ]
+      },
+      {
+        "id": "P2",
+        "node": "A2_15",
+        "slots": 1,
+        "service_lognorm": [
+          -0.7,
+          0.3
+        ]
+      }
+    ],
+    "pack": [
+      {
+        "id": "K1",
+        "node": "A4_15",
+        "slots": 2,
+        "service_lognorm": [
+          -0.5,
+          0.3
+        ]
+      },
+      {
+        "id": "K2",
+        "node": "A5_15",
+        "slots": 2,
+        "service_lognorm": [
+          -0.5,
+          0.3
+        ]
+      }
+    ],
+    "charge": [
+      {
+        "id": "C1",
+        "node": "A1_00",
+        "slots": 2
+      }
+    ],
+    "dock": [
+      {
+        "id": "D1",
+        "node": "A5_00"
+      }
+    ]
+  },
+  "fleet": {
+    "amr_count": 7,
+    "speed_mps": 1.5,
+    "battery_capacity_m": 8000,
+    "charge_minutes": 15,
+    "routing": "shortest_path"
+  },
+  "demand": {
+    "arrival_rate_per_min": 3.2,
+    "pack_assignment": "shortest_queue"
+  },
+  "horizon": {
+    "sim_minutes": 300,
+    "warmup_minutes": 30
+  }
+}

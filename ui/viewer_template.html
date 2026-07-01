@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>LAPLACE · FACILITY DECISION TWIN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  /* Ad Astra direction: cool, minimal, "high-end tech firm" - one restrained
+     accent, hairlines + negative space + registration ticks, no glow.
+     Spacing on an 8pt grid; one accent matched to the robot emissive. */
+  :root{ color-scheme:dark;
+    --bg:#0a0e13; --bg2:#0c1118; --panel:rgba(13,18,24,.72); --line:#1d2730; --line2:#161d24;
+    --accent:#6fb2d6; --accent-dim:#3a566a; --txt:#d6dee6; --dim:#76828f; --dim2:#5a6571;
+    --ok:#5fae8a; --alert:#e0a23a; --bad:#d2705f;
+    --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px;
+    --drawer-w:368px;   /* decision-drawer width; the right column shifts by this when it opens */
+    --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);
+    font-family:var(--sans);overflow:hidden;}
+  /* Backdrop is a subtle Bayer ordered-dither (drawn once to #bgdither, cached as an image).
+     No CSS gradient - a radial glow reads as "AI-generated"; a low-contrast dither reads as
+     considered texture. It sits at the LOWEST layer, behind the 3D canvas and every panel, and
+     is pointer-events:none so it never intercepts drag/orbit. */
+  #bgdither{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-color:#0a0d11;background-repeat:no-repeat;background-size:cover;}
+  /* premium honesty pass: fidelity-tier/provenance badge + KPI hierarchy */
+  #hud .srcrow{display:flex;align-items:center;gap:6px;margin:2px 0 9px;}
+  .srcbadge{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--accent-dim);border-radius:5px;padding:2px 7px;
+    display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+  .srcbadge .d{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .srcbadge.replay{color:var(--dim);border-color:var(--line);}
+  .srcbadge.physx{color:var(--ok);border-color:#2f5a48;}
+  .srcbadge.physx .d{box-shadow:0 0 7px var(--ok);}
+  .kpi-hero{display:flex;align-items:baseline;gap:8px;margin:3px 0 11px;}
+  .kpi-hero b{font-family:var(--mono);font-size:30px;line-height:1;color:var(--txt);
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
+  .kpi-hero .u{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+  #c{position:fixed;inset:0;display:block;z-index:1;opacity:0;transition:opacity .9s ease;}
+  body:not(.preflight) #c{opacity:1;}
+  .lbl{font-family:var(--sans);text-transform:uppercase;letter-spacing:.16em;}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+  .panel{position:relative;z-index:10;background:var(--panel);border:1px solid var(--line);
+    padding:13px 15px;border-radius:12px;backdrop-filter:blur(14px) saturate(118%);
+    transition:opacity .5s ease;pointer-events:auto;}
+  /* docked panel columns: fixed containers that pass pointer events THROUGH the gaps to the
+     canvas (so OrbitControls/DragControls are unaffected); the .panel children opt back in. The
+     columns stack their panels with a gap and scroll internally instead of overlapping. */
+  .pcol{position:fixed;top:48px;z-index:10;display:flex;flex-direction:column;gap:12px;
+    max-height:calc(100vh - 48px - 86px);overflow-y:auto;overflow-x:hidden;pointer-events:none;
+    transition:transform .28s ease,opacity .28s ease;scrollbar-width:thin;}
+  .pcol::-webkit-scrollbar{width:6px;} .pcol::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  #colL{left:18px;width:240px;}
+  #colR{right:18px;width:240px;align-items:flex-end;}
+  #colR>.panel{width:100%;}
+  body.preflight .pcol{opacity:0;pointer-events:none;}
+  /* drawer open: slide the RIGHT column clear of the decision drawer so fleet-status / live
+     params are never buried. The LEFT column (KPIs the user came to watch) stays put. */
+  body.decide-open #colR{transform:translateX(calc(-1 * var(--drawer-w, 368px)));}
+  /* thin registration ticks at opposite corners - monochrome, no glow */
+  .panel::before,.panel::after{content:"";position:absolute;width:7px;height:7px;border:0;}
+  .panel::before{top:6px;left:6px;border-left:1px solid var(--dim2);border-top:1px solid var(--dim2);}
+  .panel::after{bottom:6px;right:6px;border-right:1px solid var(--dim2);border-bottom:1px solid var(--dim2);}
+  .panel h2{margin:0 0 10px;font-family:var(--sans);font-size:10px;font-weight:600;
+    letter-spacing:.2em;color:var(--dim);text-transform:uppercase;
+    border-bottom:1px solid var(--line2);padding-bottom:7px;}
+  /* running-UI is hidden until the sim is launched */
+  body.preflight .panel,body.preflight #decbtn,body.preflight #status{opacity:0;pointer-events:none;}
+  #top{position:fixed;top:0;left:0;right:0;height:38px;display:flex;align-items:center;z-index:50;
+    justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);
+    background:rgba(10,14,19,.62);backdrop-filter:blur(10px);}
+  #top .brand{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;}
+  #top .brand span{color:var(--accent);font-weight:400;}
+  #top .sub{font-size:11px;color:var(--dim);letter-spacing:.14em;}
+  #status{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);transition:opacity .4s ease;}
+  #dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2.4s infinite ease-in-out;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+  /* status semantics - three meanings, three colors:
+     • online / success  -> steady accent (no alarm)
+     • working (recompute/apply/launch) -> calm accent dot, gently animated (NOT amber)
+     • held               -> amber, static (a deliberate pause)
+     • error / unreachable -> red (something is actually wrong)
+     Amber/red are reserved for held + true errors; a normal recompute must read calm. */
+  body.held #dot{background:var(--alert);animation:none;} body.held #status{color:var(--alert);}
+  body.working #dot{background:var(--accent);animation:pulse 1.1s infinite ease-in-out;}
+  body.working #status{color:var(--accent);}
+  body.error #dot{background:var(--bad);animation:none;} body.error #status{color:var(--bad);}
+  #hud{min-width:0;}
+  #hud .row{display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin:8px 0;}
+  #hud .row span{color:var(--dim);font-size:10px;letter-spacing:.12em;text-transform:uppercase;}
+  #hud .row b{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--txt);
+    font-variant-numeric:tabular-nums;}
+  #hud .row b.hl{color:var(--accent);}
+  #legend{min-width:0;}
+  #legend .k{display:flex;align-items:center;gap:9px;margin:6px 0;font-size:10px;
+    color:var(--dim);letter-spacing:.1em;text-transform:uppercase;}
+  #legend .sw{width:10px;height:2px;border-radius:2px;}
+  #edits{min-width:0;}
+  #edits .e{font-family:var(--mono);color:var(--accent);font-size:12px;margin:4px 0;}
+  #edits .hint{color:var(--dim);font-size:10px;letter-spacing:.1em;text-transform:uppercase;}
+  #bar{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:11;display:flex;align-items:center;
+    gap:18px;width:min(540px,78vw);}
+  #hold{cursor:pointer;background:transparent;border:1px solid var(--accent-dim);color:var(--accent);
+    font-family:var(--sans);letter-spacing:.16em;font-size:11px;font-weight:500;text-transform:uppercase;
+    padding:8px 16px;min-width:108px;border-radius:8px;}
+  #hold:hover{border-color:var(--accent);}
+  .clock{flex:1;}
+  .clock .t{font-family:var(--mono);font-size:18px;color:var(--txt);letter-spacing:.04em;
+    font-variant-numeric:tabular-nums;}
+  .clock .meta{display:flex;justify-content:space-between;font-size:9px;color:var(--dim);
+    letter-spacing:.14em;text-transform:uppercase;margin-top:3px;}
+  .clock .track{height:3px;background:var(--line);margin-top:6px;border-radius:3px;overflow:hidden;}
+  .clock .fill{height:100%;width:0;background:var(--accent);}
+  #rate{background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:8px;
+    font-family:var(--mono);font-size:12px;height:32px;padding:0 6px;}
+  #ctrl{min-width:0;}
+  #ctrl .grp{margin:11px 0 9px;}
+  #ctrl .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:10px;
+    color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px;}
+  #ctrl .lab b{font-family:var(--mono);color:var(--accent);font-size:13px;letter-spacing:0;}
+  #ctrl .step{display:flex;align-items:center;gap:9px;}
+  #ctrl .step button{flex:0 0 30px;height:30px;background:transparent;border:1px solid var(--accent-dim);
+    color:var(--accent);font-family:var(--mono);font-size:16px;line-height:1;cursor:pointer;border-radius:7px;}
+  #ctrl .step button:hover{border-color:var(--accent);}
+  #ctrl .step button:disabled{cursor:default;color:var(--dim);border-color:var(--line);}
+  #ctrl .step .v{flex:1;text-align:center;font-family:var(--mono);font-size:14px;color:var(--txt);}
+  #ctrl input[type=range]{width:100%;height:18px;accent-color:var(--accent);background:transparent;cursor:pointer;}
+  #ctrl input[type=range]:disabled{cursor:default;opacity:.5;}
+  #ctrl .note{font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;
+    margin-top:6px;border-top:1px solid var(--line2);padding-top:7px;}
+  #ctrl.off{opacity:.62;}
+  /* staged-streaming decision replay */
+  .topbtn{background:transparent;border:1px solid var(--accent-dim);color:var(--accent);
+    font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;border-radius:8px;
+    padding:6px 12px;cursor:pointer;transition:opacity .4s ease;} .topbtn:hover{border-color:var(--accent);}
+  /* three-state Live button: hollow=idle/unavailable, filled+pulse=streaming */
+  #livebtn.streaming{background:var(--accent-dim);color:#0a0e13;border-color:var(--accent);
+    animation:livepulse 1.4s infinite ease-in-out;}
+  @keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(111,178,214,.35)}50%{box-shadow:0 0 0 4px rgba(111,178,214,0)}}
+  #decide{position:fixed;top:38px;right:0;bottom:0;width:368px;max-width:90vw;z-index:30;
+    background:var(--panel);border-left:1px solid var(--line);backdrop-filter:blur(14px);
+    transform:translateX(101%);transition:transform .28s ease;
+    display:flex;flex-direction:column;}
+  #decide.open{transform:none;}
+  #decide .dh{display:flex;align-items:center;justify-content:space-between;
+    padding:13px 16px;border-bottom:1px solid var(--line);}
+  #decide .dh h2{margin:0;font-size:11px;letter-spacing:.2em;color:var(--dim);
+    text-transform:uppercase;font-weight:600;}
+  #decclose{background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;line-height:1;}
+  #askctl{display:flex;gap:8px;padding:12px 16px 8px;}
+  #askq{flex:1;min-width:0;background:var(--bg);color:var(--txt);border:1px solid var(--line);border-radius:8px;
+    font-family:var(--sans);font-size:12px;padding:8px 10px;}
+  #askq:focus{outline:none;border-color:var(--accent-dim);}
+  #askq:disabled{opacity:.5;}
+  #ask{background:var(--accent-dim);border:1px solid var(--accent-dim);color:#0a0e13;font-weight:600;border-radius:8px;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:0 14px;cursor:pointer;}
+  #ask:hover{background:var(--accent);border-color:var(--accent);}
+  #ask:disabled{background:transparent;color:var(--dim);border-color:var(--line);cursor:default;}
+  #decctl{display:flex;gap:8px;align-items:center;padding:0 16px 11px;border-bottom:1px solid var(--line2);}
+  .orlbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);white-space:nowrap;}
+  #epsel{flex:1;min-width:0;background:var(--bg);color:var(--txt);border:1px solid var(--line);border-radius:8px;
+    font-family:var(--mono);font-size:11px;padding:6px;}
+  #replay{background:transparent;border:1px solid var(--accent-dim);color:var(--accent);border-radius:8px;
+    font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:0 12px;cursor:pointer;white-space:nowrap;}
+  #replay:hover{border-color:var(--accent);}
+  #replay:disabled{color:var(--dim);border-color:var(--line);cursor:default;}
+  #feed{flex:1;overflow-y:auto;padding:12px 16px;}
+  .dhint{color:var(--dim);font-size:11px;letter-spacing:.03em;line-height:1.6;}
+  .scard{font-size:12px;color:var(--txt);border-left:2px solid var(--line);padding:7px 11px;
+    margin:7px 0;background:rgba(255,255,255,.014);line-height:1.5;border-radius:0 6px 6px 0;}
+  .scard .sb{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--dim);margin-right:9px;}
+  .scard.dim{color:var(--dim);} .scard .num{font-family:var(--mono);}
+  .scard .ciw{color:var(--dim);font-size:10px;letter-spacing:.01em;}
+  .scard.q{border-left-color:var(--accent);color:#e6edf3;}
+  .scard.sig{border-left-color:var(--accent);} .scard.sig .num{color:var(--accent);}
+  .scard.prelim{border-left-color:var(--accent);color:var(--accent);}
+  .scard.err{border-left-color:var(--bad);color:var(--bad);}
+  .scard.report{border-left-color:var(--ok);background:rgba(95,174,138,.07);color:#e6edf3;}
+  .scard.report .ok{color:var(--ok);font-family:var(--mono);font-size:10px;}
+  /* inconclusive: a NEUTRAL outcome (calm accent), distinct from a real recommendation
+     (green) and from an error (red) */
+  .scard.inconclusive{border-left-color:var(--accent-dim);background:rgba(111,178,214,.05);color:var(--txt);}
+  .scard.inconclusive .it{font-family:var(--mono);font-size:10px;color:var(--accent);}
+  .scard .mech{color:var(--dim);font-size:11px;margin-top:6px;}
+  /* before/after paired comparison (academic #4): freeze baseline beside candidate */
+  .cmp{margin:8px 0 9px;border:1px solid var(--line2);border-radius:8px;
+    background:rgba(255,255,255,.015);overflow:hidden;}
+  .cmp .ch{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    padding:7px 11px;border-bottom:1px solid var(--line2);}
+  .cmp .ch .t{font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--dim);}
+  .cmp .ch .m{font-family:var(--mono);font-size:10px;color:var(--accent);
+    letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cmp .cols{display:grid;grid-template-columns:1fr 1fr;}
+  .cmp .col{padding:9px 11px;}
+  .cmp .col+.col{border-left:1px solid var(--line2);}
+  .cmp .col .lab{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);}
+  .cmp .col.rec .lab{color:var(--ok);}
+  .cmp .col .val{font-family:var(--mono);font-size:19px;color:var(--txt);
+    font-variant-numeric:tabular-nums;margin:3px 0 4px;line-height:1;}
+  .cmp .col .ci{font-family:var(--mono);font-size:9.5px;color:var(--dim);letter-spacing:.01em;}
+  .cmp .dlt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+    padding:7px 11px;border-top:1px solid var(--line2);background:rgba(111,178,214,.05);}
+  .cmp .dlt .k{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);white-space:nowrap;}
+  .cmp .dlt .v{font-family:var(--mono);font-size:13px;color:var(--accent);
+    font-variant-numeric:tabular-nums;}
+  .cmp .dlt .p{font-family:var(--mono);font-size:9.5px;color:var(--dim);margin-left:7px;}
+
+  /* ── landing screen (shown first, on the dither) ───────────────────────────── */
+  #landing{position:fixed;inset:0;z-index:45;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;padding:24px;
+    transition:opacity .5s ease;}
+  body:not(.landing) #landing{opacity:0;pointer-events:none;}
+  /* while the landing is up, hold the wizard hidden underneath (it fades in on Enter) */
+  body.landing #wiz{opacity:0;pointer-events:none;}
+  /* opener: a MU-TH-UR / Nostromo-style CRT terminal (Alien homage). Green phosphor, scanlines,
+     glow, a blinking block cursor. Its own identity; dissolves into the clean app on enter. */
+  #landing.crt{--grn:#5cf2a2;}
+  body.landing #top{opacity:0;pointer-events:none;}      /* hide the chrome during the opener */
+  #term{position:relative;z-index:3;font-family:var(--mono);font-size:14px;line-height:1.95;
+    width:min(470px,92vw);color:var(--grn);text-align:left;text-shadow:0 0 6px rgba(92,242,162,.45);}
+  #term .tbig{font-size:clamp(38px,8vw,60px);font-weight:700;letter-spacing:.14em;line-height:1;
+    margin-bottom:10px;text-shadow:0 0 16px rgba(92,242,162,.55);}
+  #term .tl{white-space:pre-wrap;}
+  #term .td{color:rgba(92,242,162,.58);}                  /* dim log text */
+  #term .tv{color:var(--grn);}
+  #term .tbtn{font:inherit;background:none;border:0;color:var(--grn);cursor:pointer;padding:0;
+    text-shadow:0 0 6px rgba(92,242,162,.45);}
+  #term .tbtn:hover{text-decoration:underline;text-underline-offset:3px;}
+  #term .tcur{display:inline-block;width:9px;height:17px;background:var(--grn);margin-left:8px;
+    vertical-align:-3px;box-shadow:0 0 8px var(--grn);animation:tblink 1.05s steps(1) infinite;}
+  @keyframes tblink{50%{opacity:0;}}
+  #term .th{margin-top:18px;font-size:12px;letter-spacing:.08em;color:rgba(92,242,162,.58);}
+  #term .tlink{font:inherit;font-size:12px;background:none;border:0;color:rgba(92,242,162,.58);
+    cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;}
+  #term .tlink:hover{color:var(--grn);}
+  /* CRT scanlines + a subtle edge vignette over the opener (a screen curvature cue, not a glow) */
+  #landing .scan{position:absolute;inset:0;pointer-events:none;z-index:4;
+    background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.20) 2px 3px);}
+  #landing .scan::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(135% 100% at 50% 50%, transparent 62%, rgba(0,0,0,.5));}
+  /* ── pre-flight wizard ─────────────────────────────────────────────────── */
+  #wiz{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;
+    padding:24px;transition:opacity .5s ease;overflow-y:auto;}
+  body:not(.preflight) #wiz{opacity:0;pointer-events:none;}
+  /* max-height + scroll so a tall step (e.g. the guided station setup) is never clipped off-screen */
+  .wcard{width:min(580px,94vw);max-height:calc(100vh - 48px);overflow-y:auto;margin:auto;
+    background:rgba(13,18,24,.82);border:1px solid var(--line);
+    border-radius:18px;backdrop-filter:blur(20px) saturate(120%);padding:28px 30px 24px;
+    box-shadow:0 24px 80px -24px rgba(0,0,0,.7);position:relative;}
+  .wcard::-webkit-scrollbar{width:6px;} .wcard::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  .wcard::before,.wcard::after{content:"";position:absolute;width:9px;height:9px;}
+  .wcard::before{top:9px;left:9px;border-left:1px solid var(--dim2);border-top:1px solid var(--dim2);}
+  .wcard::after{bottom:9px;right:9px;border-right:1px solid var(--dim2);border-bottom:1px solid var(--dim2);}
+  .weyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);
+    display:flex;align-items:center;gap:8px;margin-bottom:18px;}
+  .weyebrow span{color:var(--accent);}
+  /* stepper rail */
+  .rail{display:flex;align-items:center;gap:0;margin-bottom:6px;}
+  .rail .st{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
+  .rail .st .n{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;
+    color:var(--dim);background:transparent;transition:all .25s ease;}
+  .rail .st .tl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+    transition:color .25s ease;white-space:nowrap;}
+  .rail .st[data-s="current"] .n{border-color:var(--accent);color:#0a0e13;background:var(--accent);}
+  .rail .st[data-s="current"] .tl{color:var(--txt);}
+  .rail .st[data-s="done"] .n{border-color:var(--accent-dim);color:var(--accent);}
+  .rail .st[data-s="done"] .tl{color:var(--dim);}
+  .rail .seg{flex:1;height:1px;background:var(--line);margin:0 10px;min-width:14px;}
+  .rail .seg.fill{background:var(--accent-dim);}
+  .wprog{height:2px;background:var(--line);border-radius:2px;margin:14px 0 20px;overflow:hidden;}
+  .wprog i{display:block;height:100%;width:25%;background:var(--accent);transition:width .35s ease;}
+  /* step body */
+  .wstep{display:none;min-height:188px;animation:wfade .35s ease;}
+  .wstep.on{display:block;}
+  @keyframes wfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .wstep h1{font-size:21px;font-weight:600;margin:2px 0 8px;letter-spacing:-.01em;color:#eef3f8;}
+  .wstep .lede{font-size:13px;line-height:1.65;color:var(--dim);margin:0 0 18px;max-width:46ch;}
+  .wstep .lede b{color:var(--txt);font-weight:500;}
+  .field{margin:14px 0;}
+  .field>label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--dim);margin-bottom:8px;}
+  .wsel{width:100%;background:var(--bg);color:var(--txt);border:1px solid var(--line);border-radius:9px;
+    font-family:var(--sans);font-size:14px;padding:11px 12px;cursor:pointer;}
+  .wsel:focus{outline:none;border-color:var(--accent-dim);}
+  .facts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .fact{border:1px solid var(--line);border-radius:9px;padding:9px 12px;background:rgba(255,255,255,.015);}
+  .fact .k{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);}
+  .fact .v{font-family:var(--mono);font-size:16px;color:var(--txt);margin-top:3px;
+    font-variant-numeric:tabular-nums;}
+  .fact .v b{color:var(--accent);font-weight:500;}
+  .qbox{border-left:2px solid var(--accent);padding:4px 0 4px 16px;margin:6px 0 16px;}
+  .qbox .q{font-size:18px;line-height:1.45;color:#eef3f8;font-weight:500;}
+  .qbox .why{font-size:12.5px;line-height:1.6;color:var(--dim);margin-top:10px;}
+  .wstepper{display:flex;align-items:center;gap:12px;margin:8px 0 6px;}
+  .wstepper button{width:38px;height:38px;border-radius:9px;background:transparent;
+    border:1px solid var(--accent-dim);color:var(--accent);font-family:var(--mono);font-size:18px;
+    cursor:pointer;line-height:1;}
+  .wstepper button:hover{border-color:var(--accent);}
+  .wstepper button:disabled{color:var(--dim);border-color:var(--line);cursor:default;}
+  .wstepper .val{font-family:var(--mono);font-size:24px;color:var(--txt);min-width:54px;text-align:center;
+    font-variant-numeric:tabular-nums;}
+  .wstepper .unit{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+  .wrange{display:flex;align-items:center;gap:14px;}
+  .wrange input[type=range]{flex:1;accent-color:var(--accent);height:22px;cursor:pointer;}
+  .wrange .rv{font-family:var(--mono);font-size:20px;color:var(--txt);min-width:64px;text-align:right;
+    font-variant-numeric:tabular-nums;}
+  .vhint{font-size:11px;color:var(--dim2);margin-top:7px;line-height:1.5;}
+  /* ── guided station setup (wizard step 3) ─────────────────────────────────── */
+  /* a sequential walk-through of the facility's stations (pick → pack → charge → dock),
+     each with a color swatch matching the scene, its purpose, and where/how many. */
+  .stwalk{display:flex;flex-direction:column;gap:9px;margin:4px 0 16px;max-height:30vh;overflow-y:auto;
+    scrollbar-width:thin;padding-right:2px;}
+  .stwalk::-webkit-scrollbar{width:6px;} .stwalk::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  .stcard{border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.015);
+    padding:11px 13px;}
+  .stcard .sh{display:flex;align-items:center;gap:9px;}
+  .stcard .sw{width:11px;height:11px;border-radius:3px;flex:0 0 auto;box-shadow:0 0 6px -1px currentColor;}
+  .stcard .nm{font-size:13px;font-weight:600;color:#eef3f8;letter-spacing:.01em;}
+  .stcard .ct{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent);
+    font-variant-numeric:tabular-nums;}
+  .stcard .pp{font-size:12px;line-height:1.55;color:var(--dim);margin:7px 0 0;}
+  .stcard .where{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+  .stcard .chip{font-family:var(--mono);font-size:10px;color:var(--txt);border:1px solid var(--line2);
+    border-radius:6px;padding:2px 7px;background:rgba(255,255,255,.02);}
+  .stcard .chip[data-stid]{cursor:pointer;} .stcard .chip[data-stid]:hover{border-color:var(--accent-dim);}
+  .stcard .chip.selchip{border-color:var(--accent);background:rgba(111,178,214,.12);}
+  .stcard .chip b{color:var(--accent);font-weight:500;}
+  .stnote{font-size:11px;color:var(--dim2);line-height:1.55;margin:2px 0 14px;}
+  .stnote b{color:var(--dim);font-weight:500;}
+  .knob{margin:13px 0;}
+  .knob>label{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--dim);margin-bottom:7px;}
+  .knob .why{font-size:11px;color:var(--dim2);line-height:1.5;margin-top:7px;}
+  /* 2D floor-plan click-to-place (step 3) */
+  .mapwrap{border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.012);
+    padding:10px 11px 11px;margin:2px 0 14px;}
+  .mapwrap .maphd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+  .mapwrap .maphd #wmaptip{font-size:11px;color:var(--dim);letter-spacing:.02em;line-height:1.4;}
+  .mapwrap .maphd #wmaptip b{color:var(--accent);font-weight:500;}
+  .maprst{background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:7px;
+    font-family:var(--sans);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+    padding:4px 9px;cursor:pointer;white-space:nowrap;flex:0 0 auto;}
+  .maprst:hover{border-color:var(--accent-dim);color:var(--txt);}
+  .maprst:disabled{opacity:.4;cursor:default;}
+  #wmap{display:block;width:100%;height:auto;border-radius:7px;background:#0a0d11;
+    cursor:crosshair;touch-action:none;}
+  #wmap.armed{cursor:cell;box-shadow:0 0 0 1px var(--accent-dim) inset;}
+  /* ── About modal ──────────────────────────────────────────────────────────── */
+  #about{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
+    padding:24px;background:rgba(5,8,12,.62);backdrop-filter:blur(6px);}
+  body.about-on #about{display:flex;}
+  #about .acard{width:min(620px,94vw);max-height:88vh;overflow-y:auto;background:rgba(13,18,24,.94);
+    border:1px solid var(--line);border-radius:16px;padding:26px 28px 24px;position:relative;
+    box-shadow:0 24px 80px -24px rgba(0,0,0,.7);scrollbar-width:thin;}
+  #about .acard::-webkit-scrollbar{width:7px;} #about .acard::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  #about .acard::before,#about .acard::after{content:"";position:absolute;width:9px;height:9px;}
+  #about .acard::before{top:9px;left:9px;border-left:1px solid var(--dim2);border-top:1px solid var(--dim2);}
+  #about .acard::after{bottom:9px;right:9px;border-right:1px solid var(--dim2);border-bottom:1px solid var(--dim2);}
+  #about .aeyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+  #about .aeyebrow span{color:var(--accent);}
+  #about h1{font-size:22px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em;color:#eef3f8;}
+  #about .intro{font-size:13.5px;line-height:1.7;color:var(--dim);margin:0 0 18px;}
+  #about .intro b{color:var(--txt);font-weight:500;}
+  #about h2{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+    border-bottom:1px solid var(--line2);padding-bottom:6px;margin:20px 0 12px;}
+  #about .asec p{font-size:12.5px;line-height:1.65;color:var(--txt);margin:0 0 10px;}
+  #about .asec p .em{color:var(--accent);font-weight:500;}
+  #about .arow{display:flex;align-items:flex-start;gap:10px;margin:9px 0;font-size:12.5px;line-height:1.5;}
+  #about .arow .sw{width:12px;height:12px;border-radius:3px;flex:0 0 auto;margin-top:2px;box-shadow:0 0 6px -1px currentColor;}
+  #about .arow .nm{color:#eef3f8;font-weight:600;margin-right:6px;}
+  #about .arow .ds{color:var(--dim);}
+  #about ol.flow{margin:6px 0 4px;padding:0;list-style:none;counter-reset:fl;}
+  #about ol.flow li{counter-increment:fl;position:relative;padding:6px 0 6px 30px;font-size:12.5px;
+    line-height:1.5;color:var(--txt);border-left:1px solid var(--line2);margin-left:9px;}
+  #about ol.flow li::before{content:counter(fl);position:absolute;left:-11px;top:5px;width:21px;height:21px;
+    border-radius:50%;background:var(--bg);border:1px solid var(--accent-dim);color:var(--accent);
+    font-family:var(--mono);font-size:11px;display:flex;align-items:center;justify-content:center;}
+  #about ul.cando{margin:6px 0;padding-left:0;list-style:none;}
+  #about ul.cando li{font-size:12.5px;line-height:1.55;color:var(--txt);padding:5px 0 5px 18px;position:relative;}
+  #about ul.cando li::before{content:"›";position:absolute;left:2px;color:var(--accent);}
+  #about .aclose{position:absolute;top:16px;right:18px;background:none;border:0;color:var(--dim);
+    font-size:22px;line-height:1;cursor:pointer;z-index:1;} #about .aclose:hover{color:var(--txt);}
+  .summary{border:1px solid var(--line);border-radius:11px;overflow:hidden;margin:4px 0 8px;}
+  .summary .sr{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;
+    border-bottom:1px solid var(--line2);font-size:13px;}
+  .summary .sr:last-child{border-bottom:0;}
+  .summary .sr .k{color:var(--dim);font-size:11px;letter-spacing:.1em;text-transform:uppercase;}
+  .summary .sr .v{font-family:var(--mono);color:var(--txt);font-variant-numeric:tabular-nums;}
+  .summary .sr .v b{color:var(--accent);font-weight:500;}
+  /* footer nav */
+  .wnav{display:flex;align-items:center;justify-content:space-between;margin-top:22px;
+    border-top:1px solid var(--line2);padding-top:18px;}
+  .wcount{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.06em;}
+  .wnav .right{display:flex;gap:10px;align-items:center;}
+  .wbtn{font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    padding:11px 20px;border-radius:9px;cursor:pointer;border:1px solid var(--line);
+    background:transparent;color:var(--dim);}
+  .wbtn:hover{color:var(--txt);border-color:var(--accent-dim);}
+  .wbtn.primary{background:var(--accent);border-color:var(--accent);color:#08111a;font-weight:600;}
+  .wbtn.primary:hover{background:#84c0e0;}
+  .wbtn.primary:disabled{background:transparent;color:var(--dim);border-color:var(--line);cursor:default;}
+  .wbtn.ghost{visibility:hidden;}
+  .werr{color:var(--bad);font-size:12px;margin-top:12px;min-height:16px;letter-spacing:.02em;}
+  .spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(8,17,26,.35);
+    border-top-color:#08111a;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:7px;}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  /* ── non-blocking scene overlay (simulate / apply) ───────────────────────── */
+  /* a centered pill; the wrap is pointer-events:none so it never blocks canvas drag/orbit.
+     Only an explicit action inside the pill (e.g. a retry button) re-enables pointer events. */
+  #scrim{position:fixed;inset:38px 0 0 0;z-index:35;display:none;align-items:center;justify-content:center;
+    pointer-events:none;}
+  body.scrim-on #scrim{display:flex;}
+  #scrim .pill{display:inline-flex;align-items:center;gap:10px;background:var(--panel);
+    border:1px solid var(--line);border-radius:999px;padding:9px 16px;backdrop-filter:blur(14px) saturate(118%);
+    font-family:var(--sans);font-size:12px;letter-spacing:.06em;color:var(--txt);
+    box-shadow:0 12px 40px -16px rgba(0,0,0,.7);}
+  #scrim .pill .spin{border:2px solid var(--accent-dim);border-top-color:var(--accent);}
+  #scrim .pill button{pointer-events:auto;background:transparent;border:1px solid var(--accent-dim);
+    color:var(--accent);font-family:var(--sans);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    border-radius:7px;padding:4px 10px;cursor:pointer;margin-left:6px;} #scrim .pill button:hover{border-color:var(--accent);}
+  /* station drag affordance: the canvas shows a grab cursor when hovering a draggable workcell */
+  body.can-grab #c{cursor:grab;} body.grabbing #c{cursor:grabbing;}
+  /* one-time dismissible coach tip */
+  #coach{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:12;
+    background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 12px;
+    font-family:var(--sans);font-size:11px;letter-spacing:.04em;color:var(--txt);
+    backdrop-filter:blur(14px);display:none;align-items:center;gap:10px;}
+  body.coach-on #coach{display:inline-flex;}
+  #coach button{background:transparent;border:0;color:var(--dim);font-size:14px;line-height:1;cursor:pointer;}
+  #coach button:hover{color:var(--txt);}
+  /* small-screen bottom-sheet toggle (hidden on desktop; shown by the media query) */
+  #sheettab{display:none;}
+  /* ── responsive: narrow OR short viewports collapse the columns into a bottom sheet ──── */
+  /* The two columns become side-by-side halves of a bottom sheet (so they NEVER overlap) and
+     are off-screen until the sheet is toggled open from #top. Each half scrolls on its own. */
+  @media (max-width:900px), (max-height:680px){
+    #colL,#colR{min-width:0;max-width:none;top:auto;bottom:64px;width:auto;
+      max-height:46vh;align-items:stretch;
+      transform:translateY(125%);opacity:0;}            /* off-screen until the sheet is opened */
+    #colL{left:10px;right:calc(50% + 5px);}             /* left half */
+    #colR{left:calc(50% + 5px);right:10px;align-items:stretch;}   /* right half */
+    #colR>.panel{width:auto;}
+    body.sheet-open #colL,body.sheet-open #colR{transform:none;opacity:1;}
+    .pcol>.panel{min-width:0;}
+    /* on a small screen the drawer covers most of the width - fade the columns out instead of
+       shifting them, and hide them from AT, so the drawer's content is unobstructed. */
+    body.decide-open #colL,body.decide-open #colR{transform:translateY(125%)!important;opacity:0!important;pointer-events:none!important;}
+    #sheettab{display:inline-flex;}                     /* the toggle button in #top */
+  }
+  /* cinematic / present mode - a clean, recordable reel */
+  body.preflight #presentbtn{opacity:0;pointer-events:none;}
+  body.present #top, body.present .panel, body.present #decide, body.present .pcol,
+  body.present #scrim, body.present #sheettab{opacity:0!important;pointer-events:none;}
+  #cine{position:fixed;inset:0;z-index:36;pointer-events:none;opacity:0;transition:opacity .6s ease;
+    background:radial-gradient(125% 95% at 50% 48%, transparent 52%, rgba(4,7,11,.62) 100%);}
+  body.present #cine{opacity:1;}
+  #cine .lt{position:absolute;left:34px;bottom:32px;}
+  #cine .lt .br{font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);}
+  #cine .lt .scn{font-size:27px;font-weight:600;color:#eef3f8;margin-top:8px;letter-spacing:.02em;}
+  #cine .lt .tag{font-size:13.5px;color:var(--dim);margin-top:5px;max-width:46ch;line-height:1.5;}
+  #cine .st{position:absolute;right:36px;bottom:34px;text-align:right;}
+  #cine .st .v{font-family:var(--mono);font-size:32px;color:#eef3f8;font-variant-numeric:tabular-nums;line-height:1;}
+  #cine .st .k{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-top:6px;}
+  #cine .exit{position:absolute;top:22px;right:26px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.05ms!important;}}
+</style>
+</head>
+<body class="preflight landing">
+<canvas id="bgdither"></canvas>
+<canvas id="c"></canvas>
+<div id="cine">
+  <div class="lt"><div class="br">LAPLACE · DECISION TWIN</div><div class="scn" id="cinescn"></div><div class="tag" id="cinetag"></div></div>
+  <div class="st"><div class="v" id="cinethr"> - </div><div class="k">orders / hr</div></div>
+  <div class="exit">P or Esc to exit</div>
+</div>
+<div id="top">
+  <div class="brand">LAPLACE <span>·</span> FACILITY DECISION TWIN</div>
+  <div class="sub" id="sub" style="opacity:0"></div>
+  <div style="display:flex;align-items:center;gap:18px;">
+    <button id="sheettab" class="topbtn" title="Show readouts">Panels</button>
+    <button id="aboutbtn" class="topbtn" title="What is this? How it works">? About</button>
+    <button id="presentbtn" class="topbtn">Present</button>
+    <button id="livebtn" class="topbtn">● Live</button>
+    <button id="decbtn" class="topbtn">Decision</button>
+    <div id="status"><span id="dot"></span><span id="statxt">SHOWING FAST MODEL</span></div>
+  </div>
+</div>
+
+<!-- opener: a MU-TH-UR-style CRT terminal (Alien homage); Enter / PROCEED reveals the pre-flight wizard -->
+<div id="landing" class="crt">
+  <div id="term">
+    <div class="tbig">LAPLACE</div>
+    <div class="tl td">DECISION TWIN &nbsp;·&nbsp; INTERFACE 2037</div>
+    <div class="tl">&nbsp;</div>
+    <div class="tl td">&gt; WAREHOUSE DECISION TWIN</div>
+    <div class="tl td">&gt; FACILITY ........ <span id="tfac" class="tv">-</span></div>
+    <div class="tl td">&gt; STATUS .......... <span class="tv">OPERATIONAL</span></div>
+    <div class="tl">&nbsp;</div>
+    <div class="tl">READY FOR INQUIRY<span class="tcur"></span></div>
+    <div class="th"><button id="lenter" class="tbtn">[ PRESS ENTER TO PROCEED ]</button> &nbsp;·&nbsp; <button id="laboutlink" class="tlink">ABOUT</button></div>
+  </div>
+  <div class="scan"></div>
+</div>
+
+<!-- pre-flight wizard: Facility -> Question -> Configure -> Run -->
+<div id="wiz">
+  <div class="wcard">
+    <div class="weyebrow">LAPLACE <span>·</span> DECISION TWIN &nbsp;/&nbsp; PRE-FLIGHT</div>
+    <div class="rail" id="rail"></div>
+    <div class="wprog"><i id="wprog"></i></div>
+
+    <!-- step 1: facility -->
+    <section class="wstep" data-step="1">
+      <h1>Choose a facility</h1>
+      <p class="lede">Laplace doesn't guess at warehouse dynamics - it <b>runs the experiment</b>
+        in a fast deterministic twin and reports what actually happens. Pick a facility to study.</p>
+      <div class="field">
+        <label>Facility</label>
+        <select id="wscenario" class="wsel"></select>
+      </div>
+      <div class="facts" id="wfacts"></div>
+    </section>
+
+    <!-- step 2: the question -->
+    <section class="wstep" data-step="2">
+      <h1>The decision</h1>
+      <p class="lede">Every facility comes with an operational question a planner would actually
+        ask. The twin exists to answer it with evidence, not intuition.</p>
+      <div class="qbox">
+        <div class="q" id="wq"> - </div>
+        <div class="why" id="wwhy"></div>
+      </div>
+    </section>
+
+    <!-- step 3: guided station setup + baseline knobs -->
+    <section class="wstep" data-step="3">
+      <h1>Set up the facility</h1>
+      <p class="lede" id="wsetuplede"></p>
+      <!-- sequential station walk-through (pick → pack → charge → dock), built from /twin/meta -->
+      <div class="stwalk" id="wstations"></div>
+      <!-- 2D floor-plan: pick a station (chip/dot), then click a grid node to move it. Writes
+           into the SAME `edits` map the 3D drag uses, so LAUNCH/resim applies it unchanged. -->
+      <div class="mapwrap" id="wmapwrap">
+        <div class="maphd"><span id="wmaptip"></span>
+          <button class="maprst" id="wmapreset" title="Undo placements">Reset placement</button></div>
+        <canvas id="wmap"></canvas>
+      </div>
+      <div class="stnote" id="wdragnote"></div>
+      <div class="knob">
+        <label>Fleet size · AMRs</label>
+        <div class="wstepper">
+          <button id="wfdn" title="remove one unit">&minus;</button>
+          <div class="val" id="wfval"> - </div><span class="unit">units</span>
+          <button id="wfup" title="add one unit">+</button>
+        </div>
+        <div class="why" id="wfleetwhy"></div>
+      </div>
+      <div class="knob">
+        <label>Demand · orders per minute</label>
+        <div class="wrange">
+          <input type="range" id="wdem" min="0.5" max="8" step="0.1"/>
+          <span class="rv" id="wdemv"> - </span>
+        </div>
+        <div class="why" id="wdemwhy"></div>
+        <div class="vhint" id="wcfghint"></div>
+      </div>
+    </section>
+
+    <!-- step 4: review + run -->
+    <section class="wstep" data-step="4">
+      <h1>Review &amp; run</h1>
+      <p class="lede">The twin samples a window of operation at <b>500&times; real time</b> and
+        streams it back. Launch to watch the facility move.</p>
+      <div class="summary" id="wsummary"></div>
+    </section>
+
+    <div class="werr" id="werr"></div>
+    <div class="wnav">
+      <button class="wbtn ghost" id="wback">Back</button>
+      <div class="right">
+        <span class="wcount" id="wcount">Step 1 of 4</span>
+        <button class="wbtn primary" id="wnext">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- About / help overlay: populated from COPY.about by the script; dismiss via ×, Esc, click-outside -->
+<div id="about" role="dialog" aria-modal="true" aria-label="About this app">
+  <div class="acard">
+    <button class="aclose" id="aboutclose" title="Close (Esc)">×</button>
+    <div class="aeyebrow">LAPLACE <span>·</span> DECISION TWIN</div>
+    <h1 id="abouth1"></h1>
+    <p class="intro" id="aboutintro"></p>
+    <div class="asec"><h2 id="aboutAmrH"></h2><p id="aboutAmr"></p></div>
+    <div class="asec"><h2 id="aboutStH"></h2><div id="aboutStations"></div></div>
+    <div class="asec"><h2 id="aboutFlowH"></h2><ol class="flow" id="aboutFlow"></ol></div>
+    <div class="asec"><h2 id="aboutDoH"></h2><ul class="cando" id="aboutDo"></ul></div>
+  </div>
+</div>
+
+<!-- Panels are docked into two flex COLUMNS so they stack (never overlap) on short/narrow
+     screens. The column CONTAINERS are pointer-events:none (so 3D drag/orbit pass through the
+     gaps); each .panel re-enables pointer-events:auto. A small-screen bottom-sheet toggle lives
+     in #top via the script. -->
+<div id="colL" class="pcol">
+  <div id="hud" class="panel">
+    <h2>Facility readout</h2>
+    <div class="srcrow"><span class="srcbadge replay" id="srcbadge" title="Tier-0 discrete-event simulation, the fast deterministic model"><span class="d"></span><span id="srctxt">FAST MODEL</span></span></div>
+    <div class="kpi-hero"><b id="thr"> - </b><span class="u">orders / hr</span></div>
+    <div class="row"><span title="95th-percentile order wait time">p95 wait</span><b id="p95"> - </b></div>
+    <div class="row"><span>carrying a load</span><b id="carry"> - </b></div>
+    <div class="row"><span>fleet</span><b id="fleet"> - </b></div>
+    <div class="row"><span>elapsed</span><b id="simt" class="hl"> - </b></div>
+  </div>
+  <div id="edits" class="panel">
+    <h2>Manual edits</h2>
+    <div id="editlist"><div class="hint">drag a station to relocate it</div></div>
+  </div>
+</div>
+<div id="colR" class="pcol">
+  <div id="legend" class="panel">
+    <h2>Fleet status · why units move</h2>
+    <div id="fleetrows"></div>
+    <div class="k" style="margin-top:12px;padding-top:9px;border-top:1px solid var(--line)">Chargers&nbsp;<b class="fc" id="chg" style="float:right"> - </b></div>
+  </div>
+  <div id="ctrl" class="panel">
+    <h2>Live parameters</h2>
+    <div class="grp">
+      <div class="lab"><span>fleet size</span></div>
+      <div class="step"><button id="fdn" title="remove one unit">&minus;</button>
+        <div class="v" id="fbar"> - </div>
+        <button id="fup" title="add one unit">+</button></div>
+    </div>
+    <div class="grp">
+      <div class="lab"><span>demand · orders/min</span><b id="demv"> - </b></div>
+      <input type="range" id="dem" min="0.5" max="8" step="0.1"/>
+    </div>
+    <div class="note" id="ctrlnote"> - </div>
+  </div>
+</div>
+<!-- non-blocking scene overlay: a centered pill shown during simulate / apply.
+     pointer-events:none on the wrap so it never blocks canvas drag/orbit. -->
+<div id="scrim" aria-live="polite"><div class="pill"><span class="spin"></span><span id="scrimtxt">Running the experiment…</span></div></div>
+<div id="coach"><span>Drag a station to test moving it.</span><button id="coachx" title="dismiss">×</button></div>
+<div id="bar" class="panel">
+  <button id="hold">HOLD</button>
+  <div class="clock">
+    <div class="t" id="clock">T+0.0 MIN</div>
+    <div class="meta"><span title="current sampled frame of the run">frame</span><span id="cyc"> - </span></div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+  </div>
+  <select id="rate"><option value="0.5">×0.5</option><option value="1" selected>×1</option>
+    <option value="2">×2</option><option value="4">×4</option></select>
+</div>
+
+<div id="decide">
+  <div class="dh"><h2>Decision</h2><button id="decclose" title="close">×</button></div>
+  <div id="askctl"><input id="askq" type="text" maxlength="2000" placeholder="e.g. Should we add a cross-aisle between A3 and A4?"/><button id="ask">Ask</button></div>
+  <div id="decctl"><span class="orlbl">or replay</span><select id="epsel"></select><button id="replay">▶</button></div>
+  <div id="feed"><div class="dhint" id="feedintro"></div></div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { DragControls } from 'three/addons/controls/DragControls.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const SCENE_INLINE = /*__SCENE__*/;
+const BOOT = /*__BOOT__*/;
+const LIVE = !!(BOOT && BOOT.engine !== null && BOOT.engine !== undefined);
+// cool, restrained station palette (one accent; functional, desaturated)
+const stationColor = { pick:0x6fb2d6, pack:0x5fae8a, charge:0x5a7fb0, dock:0x8893a0 };
+
+// ════════════════════════════════════════════════════════════════════════════
+// COPY - every user-facing string lives here so the wording is auditable in one
+// place. Keep technical terms only in title="" tooltips; the visible label is
+// always plain language. (No new visual language - strings + states only.)
+// ════════════════════════════════════════════════════════════════════════════
+const COPY = {
+  // persistent chrome / status line
+  status:{
+    online:'SHOWING FAST MODEL',          // steady success - not a busy spinner
+    held:'PAUSED',
+    launching:'STARTING…',
+    recomputing:'RECOMPUTING…',
+    applying:'APPLYING RECOMMENDATION…',
+    showingRec:'SHOWING RECOMMENDED SETUP', // success state, steady accent
+    appliedLive:'APPLIED TO LIVE TWIN',
+    liveConnecting:'LIVE · connecting…',
+    liveStreaming:'LIVE · physics feed',
+    liveReconnecting:'LIVE · reconnecting…',
+    engineUnreachable:'ENGINE UNREACHABLE',
+    liveUnreachable:'LIVE FEED UNAVAILABLE',
+    editRejected:'EDIT NOT APPLIED',
+    noChange:'NO LAYOUT CHANGE NEEDED',
+  },
+  // fidelity / provenance badge on the readout
+  source:{ des:'FAST MODEL', desTitle:'Tier-0 discrete-event simulation, the fast deterministic model',
+    physx:'LIVE PHYSICS · ISAAC', physxTitle:'Live PhysX physics on Isaac Sim',
+    orca:'LIVE · LOCAL', orcaTitle:'Local stand-in physics feed' },
+  // facility display-name map: raw scenario_id stays the engine value; this is the human title
+  facilityTitle:{
+    braess_dev:'Braess Shortcut Cell', corridor_med:'Single-Corridor Floor',
+    dc_pickzone_med:'Pick-Zone DC', real_full_warehouse:'NVIDIA Full Warehouse',
+    baseline_small:'Baseline Cell', mfc_compact:'Compact Micro-Fulfilment',
+  },
+  // live-feed button labels
+  live:{ idle:'● Live', streaming:'● LIVE',
+    titleIdle:'Live physics feed · not connected',
+    titleConfigured:'Watch the live physics feed',
+    titleUnreachable:'Live feed is set up but unreachable right now (tunnel may be down)' },
+  // decision-feed prompts
+  feed:{
+    intro:'<b>Ask an operational question.</b> The agent runs paired experiments in the twin, '
+      +'same orders, same random seed, so the comparison is apples-to-apples, then it streams a '
+      +'recommendation with its evidence, and <b>the floor you are watching changes to its answer</b>. '
+      +'Or replay a recorded decision below.',
+    staticReplay:'This is a saved snapshot. Open the live viewer to ask your own questions.',
+    engineUnreachable:'Can’t reach the engine. Check that the Laplace service is running, then reload.',
+    noEpisodes:'No saved decisions yet. Ask a question above to run the first one.',
+    streamEnded:'The agent’s stream ended early. Try asking again.',
+    inconclusiveTitle:'No confident recommendation',
+  },
+  // stage tags (left rail of each card) - plain, consistent verbs
+  tag:{ run:'RUN', ask:'ASK', plan:'PLAN', test:'TEST', result:'RESULT',
+        signal:'SIGNAL', power:'POWER', answer:'ANSWER', err:'ERROR' },
+  // ── DOMAIN MODEL (from sim/engine.py) - the single source of plain-language explanations
+  //    reused by both the About modal and the guided pre-flight setup. Do NOT invent mechanics. ──
+  domain:{
+    // the autonomous mobile robot
+    amr:{ name:'AMR (autonomous mobile robot)',
+      desc:'A self-driving cart. It idles at the dock; when an order arrives it drives to that '
+        +'order’s pick station to collect the items, carries them to the order’s pack station to be '
+        +'boxed, then frees up for the next order. When its battery drops low it drives to a charge '
+        +'station, waits for a free slot, and charges back to full. A charge never interrupts a job '
+        +'already in progress.' },
+    // the four station kinds, keyed by the engine's kind string; swatch color comes from stationColor
+    stations:{
+      pick:{ name:'Pick station',
+        purpose:'Where a robot collects an order’s items. It has parallel slots; if every slot is busy, orders queue here, and that is exactly what the twin measures.' },
+      pack:{ name:'Pack station',
+        purpose:'Where the picked order is boxed and consolidated for shipment. Also slotted, and each order is assigned a pack station when it arrives.' },
+      charge:{ name:'Charge station',
+        purpose:'Where robots recharge to full. A low-battery robot queues for a slot and is briefly out of service.' },
+      dock:{ name:'Dock',
+        purpose:'The robots’ home base. They start here and idle here between jobs.' },
+    },
+  },
+  // ── ABOUT modal copy (plain new-user language) ──
+  about:{
+    title:'What is this?',
+    intro:'A <b>warehouse decision twin</b>. Ask a question in plain English, like “should we add a '
+      +'cross-aisle?”, “how many robots do we need?”, and Laplace <b>runs the experiment</b> in a '
+      +'fast, deterministic copy of the facility, streams it back so you can <b>watch it happen</b>, '
+      +'and gives you the evidence to decide. It doesn’t guess at the dynamics; it measures them.',
+    amrHeading:'The robots',
+    stationsHeading:'The four station types',
+    flowHeading:'How an order flows',
+    flow:[
+      'An order <b>arrives</b> at the demand rate.',
+      'A free robot is <b>dispatched</b> from the dock to the order’s <b>pick</b> station (waiting for a slot if all are busy), and collects the items.',
+      'It carries the items to the order’s <b>pack</b> station (waiting for a slot), where the order is boxed.',
+      'The order is <b>done</b>; the robot frees up for the next one. Robots <b>recharge</b> at a charge station whenever their battery runs low.',
+    ],
+    doHeading:'What you can do',
+    can:[
+      'Ask an operational question in plain English and watch the agent test it.',
+      'Type a command to edit the facility live (e.g. add a station or a lane).',
+      'Drag any station in the 3D scene to move it, and the twin re-runs on the new layout.',
+      'Accept the agent’s recommended change, or undo it and keep your baseline.',
+    ],
+    metrics:'Throughput is orders completed per hour; p95 wait is how long the slowest orders wait.',
+  },
+  // ── landing screen (shown first, before the wizard) ──
+  landing:{
+    title:'Every warehouse hides a<br><b>decision you’ll get wrong</b>.',
+    pitch:'Ask it a question. Watch the twin run the experiment. Then make the call.',
+    enter:'Step onto the floor',
+    about:'What is this?',
+    hint:'or press Enter',
+  },
+  // ── guided pre-flight station setup (step 3) ──
+  setup:{
+    lede:'This is the facility you’ll study. Here’s what’s on the floor and why it matters, '
+      +'then set the operating point the agent will use as its baseline.',
+    fleetWhy:'More robots = more orders worked in parallel, until the aisles congest and adding '
+      +'robots stops helping. Finding that point is exactly the kind of question the twin answers.',
+    demandWhy:'Orders per minute the facility must keep up with. Push it higher and stations start to queue.',
+    dragNote:'<b>Tip:</b> after launch, you can also drag any station in the 3D scene to move it, and the twin re-runs.',
+    staticNote:'Saved snapshot. Values are fixed. Open the live viewer to configure and re-run.',
+    liveHint:'Fleet 1 to 12 AMRs · demand re-simulates the facility when you launch.',
+    countLabel:n=>n===1?'1 station':n+' stations',
+    none:'No stations of this type in this facility.',
+    // floor-plan click-to-place prompts
+    mapIdle:'Click a station, then click a spot on the map to move it.',
+    mapArmed:sel=>`Placing <b>${sel}</b>. Click a spot on the map. (Esc to cancel.)`,
+    mapPlaced:(sel,node)=>`Moved <b>${sel}</b> → ${node}. Applied on launch.`,
+    mapStatic:'Placement is available in the live viewer.',
+  },
+};
+// raw engine error.code -> friendly human sentence. Raw code stays in console.* only.
+const ERROR_COPY = {
+  validation_error:'That setup isn’t valid.',          // details.violations[] appended when present
+  question_too_long:'That question is too long. Please keep it under 2000 characters.',
+  simulate_failed:'The simulation couldn’t finish. Try a different operating point.',
+  unknown_scenario:'That facility isn’t available.',
+  engine_unreachable:'Can’t reach the engine right now. Check the Laplace service and try again.',
+  missing_question:'Please type a question first.',
+  patch_path_not_editable:'That change isn’t something the twin can apply.',
+};
+// translate an error envelope {code, details?} into a sentence the user can act on.
+function errorSentence(err){ if(!err) return 'Something went wrong.';
+  const code=err.code||''; let msg=ERROR_COPY[code];
+  if(code==='validation_error'){ const v=err.details&&Array.isArray(err.details.violations)?err.details.violations:[];
+    if(v.length){ const parts=v.map(x=>typeof x==='string'?x:(x&&(x.message||x.msg||x.path))).filter(Boolean);
+      if(parts.length) msg=(msg||'That setup isn’t valid.')+' '+parts.join('; ')+'.'; } }
+  if(!msg){ console.warn('[laplace] unmapped error code:', code, err); msg='Something went wrong. Please try again.'; }
+  return msg; }
+// raw scenario_id -> human facility title (engine value is preserved everywhere)
+function facilityTitle(sid){ return COPY.facilityTitle[sid]
+  || String(sid||'').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase()); }
+// confidence 0.82 -> "82%"
+function fmtConfidence(c){ return c==null?'':Math.round((+c)*100)+'%'; }
+// p-value -> "p < 0.001" / "p = 0.03" (plain, not scientific notation)
+function fmtP(p){ if(p==null) return ''; p=+p;
+  if(p<0.001) return 'p < 0.001';
+  return 'p = '+(p<0.1?p.toFixed(3):p.toFixed(2)); }
+// NaN/null-safe number display: an absent or non-finite value shows "-", never "NaN"
+function fmtNum(v,dp){ const n=+v; if(v==null||!isFinite(n)) return '-';
+  return dp==null?String(n):n.toFixed(dp); }
+// station kind -> "#rrggbb" using the SAME palette the 3D scene paints stations with, so the
+// About swatches and setup chips match what the user sees on the floor.
+const KINDS=['pick','pack','charge','dock'];
+function stationHexOf(kind){ const c=stationColor[kind]!=null?stationColor[kind]:0x8893a0;
+  return '#'+c.toString(16).padStart(6,'0'); }
+
+// curated decision framing per facility (client-side; falls back gracefully)
+const QUESTIONS = {
+  braess_dev:{ q:"Should we open a cross-aisle shortcut between the pick and pack zones?",
+    why:"A shortcut looks like it should only help - but on a congested floor it can pull every robot onto the same lane and make throughput <b>worse</b> (a Braess paradox). The only way to know is to run both layouts." },
+  corridor_med:{ q:"The floor funnels through a single cross-aisle. Is that corridor the bottleneck?",
+    why:"When one edge carries most of the traffic, adding robots stops helping and starts queuing. The twin shows where the contention actually sits." },
+  dc_pickzone_med:{ q:"How many AMRs does this pick zone need to keep p95 latency under target?",
+    why:"Too few robots and orders pile up; too many and they congest each other. There's a sweet spot - and it moves with demand." },
+  real_full_warehouse:{ q:"A real NVIDIA warehouse layout - how does throughput respond to fleet and demand?",
+    why:"Layout extracted from a production <i>full_warehouse.usd</i>. Watch how a real footprint behaves as you push the operating point." },
+  baseline_small:{ q:"A clean baseline cell - how does fleet size trade off against latency?",
+    why:"The simplest facility, useful for building intuition before the harder layouts: more robots cut latency only up to the point where they start blocking each other." },
+  mfc_compact:{ q:"A compact micro-fulfilment cell - where does congestion appear as demand rises?",
+    why:"Small floors saturate fast. The twin reveals the demand level at which the cell tips from free-flowing to gridlocked." },
+};
+function questionFor(sid){ return QUESTIONS[sid] ||
+  { q:"How does this facility respond to changes in fleet and demand?",
+    why:"Adjust the operating point and watch the dynamics - Laplace runs the experiment instead of guessing." }; }
+
+let SCENE=SCENE_INLINE, META=null, renderer, scene, cam, controls, drag, W, pmrem, composer=null;
+let stationMeshes=[], amrs=[], amrIds=[], laneMeshes=[], frame=0, running=true, cfg=null, playIntent=true, tNow=0;
+let goodEdits={}, resimSeq=0, launched=false, idleSpin=true, blobTex=null;
+let hoverPad=null;                         // currently hovered draggable station (for grab cursor + ring brighten)
+const _ray=new THREE.Raycaster(), _ptr=new THREE.Vector2(); let _hoverScheduled=false, _lastPtrEv=null;
+const edits={}; const $=id=>document.getElementById(id);
+
+// ── background: subtle Bayer 4x4 ordered-dither with a faint dithered vignette ──
+// Drawn ONCE per size to an offscreen canvas, cached as a data-URL, and set as the
+// background image of the fixed #bgdither layer. Very low contrast between two near-black
+// shades so it reads as texture, not a loud pattern. Redrawn (debounced) on resize.
+const BAYER4=[[0,8,2,10],[12,4,14,6],[3,11,1,9],[15,7,13,5]];   // classic 4x4 index matrix
+const DITHER_A=[0x0c,0x10,0x16], DITHER_B=[0x0a,0x0d,0x11];      // near-black: shadeA lighter, shadeB darker
+let _ditherURL=null;
+function drawDither(){
+  const el=$('bgdither'); if(!el) return;
+  // Render at a capped resolution (the pattern is scaled up via background-size:cover, keeping
+  // it cheap on 4K displays); the dither cell stays 1px in the source for crisp ordered texture.
+  const W=Math.min(innerWidth||1280, 1600), H=Math.min(innerHeight||800, 1000);
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H;
+  const ctx=cv.getContext('2d'); const img=ctx.createImageData(W,H); const px=img.data;
+  const cx=W/2, cy=H/2, maxR=Math.hypot(cx,cy);
+  for(let y=0;y<H;y++){ for(let x=0;x<W;x++){
+    // field t in [0,1]: darker toward the edges (a faint dithered vignette). Higher t => shadeA.
+    const r=Math.hypot(x-cx,y-cy)/maxR;         // 0 center .. 1 corner
+    let t=1-0.34*r;                             // gentle edge darkening (low amplitude = subtle)
+    if(t<0)t=0; else if(t>1)t=1;
+    const thr=(BAYER4[y&3][x&3]+0.5)/16;        // ordered threshold in (0,1)
+    const c = t>thr ? DITHER_A : DITHER_B;      // pick one of the two near-black shades
+    const i=(y*W+x)*4; px[i]=c[0]; px[i+1]=c[1]; px[i+2]=c[2]; px[i+3]=255;
+  }}
+  ctx.putImageData(img,0,0);
+  _ditherURL=cv.toDataURL('image/png');
+  el.style.backgroundImage='url("'+_ditherURL+'")';
+}
+let _ditherT=null;
+function scheduleDither(){ clearTimeout(_ditherT); _ditherT=setTimeout(drawDither,160); }
+
+async function fetchScene(){
+  const body={scenario_id:BOOT.scenario,edits};
+  if(cfg){ body.fleet=cfg.fleet; body.demand=cfg.demand; }
+  const r=await fetch(BOOT.engine+"/twin/simulate",{method:"POST",
+    headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)});
+  if(!r.ok){ let code='http_'+r.status;
+    try{ const j=await r.json(); if(j&&j.error&&j.error.code) code=j.error.code; }catch(_){/* non-JSON */}
+    return {error:{code}}; }
+  return r.json();
+}
+
+// Cheap always-on grounding: a soft radial-gradient "contact shadow" blob laid flat just
+// above the floor. Unlike the real shadow map (which the heavy-scene path turns off, so the
+// most credible full-warehouse layout used to render flattest), these cost one transparent
+// quad each and ground racks/AMRs/stations in every scene. One shared texture; per-blob
+// geometry+material so the agent-rebuild dispose-traversal can't free a shared resource.
+function blobTexture(){ if(blobTex) return blobTex;
+  const c=document.createElement('canvas'); c.width=c.height=128; const x=c.getContext('2d');
+  const g=x.createRadialGradient(64,64,6,64,64,64);
+  g.addColorStop(0,'rgba(0,0,0,0.55)'); g.addColorStop(0.6,'rgba(0,0,0,0.22)'); g.addColorStop(1,'rgba(0,0,0,0)');
+  x.fillStyle=g; x.fillRect(0,0,128,128);
+  blobTex=new THREE.CanvasTexture(c); blobTex.colorSpace=THREE.SRGBColorSpace; return blobTex; }
+function groundBlob(w,d,op=0.5){ const m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),
+    new THREE.MeshBasicMaterial({map:blobTexture(),transparent:true,opacity:op,depthWrite:false}));
+  m.rotation.x=-Math.PI/2; m.scale.set(w,d,1); m.renderOrder=-1; m.raycast=()=>{}; return m; }
+
+// ── upgraded render pipeline (ACES + sRGB + IBL + key/fill rig) ─────────────
+function setupWorld(){
+  const ext=SCENE.extent, cx=(ext.xmin+ext.xmax)/2, cy=(ext.ymin+ext.ymax)/2;
+  const span=Math.max(ext.xmax-ext.xmin, ext.ymax-ext.ymin);
+  const heavy=(SCENE.racks.length>40)||(Object.keys(SCENE.agents).length>30);
+  SCENE.__aisleSp=SCENE.aisle_x.length>1?Math.abs(SCENE.aisle_x[1]-SCENE.aisle_x[0]):3;   // clear-lane geometry
+
+  renderer=new THREE.WebGLRenderer({canvas:$('c'),antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;        // filmic shoulder, no blowouts
+  renderer.toneMappingExposure=1.12;
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  if(!heavy){ renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; }
+
+  scene=new THREE.Scene(); scene.background=new THREE.Color(0x0a0e13);
+  scene.fog=new THREE.Fog(0x0a0e13,span*1.5,span*3.4);     // far aisles dissolve into bg
+  // image-based ambient + soft reflections from a procedural room - no asset, huge lift
+  pmrem=new THREE.PMREMGenerator(renderer);
+  scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
+
+  cam=new THREE.PerspectiveCamera(40,1,0.1,span*12);
+  // auto-frame: back the camera off the bounding sphere along an iso direction
+  const radius=span*0.62, fit=radius/Math.sin((40*Math.PI/180)/2);
+  const dir=new THREE.Vector3(0.5,0.62,1.0).normalize();       // lower, closer 3/4 looking down the aisles (preferred framing)
+  cam.position.set(cx,0,cy).addScaledVector(dir,fit*0.66);
+  controls=new OrbitControls(cam,renderer.domElement); controls.target.set(cx,0,cy);
+  controls.enableDamping=true; controls.dampingFactor=0.05;
+  controls.maxPolarAngle=Math.PI*0.49; controls.minDistance=span*0.25; controls.maxDistance=span*2.6;
+  controls.autoRotate=false; controls.autoRotateSpeed=0.32;   // calm static default; cinematic orbit only in PRESENT
+  controls.addEventListener('start',()=>{ idleSpin=false; controls.autoRotate=false; });
+  renderer.domElement.addEventListener('pointermove',onPointerMove);   // station hover affordance (rAF-coalesced)
+
+  // three-part rig: sky/ground fill + shadow-casting key + soft fill (r0.160 intensities)
+  const hemi=new THREE.HemisphereLight(0xc2d4e8,0x1a2230,1.15); hemi.position.set(cx,span,cy); scene.add(hemi);
+  const key=new THREE.DirectionalLight(0xfff2e6,3.0); key.position.set(cx-span*0.7,span*1.1,cy-span*0.45);
+  if(!heavy){ key.castShadow=true; key.shadow.mapSize.set(2048,2048); key.shadow.bias=-0.0004; key.shadow.normalBias=0.06;
+    const d=span*0.75; Object.assign(key.shadow.camera,{left:-d,right:d,top:d,bottom:-d,near:1,far:span*4});
+    key.shadow.camera.updateProjectionMatrix(); }
+  scene.add(key);
+  const fill=new THREE.DirectionalLight(0xdfe8f2,0.55); fill.position.set(cx+span*0.6,span*0.5,cy+span*0.7); scene.add(fill);
+
+  W=(x,y,h=0)=>new THREE.Vector3(x,h,y);
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(span*2.4,span*2.4),
+    new THREE.MeshStandardMaterial({color:0x10151c,roughness:0.94,metalness:0.0}));
+  floor.rotation.x=-Math.PI/2; floor.position.set(cx,-0.02,cy); floor.receiveShadow=!heavy; scene.add(floor);
+  const grid=new THREE.GridHelper(span*2.4,44,0x2a3a4a,0x161d26);
+  grid.material.opacity=0.34; grid.material.transparent=true; grid.position.set(cx,0,cy); scene.add(grid);
+
+  const steel=new THREE.MeshStandardMaterial({color:0x39434f,metalness:0.35,roughness:0.62});  // dimmed: racks are CONTEXT, the congestion lanes are the hero
+  const beam=new THREE.MeshStandardMaterial({color:0x2b333c,metalness:0.3,roughness:0.65});
+  // colored product totes give the shelves life while the floor/structure stay neutral
+  const toteCols=[0x5a6878,0x847467,0x5e7064,0x786068,0x6b7480,0x726a5e];
+  const toteMats=toteCols.map(c=>new THREE.MeshStandardMaterial({color:c,roughness:0.85}));
+  const toteGeo=new THREE.BoxGeometry(0.5,0.42,0.62);
+  // Racks are INSTANCED - one draw call for every upright, one for every shelf - so the real
+  // full-warehouse footprint stays cheap at scale. A per-rack contact-shadow blob grounds each
+  // rack even on the heavy-scene path where the shadow map is off (NVIDIA #3/#7).
+  const NR=SCENE.racks.length, H=2.4, lv=[0.7,1.4,2.1], rw=Math.min(1.15,(SCENE.__aisleSp||3)*0.45);
+  if(NR){
+    const up=new THREE.BoxGeometry(0.1,2.5,0.1), unitShelf=new THREE.BoxGeometry(1,0.05,1);
+    const upMesh=new THREE.InstancedMesh(up,steel,NR*4); upMesh.castShadow=!heavy; upMesh.receiveShadow=!heavy; upMesh.raycast=()=>{};
+    const shMesh=new THREE.InstancedMesh(unitShelf,beam,NR*lv.length); shMesh.castShadow=!heavy; shMesh.raycast=()=>{};
+    const T=new THREE.Object3D(); let ui=0, si=0;
+    for(const r of SCENE.racks){ const rd=r.d*0.97;
+      for(const sx of[-1,1])for(const sz of[-1,1]){ T.position.set(r.cx+sx*rw/2,H/2,r.cy+sz*rd/2); T.rotation.set(0,0,0); T.scale.set(1,1,1); T.updateMatrix(); upMesh.setMatrixAt(ui++,T.matrix); }
+      for(const y of lv){ T.position.set(r.cx,y,r.cy); T.rotation.set(0,0,0); T.scale.set(rw,1,rd); T.updateMatrix(); shMesh.setMatrixAt(si++,T.matrix);
+        if(!heavy){ const n=Math.max(2,Math.floor(rd/1.7));                     // colored totes spaced along the rack length
+          for(let i=0;i<n;i++){const t=new THREE.Mesh(toteGeo,toteMats[(i*2+Math.round(y*3))%toteMats.length]);
+            t.position.set(r.cx+(i%2?0.15:-0.15)*rw, y+0.24, r.cy-rd/2+0.55+i*(rd-1.1)/Math.max(1,n-1||1));scene.add(t);} } }
+      const b=groundBlob(rw*2.1, rd*1.12, 0.5); b.position.set(r.cx,0.012,r.cy); scene.add(b); }
+    upMesh.instanceMatrix.needsUpdate=true; shMesh.instanceMatrix.needsUpdate=true;
+    scene.add(upMesh); scene.add(shMesh);
+  }
+  // TWO lane lines per aisle at +-the data's lane offset, so the bots visibly travel two lanes
+  const laneMat=new THREE.LineBasicMaterial({color:0x2c3e4f}), ctrMat=new THREE.LineBasicMaterial({color:0x1a2530});
+  const loff=Math.min(0.95,Math.max(0.4,(SCENE.__aisleSp||3)*0.18));   // == export_tracks _apply_lanes offset
+  for(const x of SCENE.aisle_x){
+    scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([W(x,0,0.02),W(x,SCENE.length,0.02)]),ctrMat)); // faint centre
+    for(const s of [-1,1]) scene.add(new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints([W(x+s*loff,0,0.03),W(x+s*loff,SCENE.length,0.03)]),laneMat)); }
+  SCENE.__heavy=heavy;
+}
+
+// optional post-processing (subtle GTAO contact-AO + a whisper of bloom). Dynamically
+// imported so a missing/renamed addon degrades to the plain render - the viewer never
+// breaks; ?fx=0 disables it; skipped on heavy scenes.
+async function setupFX(){
+  if(SCENE.__heavy) return;
+  if(new URLSearchParams(location.search).get('fx')==='0') return;
+  try{
+    const w=innerWidth, h=innerHeight;
+    const {EffectComposer}=await import('three/addons/postprocessing/EffectComposer.js');
+    const {RenderPass}=await import('three/addons/postprocessing/RenderPass.js');
+    const {OutputPass}=await import('three/addons/postprocessing/OutputPass.js');
+    const c=new EffectComposer(renderer);
+    c.addPass(new RenderPass(scene,cam));
+    try{ const {GTAOPass}=await import('three/addons/postprocessing/GTAOPass.js');   // grounds objects on the floor
+      const g=new GTAOPass(scene,cam,w,h);
+      if(g.updateGtaoMaterial) g.updateGtaoMaterial({radius:1.3,distanceExponent:1.0,thickness:1.0,scale:1.4,samples:10});
+      c.addPass(g);
+    }catch(_){ }
+    try{ const {UnrealBloomPass}=await import('three/addons/postprocessing/UnrealBloomPass.js');  // whisper on highlights
+      c.addPass(new UnrealBloomPass(new THREE.Vector2(w,h),0.34,0.6,0.5));
+    }catch(_){ }
+    c.addPass(new OutputPass());                              // tone map + sRGB at the very end
+    c.setSize(w,h); composer=c; console.log('[fx] composer active, passes='+c.passes.length);
+  }catch(_){ composer=null; console.log('[fx] disabled (fell back to plain render)'); }
+}
+
+function placeStations(){
+  for(const m of stationMeshes){scene.remove(m);m.geometry.dispose();m.material.dispose();} stationMeshes=[];
+  const heavy=SCENE.__heavy;
+  for(const s of SCENE.stations){ const col=stationColor[s.kind]||0x8893a0;
+    // Stations are GROUNDED WORKCELLS, not glowing portals: a charge dock, a pack bench, or a
+    // pick/drop (P&D) stand built from desaturated steel. The ONLY emissive element is a thin
+    // colored status ring at the base, which doubles as the drag handle and brightens with
+    // start-queue occupancy. A busier zone gets a larger status ring; the workcell stays fixed.
+    let R=1;
+    if(SCENE.agents){ let cnt=0;
+      for(const aid in SCENE.agents){ const a=SCENE.agents[aid];
+        if(Math.hypot(a.x[0]-s.x, a.y[0]-s.y) < 2.6) cnt++; }
+      R=Math.min(1.5, Math.max(1, 0.7+0.45*cnt)); }   // busy zone -> larger status ring (capped)
+    const lights=[];
+    const steel=(c=0x2b333d,r=0.62,mt=0.45)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:mt});
+    const part=(geo,mat,x,y,z)=>{ const me=new THREE.Mesh(geo,mat); me.position.set(x,y,z);
+      me.castShadow=!heavy; me.receiveShadow=!heavy; me.raycast=()=>{}; return me; };
+    const accent=(geo,x,y,z)=>{ const m=new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:0.5,roughness:0.5,metalness:0.3});
+      const me=new THREE.Mesh(geo,m); me.position.set(x,y,z); me.raycast=()=>{}; lights.push(m); return me; };
+    // draggable dark base plate (the click/drag target) + the colored status ring (the handle)
+    const pad=new THREE.Mesh(new THREE.CylinderGeometry(1.02,1.06,0.06,40),
+      new THREE.MeshStandardMaterial({color:0x10161d,roughness:0.7,metalness:0.25}));
+    pad.receiveShadow=!heavy;
+    const kids=[];
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(0.95,0.05,12,48),
+      new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:0.55,roughness:0.5,metalness:0.3}));
+    ring.rotation.x=Math.PI/2; ring.position.y=0.065; ring.scale.set(R,R,1); ring.raycast=()=>{};
+    lights.push(ring.material); kids.push(ring);
+    if(s.kind==='charge'){
+      kids.push(part(new THREE.BoxGeometry(1.5,0.04,0.6), steel(0x222a32,0.7,0.3), 0,0.05,0));      // dock footprint
+      kids.push(part(new THREE.BoxGeometry(0.24,0.95,0.24), steel(), 0,0.52,-0.5));                  // charge pillar
+      kids.push(part(new THREE.BoxGeometry(0.34,0.2,0.18), steel(0x363f49), 0,0.98,-0.42));          // connector head
+      kids.push(accent(new THREE.BoxGeometry(0.06,0.6,0.03), 0,0.55,-0.37));                          // charge-status strip
+    } else if(s.kind==='pack'){
+      kids.push(part(new THREE.BoxGeometry(1.4,0.06,0.74), steel(0x3a434e,0.5,0.35), 0,0.66,0));     // bench top
+      for(const sx of [-0.62,0.62]) for(const sz of [-0.3,0.3])
+        kids.push(part(new THREE.BoxGeometry(0.07,0.62,0.07), steel(), sx,0.33,sz));                  // legs
+      kids.push(part(new THREE.BoxGeometry(1.4,0.5,0.05), steel(0x222a32,0.7,0.3), 0,0.95,-0.36));    // back panel
+      kids.push(part(new THREE.BoxGeometry(0.42,0.3,0.42), steel(0x4a525c,0.8,0.1), -0.35,0.84,0.02));// tote on bench
+    } else {                                                                                          // pick / dock -> P&D stand
+      kids.push(part(new THREE.BoxGeometry(1.1,0.05,0.84), steel(0x3a434e,0.55,0.3), 0,0.52,0));     // shelf
+      for(const sx of [-0.5,0.5])
+        kids.push(part(new THREE.BoxGeometry(0.07,0.95,0.07), steel(), sx,0.5,-0.36));                // back posts
+      kids.push(part(new THREE.BoxGeometry(1.1,0.14,0.09), steel(0x222a32,0.7,0.3), 0,1.0,-0.36));    // sign bar
+      kids.push(accent(new THREE.BoxGeometry(1.06,0.06,0.04), 0,1.0,-0.31));                           // accent header strip
+      for(const rx of [-0.32,0,0.32]){ const r=part(new THREE.CylinderGeometry(0.04,0.04,0.78,12), steel(0x2b333d,0.6,0.5), rx,0.56,0);
+        r.rotation.x=Math.PI/2; kids.push(r); }                                                       // conveyor rollers
+    }
+    for(const c of kids) pad.add(c);
+    const sblob=groundBlob(2.6,2.6,0.42); sblob.position.y=-0.022; pad.add(sblob);   // always-on contact shadow grounds the workcell
+    pad.position.copy(W(s.x,s.y,0.04));
+    pad.userData={id:s.id,kind:s.kind,lights,baseE:lights.map(m=>m.emissiveIntensity),spin:null};
+    scene.add(pad); stationMeshes.push(pad); }
+  if(drag) drag.dispose();
+  drag=new DragControls(stationMeshes,cam,renderer.domElement);
+  drag.addEventListener('dragstart',()=>{controls.enabled=false; document.body.classList.add('grabbing');});
+  drag.addEventListener('drag',e=>{e.object.position.y=0.07;});
+  drag.addEventListener('dragend',e=>{controls.enabled=true; document.body.classList.remove('grabbing'); snapStation(e.object);});
+}
+
+// Render the navgraph as the MEANINGFUL structure (replaces decorative aisles as the hero
+// layer). Each lane is a capacity-limited corridor - aisle / cross-aisle / the cap-1 shortcut -
+// and its glow tracks LIVE occupancy from edge_occ, every value sourced from the event log.
+// The aisles now mean congestion: the Braess shortcut blooms red as it chokes. Presentational.
+function laneLerp(a,b,t){ const ar=(a>>16)&255,ag=(a>>8)&255,ab=a&255,br=(b>>16)&255,bg=(b>>8)&255,bb=b&255;
+  return (Math.round(ar+(br-ar)*t)<<16)|(Math.round(ag+(bg-ag)*t)<<8)|Math.round(ab+(bb-ab)*t); }
+function laneColor(ratio){                                            // occupancy/capacity -> {hex, emissiveIntensity}
+  if(ratio<=0.001) return {c:0x16202b, e:0.05};                      // idle: dim cool
+  if(ratio<=1) return {c:laneLerp(0x294a63,0xe0a23a,ratio), e:0.12+0.30*ratio};         // busy: steel -> amber (on-palette)
+  return {c:laneLerp(0xe0a23a,0xd2705f,Math.min(ratio-1,1)), e:0.42+0.30*Math.min(ratio-1,1)}; }  // over capacity: muted brick, not neon
+function buildLanes(){
+  for(const m of laneMeshes){ scene.remove(m); m.geometry.dispose(); m.material.dispose(); } laneMeshes=[];
+  const edges=SCENE.edges||[];
+  for(let li=0; li<edges.length; li++){ const e=edges[li];
+    const dx=e.x1-e.x0, dy=e.y1-e.y0, L=Math.hypot(dx,dy)||0.001;
+    const isSc=e.kind==='shortcut';
+    const w = isSc ? 0.6 : Math.min(1.1, 0.4*(e.cap||2));                    // width hints capacity
+    const h = isSc ? 0.10 : 0.04;
+    const base = isSc ? 0x5fae8a : 0x16202b;                                  // shortcuts = palette "ok" green: an ADDED lane reads as infrastructure, on-palette
+    const mat=new THREE.MeshStandardMaterial({color:base,emissive:base,emissiveIntensity:isSc?0.42:0.05,
+                                              roughness:0.5,metalness:0.0,transparent:true,opacity:0.95});
+    const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,L),mat);
+    m.rotation.y=Math.atan2(dx,dy);                                  // box depth (L) aligns to the edge direction
+    m.position.set((e.x0+e.x1)/2, h/2+0.012, (e.y0+e.y1)/2);
+    m.userData={li, cap:e.cap||2, kind:e.kind};
+    scene.add(m); laneMeshes.push(m); }
+}
+function updateLanes(i){
+  if(!SCENE.edge_occ) return;
+  for(const m of laneMeshes){ const occ=SCENE.edge_occ[m.userData.li];
+    const o=occ?occ[i]:0, col=laneColor(o/Math.max(1,m.userData.cap));
+    m.material.color.setHex(col.c); m.material.emissive.setHex(col.c); m.material.emissiveIntensity=col.e; }
+}
+// build ONE iw_hub AMR mesh group (extracted so live mode can grow/shrink the fleet).
+// Modeled on the Idealworks iw.hub: a squat, low-profile drive unit on four casters
+// with a flat lifting deck that rises under a payload (not a 2-wheel rounded box).
+function makeAMR(){ const heavy=SCENE&&SCENE.__heavy;
+  const g=new THREE.Group();
+  const steel=0x586273, dark=new THREE.MeshStandardMaterial({color:0x1b1f25,roughness:0.8,metalness:0.2});
+  const chassis=new THREE.Mesh(new RoundedBoxGeometry(0.94,0.22,1.34,4,0.05),        // squat drive chassis (amber iw_hub)
+    new THREE.MeshStandardMaterial({color:0xdb8f3c,roughness:0.5,metalness:0.3}));
+  chassis.position.y=0.15; chassis.castShadow=!heavy; g.add(chassis);
+  const skirt=new THREE.Mesh(new THREE.BoxGeometry(0.96,0.05,1.36),dark);            // dark bumper skirt grounds it
+  skirt.position.y=0.05; g.add(skirt);
+  const wheelGeo=new THREE.CylinderGeometry(0.085,0.085,0.10,16);                    // four corner casters
+  const rubber=new THREE.MeshStandardMaterial({color:0x14171c,roughness:0.85,metalness:0.0});
+  for(const sx of[-1,1])for(const sz of[-1,1]){ const w=new THREE.Mesh(wheelGeo,rubber); w.rotation.z=Math.PI/2;
+    w.position.set(sx*0.42,0.085,sz*0.50); g.add(w); }
+  const plate=new THREE.Mesh(new RoundedBoxGeometry(0.84,0.06,1.18,2,0.025),         // lifting deck (reads intent color)
+    new THREE.MeshStandardMaterial({color:steel,roughness:0.5,metalness:0.4}));
+  plate.position.y=0.31; plate.castShadow=!heavy; g.add(plate);
+  const postGeo=new THREE.BoxGeometry(0.05,0.06,0.05);                               // four lift posts under the deck
+  for(const sx of[-1,1])for(const sz of[-1,1]){ const p=new THREE.Mesh(postGeo,dark);
+    p.position.set(sx*0.32,0.27,sz*0.42); g.add(p); }
+  const acc=new THREE.MeshStandardMaterial({color:0x9aa6b0,emissive:0x9aa6b0,emissiveIntensity:0.32,roughness:0.4});
+  const nose=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.06,0.05),acc);               // front bar = direction
+  nose.position.set(0,0.22,0.67); g.add(nose);
+  const pip=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,0.07,12),acc);       // status beacon
+  pip.position.set(0,0.30,-0.40); g.add(pip);
+  const pod=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.4,0.6),                         // KLT tote payload (~0.5x0.4x0.6 m)
+    new THREE.MeshStandardMaterial({color:0x9a7b50,roughness:0.8})); pod.position.y=0.54; pod.visible=false; pod.castShadow=!heavy; g.add(pod);
+  const blob=groundBlob(1.55,1.95,0.45); blob.position.y=0.02; g.add(blob);          // always-on contact shadow grounds the unit
+  g.scale.setScalar(0.5);                                                            // AMR at HALF the iw_hub footprint
+  scene.add(g);
+  return {g,acc,plate:plate.material,pod,yaw:0,rx:0,rz:0,rinit:false,podScale:0,lag:0,lhx:0,lhz:1};
+}
+function buildAgents(){
+  for(const u of amrs){u.g.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});scene.remove(u.g);} amrs=[]; amrIds=Object.keys(SCENE.agents);
+  for(const _ of amrIds){ amrs.push(makeAMR()); }
+  buildFleetLegend();
+}
+// live mode: ensure n meshes exist (amr_00..), reset their ids, show <n / hide >=n.
+function ensureLiveFleet(n){
+  while(amrs.length<n){ amrs.push(makeAMR()); }
+  amrIds=amrs.map((_,k)=>'amr_'+String(k).padStart(2,'0'));
+  for(let k=0;k<amrs.length;k++){ amrs[k].g.visible=(k<n); amrs[k].liveInit=false; }
+}
+
+// fleet-status panel: the live legend of WHY units are moving. Rows + colors come from the
+// data layer (SCENE.intent_order / intent_color / intent_label); counts update per frame.
+function hexOf(c){ return '#'+[0,1,2].map(j=>('0'+Math.round(255*(c[j]||0)).toString(16)).slice(-2)).join(''); }
+function buildFleetLegend(){ const el=$('fleetrows'); if(!el) return; el.innerHTML='';
+  const order=SCENE.intent_order||[], col=SCENE.intent_color||{}, lab=SCENE.intent_label||{};
+  for(const k of order){ const row=document.createElement('div'); row.className='k'; row.dataset.intent=k;
+    row.innerHTML='<span class="sw" style="background:'+hexOf(col[k]||[0.5,0.5,0.5])+'"></span>'
+      +(lab[k]||k)+'<b class="fc" style="float:right">0</b>'; el.appendChild(row); } }
+function updateFleet(i){ const fl=SCENE.fleet&&SCENE.fleet[i], el=$('fleetrows');
+  if(fl&&el) for(const row of el.children){ const b=row.querySelector('.fc'), v=fl[row.dataset.intent]||0;
+    if(b){ b.textContent=v; row.style.opacity=v?1:0.35; } }
+  const co=SCENE.charge_occ, cap=SCENE.charge_cap;
+  if(co&&cap){ let busy=0,tot=0; for(const k in cap){ tot+=cap[k]; busy+=(co[k]&&co[k][i])||0; }
+    const e=$('chg'); if(e) e.textContent=busy+' / '+tot; } }
+
+// Station hover: a grab cursor + a subtle ring brighten so the draggable workcells read as
+// interactive. Driven by pointermove but the raycast is COALESCED to one per animation frame
+// (rAF-debounced) so dragging the pointer across the full warehouse can't tank FPS. Only the
+// station pad groups are tested (the decorative children all set raycast=()=>{}), so the cost
+// is ~one ray vs. a handful of pads, never the thousands of instanced racks/totes.
+function onPointerMove(ev){ _lastPtrEv=ev;
+  if(_hoverScheduled) return; _hoverScheduled=true;
+  requestAnimationFrame(()=>{ _hoverScheduled=false; updateHover(); }); }
+function updateHover(){ const ev=_lastPtrEv; if(!ev||!cam||!stationMeshes.length){ return; }
+  const r=renderer.domElement.getBoundingClientRect();
+  _ptr.x=((ev.clientX-r.left)/r.width)*2-1; _ptr.y=-((ev.clientY-r.top)/r.height)*2+1;
+  _ray.setFromCamera(_ptr,cam);
+  const hit=_ray.intersectObjects(stationMeshes,true)[0];
+  let pad=hit?hit.object:null; while(pad&&!pad.userData.id) pad=pad.parent;   // climb to the pad group that owns the id
+  if(pad!==hoverPad){
+    // restore the previously hovered cell's ring in live mode (DES mode is restored by applyFrame)
+    if(liveMode&&hoverPad&&hoverPad.userData.lights)
+      hoverPad.userData.lights.forEach((m,li)=>{ m.emissiveIntensity=hoverPad.userData.baseE[li]; });
+    hoverPad=pad;
+    if(liveMode&&hoverPad&&hoverPad.userData.lights)
+      hoverPad.userData.lights.forEach((m,li)=>{ m.emissiveIntensity=hoverPad.userData.baseE[li]*1.6; });
+  }
+  document.body.classList.toggle('can-grab', !!pad); }
+function snapStation(o){
+  let ax=SCENE.aisle_x.reduce((b,x)=>Math.abs(x-o.position.x)<Math.abs(b-o.position.x)?x:b,SCENE.aisle_x[0]);
+  const pos=Math.max(0,Math.min(SCENE.length,Math.round(o.position.z)));
+  o.position.set(ax,0.07,pos);
+  edits[o.userData.id]='A'+(SCENE.aisle_x.indexOf(ax)+1)+'_'+String(pos).padStart(2,'0');
+  renderEdits(); if(LIVE) resim();
+}
+function renderEdits(){ const ks=Object.keys(edits);
+  $('editlist').innerHTML = ks.length ? ks.map(k=>`<div class="e">${k} → ${edits[k]}</div>`).join('')
+    + `<div class="hint">${LIVE?'re-running on each change':'preview only. Open the live viewer to re-run'}</div>`
+    : '<div class="hint">drag a station to relocate it</div>'; }
+
+// live parameters (fleet, demand) -> /twin/simulate accepts fleet+demand.
+function updateFleetBounds(){ if(LIVE){ $('fup').disabled=cfg.fleet>=12; $('fdn').disabled=cfg.fleet<=1; } }
+function syncControls(){ if(!SCENE) return;
+  cfg={ fleet: SCENE.meta.amr_count,
+        demand: SCENE.meta.demand!=null ? SCENE.meta.demand : +$('dem').min };
+  $('fbar').textContent=cfg.fleet+' UNITS';
+  $('dem').value=cfg.demand; $('demv').textContent=(+cfg.demand).toFixed(2);
+  $('fleet').textContent=cfg.fleet+' UNITS'; updateFleetBounds(); }
+function setupControls(){ syncControls();
+  if(!LIVE){ $('ctrl').classList.add('off');
+    $('fup').disabled=$('fdn').disabled=$('dem').disabled=true;
+    $('ctrlnote').textContent='preview only. Open the live viewer to adjust'; return; }
+  $('ctrlnote').textContent='changes re-run the facility';
+  const stepFleet=d=>{ const n=Math.max(1,Math.min(12,cfg.fleet+d));
+    if(n===cfg.fleet) return; cfg.fleet=n; $('fbar').textContent=n+' UNITS'; updateFleetBounds();
+    if(liveMode){ sendLive({fleet:n}); } else { resim(); } };   // live: resize the running twin, no rebuild
+  $('fup').addEventListener('click',()=>stepFleet(1));
+  $('fdn').addEventListener('click',()=>stepFleet(-1));
+  $('dem').addEventListener('input',()=>{ $('demv').textContent=(+$('dem').value).toFixed(2); });
+  $('dem').addEventListener('change',()=>{ cfg.demand=+$('dem').value;
+    if(liveMode){ sendLive({demand:cfg.demand}); } else { resim(); } }); }
+
+// HONEST RENDER (v1) - the two-lane discipline is now baked into the TRACK DATA
+// (renderer/export_tracks: _apply_lanes + _separate), so BOTH this viewer and the Isaac render
+// consume identical, non-overlapping two-lane positions. This layer just renders that data
+// FAITHFULLY: interpolate the (already lane-correct) xy, face the travel direction, ease for
+// smoothness. No centerline snap / invented offset / separation here - that would fight the
+// baked data and only ever lived in JS (which is why the render used to look wrong).
+const LH={ W:2, STILL:0.05, EASE:0.22, YAW_EASE:0.18, EPS:0.004 };
+function applyFrame(fr){ const N=SCENE.meta.n_frames; fr=Math.max(0,Math.min(N-1,fr));
+  const i0=Math.floor(fr), i1=Math.min(N-1,i0+1), f=fr-i0, i=i0;          // interpolate between sampled frames
+  const n=amrIds.length;
+  const tgx=new Array(n), tgz=new Array(n), hxa=new Array(n), hza=new Array(n), mv=new Array(n), onln=new Array(n);
+  for(let k=0;k<n;k++){ const u=amrs[k], a=SCENE.agents[amrIds[k]];
+    if(u.lhx===undefined){ u.lhx=0; u.lhz=1; }
+    const rxk=a.x[i0]+(a.x[i1]-a.x[i0])*f, rzk=a.y[i0]+(a.y[i1]-a.y[i0])*f;   // already lane-correct in the data
+    const j0=Math.max(0,i0-LH.W), j1=Math.min(N-1,i0+LH.W);
+    let dx=a.x[j1]-a.x[j0], dz=a.y[j1]-a.y[j0]; const m=Math.hypot(dx,dz); mv[k]=m>LH.STILL;
+    if(mv[k]){ u.lhx=dx/m; u.lhz=dz/m; }                                  // heading from travel; hold when still
+    onln[k]=a.on_lane?a.on_lane[i]:-1;
+    tgx[k]=rxk; tgz[k]=rzk; hxa[k]=u.lhx; hza[k]=u.lhz; }
+  // 6b-8. ease + commit per robot (the anti-jitter rules live here), then status/pod/bob
+  for(let k=0;k<n;k++){ const u=amrs[k]; const tx=tgx[k], tz=tgz[k];
+    if(!u.rinit){ u.rx=tx; u.rz=tz; u.rinit=true; }
+    else { const ddx=tx-u.rx, ddz=tz-u.rz;
+      if(Math.abs(ddx)<LH.EPS && Math.abs(ddz)<LH.EPS){ u.rx=tx; u.rz=tz; }                  // deadband: settle dead-still
+      else { u.rx+=ddx*LH.EASE; u.rz+=ddz*LH.EASE; } }
+    u.g.position.set(u.rx,0,u.rz);
+    if(mv[k] || onln[k]>=0){ const yawT=Math.atan2(hxa[k],hza[k]);                           // yaw from lane direction; hold when parked
+      let dd=yawT-u.yaw; dd=Math.atan2(Math.sin(dd),Math.cos(dd)); u.yaw+=dd*LH.YAW_EASE; }
+    u.g.rotation.y=u.yaw;
+    const a=SCENE.agents[amrIds[k]];
+    if(a.band){ const c=a.band[i];
+      const carrying=c[1]>=c[0] && c[1]>=c[2] && c[1]>0.45;          // green band = carrying a load
+      const working=c[2]>=c[0] && c[2]>=c[1] && c[2]>0.55;           // blue/cyan band = at a station (servicing/charging)
+      const pulse=working?(0.5+0.5*Math.abs(Math.sin(tNow*0.005))):1.0;
+      u.acc.color.setRGB(c[0],c[1],c[2]); u.acc.emissive.setRGB(c[0]*pulse,c[1]*pulse,c[2]*pulse);
+      if(u.plate){ u.plate.color.setRGB(0.18+0.45*c[0],0.22+0.45*c[1],0.26+0.45*c[2]);   // deck reads the intent color
+        u.plate.emissive.setRGB(c[0]*0.45,c[1]*0.45,c[2]*0.45); u.plate.emissiveIntensity=0.55; }
+      const ts=carrying?1:0; u.podScale+=(ts-u.podScale)*0.16;       // pod pops in on pick-up, shrinks out on drop-off
+      u.pod.visible=u.podScale>0.02; u.pod.scale.setScalar(Math.max(0.02,u.podScale));
+      u.g.position.y=working?0.07*Math.abs(Math.sin(tNow*0.006)):0; } }   // a small bob while it works
+  updateLanes(i);                                                   // congestion glow tracks live edge occupancy
+  const t=SCENE.meta.t0+fr*SCENE.meta.dt;
+  $('simt').textContent=t.toFixed(1)+' MIN'; $('clock').textContent='T+'+t.toFixed(1)+' MIN';
+  $('cyc').textContent=(i+1)+' / '+N; $('fill').style.width=(100*fr/Math.max(N-1,1))+'%';
+  updateFleet(i);                                                  // live "why units move" panel
+  if(SCENE.station_occ) for(const m of stationMeshes){ const L=m.userData.lights; if(!L) continue;   // steady glow + slow spin
+    const occ=((SCENE.station_occ[m.userData.id]||[])[i])||0, cap=(SCENE.station_cap&&SCENE.station_cap[m.userData.id])||1;
+    let k2=occ>0?(1.0+0.7*Math.min(occ/cap,1)):0.7;                                                   // brighter when busy, but STEADY (no phasing)
+    if(m===hoverPad) k2*=1.6;                                                                         // subtle brighten so the draggable cell reads as interactive
+    for(let li=0;li<L.length;li++) L[li].emissiveIntensity=m.userData.baseE[li]*k2;
+    if(m.userData.spin) m.userData.spin.rotation.z=tNow*0.0006; }                                     // slow steady portal rotation
+  if(SCENE.hud&&SCENE.hud[i]){const h=SCENE.hud[i];
+    $('thr').textContent=h.throughput; $('p95').textContent=h.p95_latency+' MIN'; $('carry').textContent=h.carrying;
+    const ce=$('cinethr'); if(ce) ce.textContent=h.throughput; }
+  if(!liveMode) setSource('des'); }
+
+// status semantics: cls is one of null (steady success) | 'working' (calm, animated)
+// | 'held' (amber pause) | 'error' (red). Amber/red are reserved for held + true errors.
+function setStatus(cls,txt){ document.body.classList.remove('held','working','error');
+  if(cls)document.body.classList.add(cls); $('statxt').textContent=txt; }
+function setRunning(on){ playIntent=on; running=on;
+  setStatus(on?null:'held', on?COPY.status.online:COPY.status.held); $('hold').textContent=on?'HOLD':'RESUME'; }
+// non-blocking scene overlay during simulate / apply. on=false clears it. The pill never
+// blocks the canvas (pointer-events:none on the wrap) so drag/orbit stay live.
+function setScrim(on,txt){ document.body.classList.toggle('scrim-on',!!on);
+  if(on&&txt){ const e=$('scrimtxt'); if(e) e.textContent=txt; } }
+
+// cinematic present mode: hide the dev chrome, slow auto-orbit, clean lower-third - record this.
+function togglePresent(on){
+  if(!launched) return;
+  on = (on===undefined) ? !document.body.classList.contains('present') : on;
+  document.body.classList.toggle('present', on);
+  if(on){ const qf=questionFor(SCENE.scenario);
+    $('cinescn').textContent=facilityTitle(SCENE.scenario);
+    $('cinetag').textContent=qf.q;
+    setRunning(true); idleSpin=true; controls.autoRotate=true; controls.autoRotateSpeed=0.45; }
+  else { controls.autoRotateSpeed=0.32; } }
+
+function rollbackEdits(){ for(const k of Object.keys(edits)) delete edits[k];
+  Object.assign(edits, goodEdits); renderEdits(); }
+async function resim(){ exitLive(); const my=++resimSeq; setStatus('working',COPY.status.recomputing);
+  setScrim(true,'Re-running the experiment…'); running=false;
+  let s;
+  try{ s=await fetchScene(); }
+  catch(_){ if(my!==resimSeq) return; setScrim(false); rollbackEdits(); placeStations(); syncControls();
+    setRunning(playIntent); setStatus('error',COPY.status.engineUnreachable); return; }
+  if(my!==resimSeq) return;                       // a newer re-sim superseded this one (it owns the scrim)
+  setScrim(false);
+  if(s && s.error){ console.warn('[laplace] edit rejected:', s.error.code, s.error);
+    rollbackEdits(); placeStations(); syncControls();
+    setRunning(playIntent); setStatus('error',COPY.status.editRejected); return; }
+  const heavy=SCENE.__heavy; SCENE=s; SCENE.__heavy=heavy; goodEdits={...edits};
+  placeStations(); buildAgents(); buildLanes(); syncControls(); frame=0; setRunning(playIntent); }
+
+// --- live feed (Track L): drive robots from a real-time pose stream (/twin/live) ---
+let liveMode=false, liveWS=null; const LIVE_MAX=12;   // pre-spawned ceiling = stream --max-robots
+let liveHz=0, _lhT=[];   // measured live-feed rate at the viewer (honest, client-side)
+function applyLivePoses(agents){ for(let k=0;k<amrs.length;k++){
+    const id='amr_'+String(k).padStart(2,'0'), p=agents[id], u=amrs[k];
+    const present=p!==undefined; u.g.visible=present;                       // show exactly the active fleet
+    if(present){ u.ltx=p[0]; u.ltz=p[1]; u.ltyaw=Math.atan2(Math.cos(p[2]),Math.sin(p[2])); } } }
+// live Fleet-Status + Facility-Readout, straight from the feed's kpis (honest, never baked).
+function updateFleetLive(k){ if(!k) return; const el=$('fleetrows'), it=k.intent||{};
+  if(el) for(const row of el.children){ const b=row.querySelector('.fc'), v=it[row.dataset.intent]||0;
+    if(b){ b.textContent=v; row.style.opacity=v?1:0.35; } }
+  if(k.throughput!=null){ $('thr').textContent=k.throughput; const ce=$('cinethr'); if(ce) ce.textContent=k.throughput; }
+  if(k.p95_latency!=null) $('p95').textContent=k.p95_latency+' MIN';
+  if(k.carrying!=null) $('carry').textContent=k.carrying;
+  if(k.fleet!=null) $('fleet').textContent=k.fleet+' UNITS';   // observed active count (readout only; controls own cfg.fleet)
+  if(k.chargers){ const e=$('chg'); if(e) e.textContent=k.chargers.busy+' / '+k.chargers.cap; }
+  setSource(k.source==='orca_local'?'orca':'physx', liveHz); }
+function sendLive(msg){ if(liveWS&&liveWS.readyState===1){ try{liveWS.send(JSON.stringify(msg));}catch(_){} return true; } return false; }
+// fidelity-tier / provenance badge on the Facility Readout (honesty-as-identity: which model is driving these numbers)
+function setSource(kind, hz){ const b=$('srcbadge'), t=$('srctxt'); if(!b||!t) return;
+  const label = kind==='physx' ? (COPY.source.physx+(hz?' · '+hz+' Hz':''))
+              : kind==='orca'  ? (COPY.source.orca+(hz?' · '+hz+' Hz':''))
+              : COPY.source.des;
+  b.title = kind==='physx'?COPY.source.physxTitle : kind==='orca'?COPY.source.orcaTitle : COPY.source.desTitle;
+  if(setSource._l===label) return; setSource._l=label;
+  b.classList.toggle('physx', kind==='physx'||kind==='orca');
+  b.classList.toggle('replay', kind==='des'); t.textContent=label; }
+// small debug accessor (watchable-twin diagnostics): lane/shortcut counts from the live scene
+window.__twinDebug=()=>({lanes:laneMeshes.length,
+  shortcuts:laneMeshes.filter(m=>m&&m.userData&&m.userData.kind==='shortcut').length,
+  edges:(SCENE&&SCENE.edges||[]).length, aisles:(SCENE&&SCENE.aisle_x||[]).length, live:liveMode, hz:liveHz, samples:_lhT.length});
+function applyLiveEase(){ for(let k=0;k<amrs.length;k++){ const u=amrs[k]; if(u.ltx===undefined||!u.g.visible) continue;
+    if(!u.liveInit){ u.rx=u.ltx; u.rz=u.ltz; u.yaw=u.ltyaw; u.liveInit=true; }
+    else { u.rx+=(u.ltx-u.rx)*0.22; u.rz+=(u.ltz-u.rz)*0.22;
+      let dd=u.ltyaw-u.yaw; dd=Math.atan2(Math.sin(dd),Math.cos(dd)); u.yaw+=dd*0.2; }
+    u.g.position.set(u.rx,0,u.rz); u.g.rotation.y=u.yaw;
+    if(u.acc){ u.acc.color.setRGB(0.32,0.71,0.62); u.acc.emissive.setRGB(0.16,0.55,0.45); } } }
+// three-state Live button: idle (hollow) -> connecting (hollow, working status)
+// -> streaming (filled + pulse, ONLY after the first frame). Driven by real state.
+function setLiveButton(state){ const b=$('livebtn'); if(!b) return;
+  b.classList.toggle('streaming', state==='streaming');
+  b.textContent = state==='streaming' ? COPY.live.streaming : COPY.live.idle; }
+let _liveFirstFrame=false, _liveLastFrame=0, _liveLink='connecting', _liveStaleTimer=null;
+// reflect link/staleness on the status line without spamming: green only once a frame has
+// arrived AND link is healthy; otherwise a calm "reconnecting…" (never a frozen green).
+function refreshLiveStatus(){ if(!liveMode) return;
+  const stale = _liveFirstFrame && (performance.now()-_liveLastFrame > 2000);
+  if(!_liveFirstFrame){ setStatus('working',COPY.status.liveConnecting); setLiveButton('connecting'); return; }
+  if(stale || _liveLink==='reconnecting' || _liveLink==='disconnected'){
+    setStatus('working',COPY.status.liveReconnecting); setLiveButton('connecting'); }
+  else { setStatus(null,COPY.status.liveStreaming); setLiveButton('streaming'); } }
+async function connectLive(){ if(!LIVE) return;
+  if(liveMode){ if(liveWS) liveWS.close(); return; }
+  if(!launched){ setStatus('working',COPY.status.launching); await launch(); if(!launched) return; }   // one-click: launch the facility, then go live
+  const url=location.origin.replace(/^http/,'ws')+'/twin/live?scenario='+encodeURIComponent(BOOT.scenario)+'&robots='+amrIds.length+'&source=physx';
+  try{ liveWS=new WebSocket(url); }catch(_){ setStatus('error',COPY.status.liveUnreachable); return; }
+  liveWS.onopen=()=>{ liveMode=true; running=false; _lhT=[]; liveHz=0;
+    _liveFirstFrame=false; _liveLastFrame=performance.now(); _liveLink='connecting';
+    ensureLiveFleet(LIVE_MAX);                                                   // pre-spawn meshes so live resize is instant
+    refreshLiveStatus();                                                         // "connecting…" - badge stays FAST MODEL until first frame
+    if(_liveStaleTimer) clearInterval(_liveStaleTimer);
+    _liveStaleTimer=setInterval(refreshLiveStatus,500); };                       // catch >2s staleness even with no new frames
+  liveWS.onmessage=ev=>{ let m; try{m=JSON.parse(ev.data);}catch(_){return;}
+    if(m&&m.hello) return;                                                       // handshake frame: not a pose frame
+    if(m&&typeof m.link==='string') _liveLink=m.link;
+    const now=performance.now(); _liveLastFrame=now;
+    if(!_liveFirstFrame){ _liveFirstFrame=true; setSource('physx'); }            // flip the badge to LIVE only on the first real frame
+    _lhT.push(now); if(_lhT.length>30) _lhT.shift();
+    if(_lhT.length>=6){ const span=(_lhT[_lhT.length-1]-_lhT[0])/1000; if(span>0) liveHz=Math.round((_lhT.length-1)/span); }
+    if(m&&m.agents) applyLivePoses(m.agents); if(m&&m.kpis) updateFleetLive(m.kpis);
+    refreshLiveStatus(); };
+  liveWS.onclose=()=>{ liveMode=false; liveWS=null;
+    if(_liveStaleTimer){ clearInterval(_liveStaleTimer); _liveStaleTimer=null; }
+    setLiveButton('idle');
+    buildAgents(); setSource('des');                                            // restore DES-count meshes + tier badge
+    setRunning(true); };                                                         // setRunning sets the steady "SHOWING FAST MODEL" success state
+  liveWS.onerror=()=>{ setStatus('error',COPY.status.liveUnreachable); }; }
+function exitLive(){ if(liveWS){ try{liveWS.close();}catch(_){} } liveWS=null; liveMode=false;
+  if(_liveStaleTimer){ clearInterval(_liveStaleTimer); _liveStaleTimer=null; }
+  _liveFirstFrame=false; setLiveButton('idle'); }
+// node 'A3_10' -> floor xy, using the same aisle x-positions the scene was built with.
+function nodeXY(name){ const m=/^A(\d+)_(\d+)$/.exec(String(name||'')); if(!m) return null;
+  const ax=SCENE.aisle_x&&SCENE.aisle_x[(+m[1])-1]; if(ax===undefined) return null; return {x:ax,y:+m[2]}; }
+// pull the extra_edges list out of a patch in any shape (dot-path, nested, or bare).
+function patchExtraEdges(patch){ if(!patch) return null;
+  if(Array.isArray(patch['layout.extra_edges'])) return patch['layout.extra_edges'];
+  if(patch.layout&&Array.isArray(patch.layout.extra_edges)) return patch.layout.extra_edges;
+  if(Array.isArray(patch.extra_edges)) return patch.extra_edges; return null; }
+// add visible cross-aisle lane(s) to the live scene geometry (so "add a lane" is SEEN, not just routed).
+function addShortcutEdges(ee){ if(!Array.isArray(ee)||!SCENE.edges) return 0; let added=0;
+  for(const e of ee){ const A=nodeXY(e.from), B=nodeXY(e.to); if(!A||!B) continue;
+    const dup=SCENE.edges.some(x=>x.kind==='shortcut'&&
+      ((x.x0===A.x&&x.y0===A.y&&x.x1===B.x&&x.y1===B.y)||(x.x0===B.x&&x.y0===B.y&&x.x1===A.x&&x.y1===A.y)));
+    if(dup) continue;
+    SCENE.edges.push({x0:A.x,y0:A.y,x1:B.x,y1:B.y,kind:'shortcut',cap:2}); added++; }
+  return added; }
+// Apply the agent's recommended config to the twin: re-simulate with its patch so the
+// recommendation is something you WATCH happen in 3D, not just text.
+async function applyAgentRecommendation(patch){
+  if(!launched) return;
+  if(!patch || !Object.keys(patch).length){ setStatus(null,COPY.status.noChange); return; }   // recommendation = keep current layout
+  if(liveMode && sendLive({patch})){                              // change the running physics twin, stay live
+    const ee=patchExtraEdges(patch); if(ee && addShortcutEdges(ee)) buildLanes();   // and DRAW the new lane(s)
+    setStatus(null,COPY.status.appliedLive); return; }
+  exitLive(); setStatus('working',COPY.status.applying); setScrim(true,'Applying the recommendation…');
+  let s; try{ s=await (await fetch(location.origin+'/twin/simulate',{method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({scenario_id:BOOT.scenario, edits, patch})})).json(); }
+  catch(_){ setScrim(false); setStatus('error',COPY.status.engineUnreachable); return; }
+  setScrim(false);
+  if(!s || s.error){ console.warn('[laplace] apply failed:', s&&s.error); setStatus('error',COPY.status.editRejected); return; }
+  const heavy=SCENE.__heavy; SCENE=s; SCENE.__heavy=heavy;
+  placeStations(); buildAgents(); buildLanes(); syncControls(); frame=0; setRunning(true);
+  setStatus(null,COPY.status.showingRec); }
+
+function loop(now){ const dt=(now-loop.last)/1000; loop.last=now; tNow=now;
+  if(liveMode){ applyLiveEase(); }
+  else if(running){ const N=SCENE.meta.n_frames; frame+=dt*2.4*(+$('rate').value); if(frame>=N) frame=0; applyFrame(frame); }
+  controls.update(); (composer?composer.render():renderer.render(scene,cam)); requestAnimationFrame(loop); }
+
+// --- staged-streaming decision replay (SSE) --------------------------------
+let es=null;
+// last paired CRN comparison seen this stream, for the before/after panel's Δ row
+let lastCmp=null;
+const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const fmtd=x=>x==null?' - ':(x>0?'+':'')+(+x).toFixed(2);
+// a real engine-supplied [lo,hi] CI, or null - never fabricated (no-number-without-a-source)
+const ciOk=ci=>Array.isArray(ci)&&ci.length===2&&typeof ci[0]==='number'&&typeof ci[1]==='number';
+const fmtci=ci=>ciOk(ci)?`90% CI [${fmtd(ci[0])}, ${fmtd(ci[1])}]`:'';
+// before/after paired comparison block, driven ONLY by engine-validated report numbers
+// (primary_metric: baseline/recommended each with mean + ci90). No fabricated values:
+// returns '' unless both blocks carry a real mean and a [lo,hi] CI90.
+function cmpBlock(d){
+  const pm=d&&d.primary_metric; if(!pm||typeof pm!=='object') return '';
+  const b=pm.baseline, r=pm.recommended;
+  const ok=x=>x&&typeof x==='object'&&typeof x.mean==='number'
+    &&Array.isArray(x.ci90)&&x.ci90.length===2
+    &&typeof x.ci90[0]==='number'&&typeof x.ci90[1]==='number';
+  if(!ok(b)||!ok(r)) return '';
+  const name=esc(pm.name||'primary metric');
+  const num=x=>(+x).toFixed(2);
+  const ci=x=>`90% CI ${num(x.ci90[0])}-${num(x.ci90[1])}`;
+  // Δ = recommended − baseline from the two engine-sourced means (each already shows its own
+  // 90% CI above). The streamed compare_configs events do NOT record which two arms they
+  // compared, so none can be soundly attributed as THE baseline→recommended paired Δ - never
+  // relabel an unrelated same-metric comparison as CRN, and claim no paired p we cannot verify.
+  const dm=r.mean-b.mean;
+  const dlab='Δ baseline → recommended';
+  const dci='', pv='';
+  return `<div class="cmp"><div class="ch"><span class="t">paired comparison</span>`
+    +`<span class="m">${name}</span></div><div class="cols">`
+    +`<div class="col"><div class="lab">baseline</div>`
+    +`<div class="val">${num(b.mean)}</div><div class="ci">${ci(b)}</div></div>`
+    +`<div class="col rec"><div class="lab">recommended</div>`
+    +`<div class="val">${num(r.mean)}</div><div class="ci">${ci(r)}</div></div></div>`
+    +`<div class="dlt"><span class="k">${dlab}</span>`
+    +`<span class="v">${fmtd(dm)}${dci}${pv}</span></div></div>`;
+}
+async function loadEpisodes(){
+  if(!LIVE){ $('feed').innerHTML=`<div class="dhint">${COPY.feed.staticReplay}</div>`; return; }
+  let eps=[];
+  try{ eps=((await (await fetch(BOOT.engine+'/twin/episodes')).json()).episodes)||[]; }
+  catch(_){ $('feed').innerHTML=`<div class="dhint">${COPY.feed.engineUnreachable}</div>`; return; }
+  eps=eps.filter(e=>e.question);
+  if(!eps.length){ $('epsel').innerHTML=''; $('replay').disabled=true;
+    $('feed').innerHTML=`<div class="dhint">${COPY.feed.noEpisodes}</div>`; return; }
+  eps.sort((a,b)=>(b.has_report?1:0)-(a.has_report?1:0));
+  $('epsel').innerHTML=eps.map(e=>`<option value="${e.episode_id}">${esc((e.question||e.episode_id).slice(0,54))}</option>`).join('');
+}
+function stageCard(st){ const d=st.detail||{}; const T=COPY.tag;
+  if(st.stage==='error')     return `<div class="scard err"><span class="sb">${T.err}</span>${esc(st.title||'Something went wrong')}${typeof d==='string'&&d?': '+esc(d):''}</div>`;
+  // inconclusive report: a calm, neutral outcome (no recommendation, no config to apply)
+  if(st.stage==='report'&&st.kind==='inconclusive')
+    return `<div class="scard inconclusive"><span class="sb">${T.answer}</span><b>${esc(st.title||COPY.feed.inconclusiveTitle)}</b>`
+      +`${typeof d==='string'&&d?`<div class="mech">${esc(d)}</div>`:''}</div>`;
+  if(st.kind==='starting')   return `<div class="scard dim"><span class="sb">${T.run}</span>starting the agent…</div>`;
+  if(st.kind==='question')   return `<div class="scard q"><span class="sb">${T.ask}</span>${esc(d)}</div>`;
+  if(st.kind==='orient')     return `<div class="scard dim"><span class="sb">${T.plan}</span>reading the facility</div>`;
+  if(st.kind==='propose')    return `<div class="scard"><span class="sb">${T.test}</span>proposed <b>${esc(d.label||'candidate')}</b>${d.diff?' · '+esc(d.diff):''}</div>`;
+  if(st.kind==='rollouts')   return `<div class="scard"><span class="sb">${T.test}</span>ran ${esc(d.n_seeds)} paired runs</div>`;
+  if(st.kind==='comparison'){ const sig=d.p_value!=null&&d.p_value<0.05; const ciw=fmtci(d.ci90); const pv=fmtP(d.p_value);
+    return `<div class="scard${sig?' sig':''}"><span class="sb">${T.result}</span>${esc(d.metric)} <b class="num">${fmtd(d.diff_mean)}</b>${ciw?` <span class="num ciw">${ciw}</span>`:''}${pv?` <span class="num">${pv}</span>`:''}</div>`; }
+  if(st.stage==='preliminary') return `<div class="scard prelim"><span class="sb">${T.signal}</span>early signal · ${esc(d.metric)} ${fmtd(d.diff_mean)}</div>`;
+  if(st.kind==='power')      return `<div class="scard dim"><span class="sb">${T.power}</span>power check · needs ${esc(d.n_pairs_required)} more paired runs</div>`;
+  if(st.kind==='render')     return `<div class="scard dim"><span class="sb">${T.test}</span>queued evidence render</div>`;
+  if(st.kind==='final'){ const cf=fmtConfidence(d.confidence);
+    return `<div class="scard report"><span class="sb">${T.answer}</span><b>${esc(d.recommendation||' - ')}</b>${cf?' · confidence '+cf:''}${d.accepted?' <span class="ok">✓ accepted</span>':''}${d.mechanism?`<div class="mech">${esc(d.mechanism)}</div>`:''}</div>`+cmpBlock(d); }
+  return ''; }
+// capture the paired CRN comparison detail so the before/after panel can cite its Δ
+function trackCmp(st){ if(st&&st.kind==='comparison'&&st.detail&&typeof st.detail==='object')
+  lastCmp={metric:st.detail.metric,diff_mean:st.detail.diff_mean,p_value:st.detail.p_value,ci90:st.detail.ci90}; }
+// a terminal SSE event has arrived (clean end): 'done', or a 'report'/'error' stage.
+// EventSource also fires onerror once the server closes a finished stream - track this so
+// that spurious onerror after a clean end is suppressed (only an ABNORMAL end shows a message).
+function isTerminal(st){ return st.stage==='done' || st.stage==='error'
+  || (st.stage==='report' && (st.kind==='final' || st.kind==='inconclusive')); }
+function startReplay(){ if(!LIVE) return; const eid=$('epsel').value; if(!eid) return;
+  if(es){es.close();es=null;} lastCmp=null; let cleanDone=false; $('feed').innerHTML=''; $('replay').disabled=true; $('replay').textContent='STREAMING…';
+  es=new EventSource(BOOT.engine+'/twin/ask?replay='+encodeURIComponent(eid)+'&delay=0.5');
+  const restore=()=>{ $('replay').disabled=false; $('replay').textContent='▶ Replay'; };
+  es.onmessage=ev=>{ let st; try{st=JSON.parse(ev.data);}catch(_){return;}
+    if(isTerminal(st)) cleanDone=true;
+    if(st.stage==='done'){ es.close(); es=null; restore(); return; }
+    trackCmp(st); const h=stageCard(st); if(h){ $('feed').insertAdjacentHTML('beforeend',h); $('feed').scrollTop=$('feed').scrollHeight; }
+    if(st.kind==='final'&&st.detail&&st.detail.config_patch){ applyAgentRecommendation(st.detail.config_patch); } };
+  es.onerror=()=>{ if(es){es.close();es=null;} restore();
+    if(!cleanDone){ $('feed').insertAdjacentHTML('beforeend',`<div class="scard err">${esc(COPY.feed.streamEnded)}</div>`); } }; }
+function startAsk(){ if(!LIVE) return; const q=$('askq').value.trim();
+  if(!q){ $('feed').insertAdjacentHTML('beforeend',`<div class="scard dim">${esc(ERROR_COPY.missing_question)}</div>`); return; }
+  if(es){es.close();es=null;} lastCmp=null; let cleanDone=false; $('feed').innerHTML=''; $('ask').disabled=true; $('ask').textContent='Running'; $('replay').disabled=true;
+  es=new EventSource(BOOT.engine+'/twin/ask?scenario='+encodeURIComponent(BOOT.scenario)+'&q='+encodeURIComponent(q));
+  const restore=()=>{ $('ask').disabled=false; $('ask').textContent='Ask'; $('replay').disabled=false; };
+  es.onmessage=ev=>{ let st; try{st=JSON.parse(ev.data);}catch(_){return;}
+    if(isTerminal(st)) cleanDone=true;
+    if(st.stage==='done'){ es.close();es=null; restore(); return; }
+    trackCmp(st); const h=stageCard(st); if(h){ $('feed').insertAdjacentHTML('beforeend',h); $('feed').scrollTop=$('feed').scrollHeight; }
+    if(st.kind==='final'&&st.detail&&st.detail.config_patch){ applyAgentRecommendation(st.detail.config_patch); } };
+  es.onerror=()=>{ if(es){es.close();es=null;} restore();
+    if(!cleanDone){ $('feed').insertAdjacentHTML('beforeend',`<div class="scard err">${esc(COPY.feed.streamEnded)}</div>`); } }; }
+
+// ── pre-flight wizard ──────────────────────────────────────────────────────
+const STEPS=['Facility','Question','Configure','Run'];
+let wstep=1; const wiz={ scenario:null, fleet:null, demand:null };
+
+function renderRail(){
+  let h='';
+  for(let i=0;i<STEPS.length;i++){ const n=i+1;
+    const s=n<wstep?'done':(n===wstep?'current':'upcoming');
+    h+=`<div class="st" data-s="${s}"><div class="n">${n<wstep?'✓':n}</div><div class="tl">${STEPS[i]}</div></div>`;
+    if(i<STEPS.length-1) h+=`<div class="seg${n<wstep?' fill':''}"></div>`; }
+  $('rail').innerHTML=h;
+  $('wprog').style.width=(wstep/STEPS.length*100)+'%';
+  $('wcount').textContent=`Step ${wstep} of ${STEPS.length}`;
+}
+function showStep(n){ wstep=n;
+  document.querySelectorAll('.wstep').forEach(s=>s.classList.toggle('on',+s.dataset.step===n));
+  $('wback').classList.toggle('ghost',n===1);
+  $('wnext').innerHTML = n===STEPS.length ? 'Run simulation ▶' : 'Next';
+  $('wnext').classList.toggle('primary',true);
+  $('werr').textContent='';
+  renderRail();
+  if(n===2) paintQuestion();
+  if(n===3) paintConfig();     // re-render the guided station setup on entry / when navigating back
+  if(n===4) paintSummary();
+}
+function fact(k,v){ return `<div class="fact"><div class="k">${k}</div><div class="v">${v}</div></div>`; }
+function paintFacts(){
+  if(!META){ $('wfacts').innerHTML=''; return; }
+  const cross=(META.cross_aisles||[]).length;
+  $('wfacts').innerHTML =
+    fact('Aisles', `<b>${META.aisles}</b>`) +
+    fact('Cross-aisles', `<b>${cross}</b>`) +
+    fact('Aisle length', `${META.aisle_length_m} m`) +
+    fact('Baseline fleet', `<b>${META.fleet}</b> AMRs`);
+}
+function paintQuestion(){ const qf=questionFor(wiz.scenario); $('wq').innerHTML=qf.q; $('wwhy').innerHTML=qf.why; }
+// ── shared floor-plan state (step 3) ─────────────────────────────────────────
+// The current node for a station is edits[id] (a live-relocation) if set, else its baseline
+// META node. Selecting a station "arms" the map; the next map click snaps to a grid node and
+// writes edits[id]=node - the SAME map the 3D drag and launch/resim read (no engine change).
+let mapSel=null;   // {id, kind} of the station being placed, or null
+function stationNodeNow(s){ return (edits[s.id]!==undefined) ? edits[s.id] : (s.node&&s.node!=='-'?s.node:null); }
+function selectStation(id,kind){ mapSel={id,kind}; paintStations(); paintMap(); updateMapTip(); }
+function clearMapSel(){ mapSel=null; paintStations(); paintMap(); updateMapTip(); }
+
+// guided station walk-through: one card per station TYPE present, in order pick→pack→charge→dock,
+// each with a scene-matched swatch, its purpose (from the domain model), and where/how many.
+// Each chip is a selectable target for the floor-plan click-to-place (LIVE only).
+function paintStations(){ const el=$('wstations'); if(!el) return;
+  const S=(META&&META.stations)||null;
+  if(!S){ el.innerHTML=`<div class="stnote">${esc('Facility details are unavailable. You can still set the operating point below.')}</div>`; return; }
+  let html='';
+  for(const k of KINDS){ const list=Array.isArray(S[k])?S[k]:[]; if(!list.length) continue;   // only types present
+    const d=COPY.domain.stations[k]; const hex=stationHexOf(k);
+    const chips=list.map(s=>{ const node=stationNodeNow(s); const hasNode=!!node;
+      const sel=mapSel&&mapSel.id===s.id;
+      return `<span class="chip${sel?' selchip':''}"${LIVE?` role="button" tabindex="0" data-stid="${esc(s.id)}" data-stkind="${esc(k)}"`:''}>`
+        +`${esc(s.id)}${hasNode?`<b> @ ${esc(node)}</b>`:''}`   // node only when known (static exports omit it)
+        +(s.slots!=null?` · ${esc(s.slots)} slot${s.slots===1?'':'s'}`:'')+`</span>`; }).join('');
+    html+=`<div class="stcard"><div class="sh">`
+      +`<span class="sw" style="color:${hex};background:${hex}"></span>`
+      +`<span class="nm">${esc(d.name)}</span>`
+      +`<span class="ct">${esc(COPY.setup.countLabel(list.length))}</span></div>`
+      +`<div class="pp">${esc(d.purpose)}</div>`
+      +`<div class="where">${chips}</div></div>`;
+  }
+  el.innerHTML=html||`<div class="stnote">${esc(COPY.setup.none)}</div>`;
+  if(LIVE) for(const c of el.querySelectorAll('.chip[data-stid]')){
+    const pick=()=>selectStation(c.dataset.stid,c.dataset.stkind);
+    c.addEventListener('click',pick);
+    c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } }); }
+}
+
+// ── 2D floor-plan mini-map: aisles as columns, station positions as dots ──
+// Node id "A<aisle>_<pos>" : aisle 1..N (N=META.aisles), pos 0..META.aisle_length_m (integer).
+// Layout maps aisle index -> x column, pos -> y (0 at bottom). Clicking snaps to nearest column
+// + integer pos, so the produced node id is always on-grid.
+const MAP_PAD={l:26,r:12,t:12,b:20};
+function mapGeom(){ const cv=$('wmap'); if(!cv||!META) return null;
+  const N=Math.max(1,META.aisles|0), L=Math.max(1,Math.round(META.aisle_length_m||30));
+  const cssW=cv.clientWidth||420; const dpr=Math.min(devicePixelRatio||1,2);
+  // keep the plan within the (scrolling) wcard: cap height, honor a readable aspect
+  const cssH=Math.max(150,Math.min(300, Math.round(cssW*0.52)));
+  const iw=cssW-MAP_PAD.l-MAP_PAD.r, ih=cssH-MAP_PAD.t-MAP_PAD.b;
+  const colX=i=>MAP_PAD.l + (N===1? iw/2 : iw*i/(N-1));           // aisle index 0..N-1 -> x
+  const posY=p=>MAP_PAD.t + ih*(1 - p/L);                          // pos 0..L -> y (0 at bottom)
+  return {cv,dpr,cssW,cssH,N,L,iw,ih,colX,posY};
+}
+function paintMap(){ const g=mapGeom(); if(!g){ return; } const {cv,dpr,cssW,cssH,N,L,colX,posY}=g;
+  cv.width=Math.round(cssW*dpr); cv.height=Math.round(cssH*dpr);
+  cv.style.height=cssH+'px';
+  const x=cv.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0); x.clearRect(0,0,cssW,cssH);
+  cv.classList.toggle('armed',!!mapSel);
+  // aisle columns (context, dim)
+  x.strokeStyle='rgba(90,101,113,.35)'; x.lineWidth=1;
+  for(let i=0;i<N;i++){ const cx=colX(i); x.beginPath(); x.moveTo(cx,MAP_PAD.t); x.lineTo(cx,MAP_PAD.t+g.ih); x.stroke();
+    x.fillStyle='rgba(118,130,143,.7)'; x.font='9px "IBM Plex Mono",monospace'; x.textAlign='center';
+    x.fillText('A'+(i+1), cx, cssH-7); }
+  // faint end rails so the extent reads as a floor
+  x.strokeStyle='rgba(90,101,113,.22)';
+  x.beginPath(); x.moveTo(colX(0),MAP_PAD.t); x.lineTo(colX(N-1),MAP_PAD.t); x.stroke();
+  x.beginPath(); x.moveTo(colX(0),MAP_PAD.t+g.ih); x.lineTo(colX(N-1),MAP_PAD.t+g.ih); x.stroke();
+  // station dots, colored by kind; the armed station gets a ring
+  const S=(META&&META.stations)||{};
+  for(const k of KINDS){ const list=Array.isArray(S[k])?S[k]:[];
+    for(const s of list){ const node=stationNodeNow(s); const np=parseNode(node); if(!np) continue;
+      const cx=colX(np.aisle-1), cy=posY(Math.max(0,Math.min(L,np.pos)));
+      const armed=mapSel&&mapSel.id===s.id;
+      x.fillStyle=stationHexOf(k); x.beginPath(); x.arc(cx,cy,armed?5.5:4,0,Math.PI*2); x.fill();
+      if(armed){ x.strokeStyle=stationHexOf(k); x.globalAlpha=.6; x.lineWidth=2;
+        x.beginPath(); x.arc(cx,cy,9,0,Math.PI*2); x.stroke(); x.globalAlpha=1; }
+      // label the moved/selected one
+      if(armed || edits[s.id]!==undefined){ x.fillStyle='rgba(214,222,230,.9)'; x.font='9px "IBM Plex Mono",monospace';
+        x.textAlign='left'; x.fillText(s.id, cx+8, cy+3); }
+    } }
+}
+function parseNode(name){ const m=/^A(\d+)_(\d+)$/.exec(String(name||'')); return m?{aisle:+m[1],pos:+m[2]}:null; }
+// snap a click (css px) to the nearest aisle column + integer position -> node id
+function snapClickToNode(px,py){ const g=mapGeom(); if(!g) return null; const {N,L,colX,posY}=g;
+  let bi=0,bd=Infinity; for(let i=0;i<N;i++){ const d=Math.abs(colX(i)-px); if(d<bd){bd=d;bi=i;} }
+  // invert posY: py = t + ih*(1 - pos/L)  => pos = L*(1 - (py-t)/ih)
+  let pos=Math.round(L*(1-(py-MAP_PAD.t)/g.ih)); pos=Math.max(0,Math.min(L,pos));
+  return 'A'+(bi+1)+'_'+String(pos).padStart(2,'0');
+}
+function updateMapTip(){ const el=$('wmaptip'); if(!el) return;
+  if(!LIVE){ el.innerHTML=esc(COPY.setup.mapStatic); return; }
+  el.innerHTML = mapSel ? COPY.setup.mapArmed(esc(mapSel.id)) : esc(COPY.setup.mapIdle);
+}
+function resetPlacements(){ let any=false;
+  // only clear station-node placements made here (all edits in pre-flight are placements)
+  for(const kk of Object.keys(edits)){ delete edits[kk]; any=true; }
+  mapSel=null; paintStations(); paintMap(); updateMapTip();
+  const rb=$('wmapreset'); if(rb) rb.disabled=!Object.keys(edits).length;
+}
+function wireMap(){ const cv=$('wmap'); if(!cv) return;
+  if(cv._wired) { paintMap(); updateMapTip(); return; } cv._wired=true;
+  cv.addEventListener('click',ev=>{ if(!LIVE||!mapSel) return;
+    const r=cv.getBoundingClientRect(); const node=snapClickToNode(ev.clientX-r.left, ev.clientY-r.top);
+    if(!node) return; edits[mapSel.id]=node;                      // write into the shared edits map
+    const tip=$('wmaptip'); if(tip) tip.innerHTML=COPY.setup.mapPlaced(esc(mapSel.id),esc(node));
+    mapSel=null; paintStations(); paintMap();
+    const rb=$('wmapreset'); if(rb) rb.disabled=!Object.keys(edits).length; });
+  $('wmapreset').addEventListener('click',resetPlacements);
+}
+function paintConfig(){
+  if(wiz.fleet==null && META){ wiz.fleet=META.fleet; wiz.demand=META.demand; }
+  $('wsetuplede').textContent=COPY.setup.lede;
+  paintStations();
+  // floor-plan click-to-place: interactive in LIVE; hidden for static snapshots (no resim path)
+  const mw=$('wmapwrap'); if(mw) mw.style.display=LIVE?'':'none';
+  if(LIVE){ wireMap(); paintMap(); updateMapTip();
+    const rb=$('wmapreset'); if(rb) rb.disabled=!Object.keys(edits).length; }
+  $('wdragnote').innerHTML=LIVE?COPY.setup.dragNote:COPY.setup.staticNote;
+  $('wfleetwhy').textContent=COPY.setup.fleetWhy;
+  $('wdemwhy').textContent=COPY.setup.demandWhy;
+  $('wfval').textContent=wiz.fleet!=null?wiz.fleet:' - ';
+  $('wdem').value=wiz.demand!=null?wiz.demand:1; $('wdemv').textContent=(+($('wdem').value)).toFixed(1);
+  $('wfup').disabled=!LIVE||wiz.fleet>=12; $('wfdn').disabled=!LIVE||wiz.fleet<=1;
+  $('wdem').disabled=!LIVE;
+  $('wcfghint').textContent = LIVE ? COPY.setup.liveHint : COPY.setup.staticNote;
+}
+function paintSummary(){ const qf=questionFor(wiz.scenario);
+  $('wsummary').innerHTML =
+    `<div class="sr"><span class="k">Facility</span><span class="v"><b>${esc(facilityTitle(wiz.scenario))}</b></span></div>`+
+    `<div class="sr"><span class="k">Question</span><span class="v" style="max-width:62%;text-align:right;font-family:var(--sans)">${esc(qf.q)}</span></div>`+
+    `<div class="sr"><span class="k">Fleet</span><span class="v"><b>${fmtNum(wiz.fleet)}</b> AMRs</span></div>`+
+    `<div class="sr"><span class="k">Demand</span><span class="v"><b>${fmtNum(wiz.demand,1)}</b> orders/min</span></div>`;
+}
+// ── About modal: populate from COPY.domain / COPY.about, with scene-matched swatches ──
+let aboutBuilt=false;
+function renderAbout(){ if(aboutBuilt) return; aboutBuilt=true; const A=COPY.about, D=COPY.domain;
+  $('abouth1').textContent=A.title;
+  $('aboutintro').innerHTML=A.intro;
+  $('aboutAmrH').textContent=A.amrHeading;
+  $('aboutAmr').innerHTML=`<span class="em">${esc(D.amr.name)}.</span> ${esc(D.amr.desc)}`;
+  $('aboutStH').textContent=A.stationsHeading;
+  $('aboutStations').innerHTML=KINDS.map(k=>{ const s=D.stations[k];
+    return `<div class="arow"><span class="sw" style="color:${stationHexOf(k)};background:${stationHexOf(k)}"></span>`
+      +`<span><span class="nm">${esc(s.name)}</span><span class="ds">${esc(s.purpose)}</span></span></div>`; }).join('');
+  $('aboutFlowH').textContent=A.flowHeading;
+  $('aboutFlow').innerHTML=A.flow.map(li=>`<li>${li}</li>`).join('');   // flow strings carry safe inline <b>
+  $('aboutDoH').textContent=A.doHeading;
+  $('aboutDo').innerHTML=A.can.map(li=>`<li>${esc(li)}</li>`).join('')
+    +`<li style="color:var(--dim2)">${esc(A.metrics)}</li>`;
+}
+function openAbout(){ renderAbout(); document.body.classList.add('about-on'); }
+function closeAbout(){ document.body.classList.remove('about-on'); }
+
+async function loadMeta(sid){
+  if(!LIVE){ // derive from the inlined scene (static export has no engine to query)
+    const st={pick:[],pack:[],charge:[],dock:[]};
+    for(const s of (SCENE.stations||[])){ if(st[s.kind]) st[s.kind].push({id:s.id, node:s.node||'-', slots:s.slots}); }
+    META={ scenario:SCENE.scenario, fleet:SCENE.meta.amr_count, demand:SCENE.meta.demand,
+           aisles:SCENE.meta.aisles, cross_aisles:SCENE.cross_y||[], aisle_length_m:SCENE.meta.aisle_length_m||SCENE.length,
+           stations:st };
+  } else {
+    try{ META=await (await fetch(BOOT.engine+'/twin/meta?scenario='+encodeURIComponent(sid))).json(); }
+    catch(_){ META=null; }
+  }
+  wiz.scenario=sid; wiz.fleet=(META&&META.fleet)??null; wiz.demand=(META&&META.demand)??null;
+  paintFacts(); paintConfig();
+}
+async function initWizard(){
+  // populate facility options
+  let opts=[];
+  if(LIVE){
+    try{ const h=await (await fetch(BOOT.engine+'/health')).json(); opts=h.scenarios||[]; }catch(_){ opts=[BOOT.scenario]; }
+    if(!opts.length) opts=[BOOT.scenario];
+  } else { opts=[SCENE.scenario]; }
+  const cur = LIVE ? (opts.includes(BOOT.scenario)?BOOT.scenario:opts[0]) : SCENE.scenario;
+  $('wscenario').innerHTML=opts.map(s=>`<option value="${esc(s)}"${s===cur?' selected':''}>${esc(facilityTitle(s))}</option>`).join('');
+  $('wscenario').disabled=!LIVE||opts.length<2;
+  await loadMeta(cur);
+  $('wscenario').addEventListener('change',async e=>{ wiz.fleet=null; await loadMeta(e.target.value); });
+  $('wfup').addEventListener('click',()=>{ if(wiz.fleet<12){wiz.fleet++; paintConfig();} });
+  $('wfdn').addEventListener('click',()=>{ if(wiz.fleet>1){wiz.fleet--; paintConfig();} });
+  $('wdem').addEventListener('input',()=>{ wiz.demand=+$('wdem').value; $('wdemv').textContent=wiz.demand.toFixed(1); });
+  $('wback').addEventListener('click',()=>{ if(wstep>1) showStep(wstep-1); });
+  $('wnext').addEventListener('click',()=>{ wstep<STEPS.length ? showStep(wstep+1) : launch(); });
+  showStep(1);
+}
+
+async function launch(){
+  if(launched) return;
+  $('wnext').disabled=true; $('wnext').innerHTML='<span class="spin"></span>Simulating…';
+  $('werr').textContent='';
+  if(LIVE){
+    BOOT.scenario=wiz.scenario; cfg={ fleet:wiz.fleet, demand:wiz.demand };
+    let s; try{ s=await fetchScene(); }catch(_){ s={error:{code:'engine_unreachable'}}; }
+    if(!s || s.error){ $('wnext').disabled=false; $('wnext').innerHTML='Run simulation ▶';
+      console.warn('[laplace] launch failed:', s&&s.error);
+      $('werr').textContent=errorSentence(s&&s.error); return; }
+    SCENE=s;
+  }
+  launched=true;
+  setupWorld(); placeStations(); buildAgents(); buildLanes();
+  if(loop.resize) loop.resize();                  // size the freshly-created renderer
+  setupFX();                                      // fire-and-forget: composer swaps in when ready
+  $('sub').textContent='FACILITY · '+facilityTitle(SCENE.scenario);   // human title; raw scenario_id stays the engine value
+  $('sub').style.opacity='';                                          // reveal only once loaded
+  setupControls(); loadEpisodes();
+  document.body.classList.remove('preflight');
+  setStatus(null,COPY.status.online); renderEdits();
+  // one-time coach tip, only when there are stations to drag and the user hasn't dismissed it
+  let coachSeen=false; try{ coachSeen=localStorage.getItem('laplace_coach_seen')==='1'; }catch(_){}
+  if(!coachSeen && stationMeshes.length){ document.body.classList.add('coach-on');
+    setTimeout(()=>document.body.classList.remove('coach-on'), 9000); }   // auto-dismiss after a bit
+  loop.last=performance.now(); applyFrame(0); requestAnimationFrame(loop);
+}
+
+async function init(){
+  // wire the always-present running-UI controls (inert until launch)
+  // drawer open/close also toggles body.decide-open so the right column slides clear of it
+  const setDrawer=open=>{ $('decide').classList.toggle('open',open);
+    document.body.classList.toggle('decide-open',open); };
+  $('decbtn').addEventListener('click',()=>setDrawer(!$('decide').classList.contains('open')));
+  $('decclose').addEventListener('click',()=>setDrawer(false));
+  // small-screen bottom-sheet toggle for the readout columns
+  $('sheettab').addEventListener('click',()=>document.body.classList.toggle('sheet-open'));
+  // Landing screen (terminal boot): shown first; "begin" (or Enter) reveals the pre-flight wizard.
+  $('tfac').textContent=(BOOT.scenario||'-').toUpperCase();
+  const enterApp=()=>{ if(!document.body.classList.contains('landing')) return;
+    document.body.classList.remove('landing'); };   // fades landing out, wizard (already built) in
+  $('lenter').addEventListener('click',enterApp);
+  $('laboutlink').addEventListener('click',openAbout);
+  // About / help modal: open from the top bar; dismiss via ×, Esc, or click-outside
+  $('aboutbtn').addEventListener('click',openAbout);
+  $('aboutclose').addEventListener('click',closeAbout);
+  $('about').addEventListener('click',e=>{ if(e.target===$('about')) closeAbout(); });   // click the backdrop
+  // one-time dismissible coach tip
+  $('coachx').addEventListener('click',()=>{ document.body.classList.remove('coach-on');
+    try{ localStorage.setItem('laplace_coach_seen','1'); }catch(_){} });
+  $('replay').addEventListener('click',startReplay);
+  $('ask').addEventListener('click',startAsk);
+  $('askq').addEventListener('keydown',e=>{ if(e.key==='Enter') startAsk(); });
+  $('feedintro').innerHTML = LIVE ? COPY.feed.intro : COPY.feed.staticReplay;   // CRN explainer, plain language
+  if(!LIVE){ $('askq').disabled=true; $('ask').disabled=true;
+    $('askq').placeholder='Open the live viewer to ask your own questions'; }
+  $('hold').addEventListener('click',()=>setRunning(!running));
+  $('presentbtn').addEventListener('click',()=>togglePresent());
+  // '● Live' = the real physics feed. Three button states reflect real availability:
+  // hollow+disabled when no feed is set up OR set up but unreachable; hollow+enabled when
+  // reachable (click to stream). Prefer physx_reachable to enable; distinguish "not set up"
+  // from "set up but tunnel down" via physx_configured for an honest tooltip.
+  setLiveButton('idle'); $('livebtn').disabled=true; $('livebtn').style.opacity='0.5';
+  $('livebtn').title=COPY.live.titleIdle;
+  if(LIVE){ fetch(location.origin+'/health').then(r=>r.json()).then(h=>{
+    if(h && h.physx_reachable){ $('livebtn').disabled=false; $('livebtn').style.opacity='';
+      $('livebtn').title=COPY.live.titleConfigured; $('livebtn').addEventListener('click',connectLive); }
+    else if(h && h.physx_configured){ $('livebtn').title=COPY.live.titleUnreachable; }   // set up but unreachable
+    else { $('livebtn').title=COPY.live.titleIdle; }                                      // no live feed configured
+  }).catch(()=>{}); }
+  // keydown shortcuts must not fire while the user is typing a question in an input/textarea
+  const typing=e=>{ const t=e.target; if(!t) return false;
+    const tag=(t.tagName||'').toUpperCase(); return tag==='INPUT'||tag==='TEXTAREA'||t.isContentEditable; };
+  addEventListener('keydown',e=>{
+    // Esc closes the About modal first, wherever focus is (even in an input)
+    if(e.key==='Escape' && document.body.classList.contains('about-on')){ closeAbout(); return; }
+    // On the landing screen, Enter begins (reveals the wizard); Esc/other shortcuts are inert there.
+    if(document.body.classList.contains('landing')){
+      if(e.key==='Enter' && !document.body.classList.contains('about-on')){ e.preventDefault(); enterApp(); }
+      return; }
+    // in the pre-flight wizard, Esc cancels an armed floor-plan placement
+    if(e.key==='Escape' && document.body.classList.contains('preflight') && mapSel){ clearMapSel(); return; }
+    if(typing(e)) return;
+    if(e.key==='p'||e.key==='P') togglePresent(); else if(e.key==='Escape') togglePresent(false); });
+  addEventListener('keydown',e=>{ if(typing(e)||!launched||running)return;
+    if(e.key==='ArrowRight'){frame=Math.min(SCENE.meta.n_frames-1,frame+1);applyFrame(frame);}
+    if(e.key==='ArrowLeft'){frame=Math.max(0,frame-1);applyFrame(frame);} });
+  const resize=()=>{const w=innerWidth||document.body.clientWidth,h=innerHeight||document.body.clientHeight;
+    if(!w||!h||!renderer)return; renderer.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix(); if(composer)composer.setSize(w,h);};
+  addEventListener('resize',()=>{ resize(); scheduleDither(); }); new ResizeObserver(resize).observe(document.body);
+  loop.resize=resize;
+  drawDither();   // paint the backdrop once up front (redrawn debounced on resize)
+
+  // in LIVE mode SCENE may be null (fetched at launch); standalone has it inlined
+  if(!LIVE && (SCENE===null||SCENE===undefined)){ $('werr').textContent='This snapshot has no scene data. Try re-exporting it.'; return; }
+  if(SCENE && SCENE.error){ console.warn('[laplace] boot error:', SCENE.error); $('werr').textContent=errorSentence(SCENE.error); return; }
+  await initWizard();
+}
+init();
+</script>
+</body>
+</html>

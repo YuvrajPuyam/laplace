@@ -1,0 +1,98 @@
+{
+  "scenario": "braess_dev",
+  "demand": 7.0,
+  "seeds": 12,
+  "curve": [
+    {
+      "fleet": 1,
+      "throughput": 0.0,
+      "throughput_sd": 0.0,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 100.0
+    },
+    {
+      "fleet": 2,
+      "throughput": 0.0,
+      "throughput_sd": 0.0,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 100.0
+    },
+    {
+      "fleet": 3,
+      "throughput": 6.81,
+      "throughput_sd": 2.61,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 98.4
+    },
+    {
+      "fleet": 4,
+      "throughput": 24.22,
+      "throughput_sd": 2.57,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 94.3
+    },
+    {
+      "fleet": 5,
+      "throughput": 40.37,
+      "throughput_sd": 2.55,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 90.4
+    },
+    {
+      "fleet": 6,
+      "throughput": 55.93,
+      "throughput_sd": 2.8,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 86.7
+    },
+    {
+      "fleet": 7,
+      "throughput": 69.13,
+      "throughput_sd": 2.9,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 83.6
+    },
+    {
+      "fleet": 8,
+      "throughput": 80.94,
+      "throughput_sd": 2.81,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 80.8
+    },
+    {
+      "fleet": 9,
+      "throughput": 89.96,
+      "throughput_sd": 2.82,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 78.7
+    },
+    {
+      "fleet": 10,
+      "throughput": 96.5,
+      "throughput_sd": 2.47,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 77.1
+    },
+    {
+      "fleet": 11,
+      "throughput": 100.56,
+      "throughput_sd": 2.52,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 76.1
+    },
+    {
+      "fleet": 12,
+      "throughput": 103.06,
+      "throughput_sd": 2.58,
+      "utilization_pct": 100.0,
+      "abandonment_pct": 75.5
+    }
+  ],
+  "diagnosis": {
+    "peak_fleet": 12,
+    "peak_throughput": 103.06,
+    "declines_after_peak": false,
+    "drop_pct_to_last": 0.0,
+    "signature": "monotone rising through the fleet cap (peak at the max swept fleet=12); the decline is past Laplace's fleet cap of 12 (Contract A) \u2014 matches RHCR's rising body, collapse not reached within the cap"
+  }
+}

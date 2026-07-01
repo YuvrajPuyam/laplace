@@ -1,0 +1,43 @@
+{
+  "facility_id": "real_full_warehouse",
+  "name": "Real warehouse extracted from /Isaac/Environments/Simple_Warehouse/full_warehouse.usd",
+  "layout_source": "Scan-to-sim extraction from USD '/Isaac/Environments/Simple_Warehouse/full_warehouse.usd'. 7 rack rows -> 6 aisles (midpoints), aisle length 15.9982 m, real aisle pitch 5.0124 m. aisles = rack rows - 1 at row midpoints; length clamped to the dense rack block (sparse staging racks trimmed); pick faces on real rack rows; cross-aisles at block ends + inter-block gaps; clamped to Contract A caps (<= 10 aisles, <= 60 m).",
+  "demand_source": "NOT from the USD: a warehouse mesh carries no order stream. Fleet and arrival rate are stated operational parameters; calibrate arrival_rate_per_min from real orders (facility/demand.py) before quoting absolute throughput.",
+  "notes": "Geometry extracted from a real USD; sim runs the extracted topology. Station counts (pick=6, pack=2, charge=2) and fleet are operational assumptions, not in the mesh.",
+  "footprint_m": {
+    "width": 25.06,
+    "length": 15.9982
+  },
+  "cross_aisles": [
+    0,
+    16
+  ],
+  "n_pick_faces": 6,
+  "fleet_amr_count": 6,
+  "arrival_rate_per_min": 1.0,
+  "coordinate_map": {
+    "frame": {
+      "up_axis": "Z",
+      "units": "metres",
+      "source_meters_per_unit": 1.0,
+      "floor_z": -0.0
+    },
+    "pitch_axis": "x",
+    "length_axis": "y",
+    "aisle_world": [
+      -22.9803,
+      -17.8912,
+      -12.9381,
+      -7.98,
+      -3.025,
+      2.0819
+    ],
+    "length_origin_m": 8.8114,
+    "length_scale": 0.999889,
+    "real_pitch_m": 5.0124,
+    "real_length_m": 15.9982,
+    "sim_pitch_m": 5.0124,
+    "source_usd": "/Isaac/Environments/Simple_Warehouse/full_warehouse.usd",
+    "note": "Sim AND render run at the real pitch: the config sets layout.grid.aisle_spacing_m = real_pitch_m, so cross-aisle travel time, battery, routing and congestion are all geometrically faithful (no longer a render-only value)."
+  }
+}

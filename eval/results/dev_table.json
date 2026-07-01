@@ -1,0 +1,246 @@
+{
+  "scenarios": [
+    "braess_dev",
+    "dc_pickzone_med",
+    "mfc_compact",
+    "real_full_warehouse"
+  ],
+  "budget": 60,
+  "seeds": 24,
+  "table": {
+    "grid_search": {
+      "decision_accuracy": 1.0,
+      "mean_regret": 0.0,
+      "total_rollouts": 228,
+      "ci_coverage": null,
+      "ece_gap": null,
+      "n": 4
+    },
+    "ocba": {
+      "decision_accuracy": 1.0,
+      "mean_regret": 0.0,
+      "total_rollouts": 228,
+      "ci_coverage": null,
+      "ece_gap": null,
+      "n": 4
+    },
+    "llm_alone": {
+      "decision_accuracy": 0.75,
+      "mean_regret": 0.25,
+      "total_rollouts": 0,
+      "ci_coverage": 0.75,
+      "ece_gap": 0.15,
+      "n": 4
+    },
+    "agent": {
+      "decision_accuracy": 1.0,
+      "mean_regret": 0.0,
+      "total_rollouts": 228,
+      "ci_coverage": 1.0,
+      "ece_gap": 0.1,
+      "n": 4
+    }
+  },
+  "graded": {
+    "grid_search": [
+      {
+        "arm": "grid_search",
+        "scenario_id": "braess_dev",
+        "picked": "mid_cross_aisle",
+        "gt_optimum": "mid_cross_aisle",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 124.2222,
+        "gt_metric": 124.2222,
+        "ci_covered": null,
+        "rollouts": 48
+      },
+      {
+        "arm": "grid_search",
+        "scenario_id": "dc_pickzone_med",
+        "picked": "amr_6",
+        "gt_optimum": "amr_6",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 6.8271,
+        "gt_metric": 6.8271,
+        "ci_covered": null,
+        "rollouts": 60
+      },
+      {
+        "arm": "grid_search",
+        "scenario_id": "mfc_compact",
+        "picked": "amr_4",
+        "gt_optimum": "amr_4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 6.5229,
+        "gt_metric": 6.5229,
+        "ci_covered": null,
+        "rollouts": 60
+      },
+      {
+        "arm": "grid_search",
+        "scenario_id": "real_full_warehouse",
+        "picked": "amr_6",
+        "gt_optimum": "amr_6",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 7.346,
+        "gt_metric": 7.346,
+        "ci_covered": null,
+        "rollouts": 60
+      }
+    ],
+    "ocba": [
+      {
+        "arm": "ocba",
+        "scenario_id": "braess_dev",
+        "picked": "mid_cross_aisle",
+        "gt_optimum": "mid_cross_aisle",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 124.2222,
+        "gt_metric": 124.2222,
+        "ci_covered": null,
+        "rollouts": 48
+      },
+      {
+        "arm": "ocba",
+        "scenario_id": "dc_pickzone_med",
+        "picked": "amr_6",
+        "gt_optimum": "amr_6",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 6.8271,
+        "gt_metric": 6.8271,
+        "ci_covered": null,
+        "rollouts": 60
+      },
+      {
+        "arm": "ocba",
+        "scenario_id": "mfc_compact",
+        "picked": "amr_4",
+        "gt_optimum": "amr_4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 6.5229,
+        "gt_metric": 6.5229,
+        "ci_covered": null,
+        "rollouts": 60
+      },
+      {
+        "arm": "ocba",
+        "scenario_id": "real_full_warehouse",
+        "picked": "amr_6",
+        "gt_optimum": "amr_6",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 7.346,
+        "gt_metric": 7.346,
+        "ci_covered": null,
+        "rollouts": 60
+      }
+    ],
+    "llm_alone": [
+      {
+        "arm": "llm_alone",
+        "scenario_id": "braess_dev",
+        "picked": "no_shortcut",
+        "gt_optimum": "mid_cross_aisle",
+        "correct": false,
+        "regret": 1.0,
+        "picked_metric": 120.1667,
+        "gt_metric": 124.2222,
+        "ci_covered": true,
+        "rollouts": 0
+      },
+      {
+        "arm": "llm_alone",
+        "scenario_id": "dc_pickzone_med",
+        "picked": "amr_6",
+        "gt_optimum": "amr_6",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 6.8271,
+        "gt_metric": 6.8271,
+        "ci_covered": true,
+        "rollouts": 0
+      },
+      {
+        "arm": "llm_alone",
+        "scenario_id": "mfc_compact",
+        "picked": "amr_4",
+        "gt_optimum": "amr_4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 6.5229,
+        "gt_metric": 6.5229,
+        "ci_covered": false,
+        "rollouts": 0
+      },
+      {
+        "arm": "llm_alone",
+        "scenario_id": "real_full_warehouse",
+        "picked": "amr_6",
+        "gt_optimum": "amr_6",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 7.346,
+        "gt_metric": 7.346,
+        "ci_covered": true,
+        "rollouts": 0
+      }
+    ],
+    "agent": [
+      {
+        "arm": "agent",
+        "scenario_id": "braess_dev",
+        "picked": "mid_cross_aisle",
+        "gt_optimum": "mid_cross_aisle",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 124.2222,
+        "gt_metric": 124.2222,
+        "ci_covered": true,
+        "rollouts": 48
+      },
+      {
+        "arm": "agent",
+        "scenario_id": "dc_pickzone_med",
+        "picked": "amr_6",
+        "gt_optimum": "amr_6",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 6.8271,
+        "gt_metric": 6.8271,
+        "ci_covered": true,
+        "rollouts": 60
+      },
+      {
+        "arm": "agent",
+        "scenario_id": "mfc_compact",
+        "picked": "amr_4",
+        "gt_optimum": "amr_4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 6.5229,
+        "gt_metric": 6.5229,
+        "ci_covered": true,
+        "rollouts": 60
+      },
+      {
+        "arm": "agent",
+        "scenario_id": "real_full_warehouse",
+        "picked": "amr_6",
+        "gt_optimum": "amr_6",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 7.346,
+        "gt_metric": 7.346,
+        "ci_covered": true,
+        "rollouts": 60
+      }
+    ]
+  }
+}

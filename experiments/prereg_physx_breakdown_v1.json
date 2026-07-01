@@ -1,0 +1,65 @@
+{
+  "preregistration_id": "physx_breakdown_v1",
+  "primary_metric": "normalized_regret",
+  "metric_orientation": "higher_is_worse",
+  "secondary_metrics": [
+    "decision_flip_rate",
+    "pearson_srcc",
+    "spearman",
+    "rel_effect_error"
+  ],
+  "rho_grid": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "rho_definition": "active_robots / reachable_floor_cells",
+  "decision_rule": {
+    "failure_threshold_tau": 0.05,
+    "crossing_rule": "first rho with ci_lo > tau, persisting for all larger rho",
+    "ci_bound_used": "lower",
+    "persistence_required": true
+  },
+  "effect_fidelity": {
+    "negligible_effect_band_delta": 0.02,
+    "delta_units": "fraction_of_baseline_throughput"
+  },
+  "decision_tie_margin": 0.01,
+  "bootstrap": {
+    "n_boot": 2000,
+    "ci_pct": [
+      5,
+      95
+    ],
+    "resample_unit_effect": "seed_index",
+    "resample_unit_sweep": "config_within_rho_bin",
+    "rng_seed": 12345
+  },
+  "srcc": {
+    "min_configs": 15,
+    "predictivity_threshold": 0.8
+  },
+  "generalization": {
+    "layout_families": [
+      "grid_aisle",
+      "fishbone",
+      "cross_dock"
+    ],
+    "train_families": [
+      "grid_aisle"
+    ],
+    "test_families": [
+      "fishbone",
+      "cross_dock"
+    ]
+  },
+  "seeds": {
+    "n_seeds_per_config": 64
+  },
+  "frozen_hash": "2a7ae8e9f231076513a5f52e742996288c504e8566c372ba0376b3208c038995"
+}

@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "real_warehouse_demo",
+  "layout": {
+    "grid": {
+      "aisles": 6,
+      "aisle_length_m": 16,
+      "cross_aisles": [
+        0,
+        16
+      ],
+      "aisle_spacing_m": 5.0124
+    },
+    "extra_edges": [],
+    "edge_overrides": []
+  },
+  "stations": {
+    "pick": [
+      {
+        "id": "P1",
+        "node": "A2_01",
+        "slots": 1,
+        "service_lognorm": [
+          0.3,
+          0.35
+        ]
+      },
+      {
+        "id": "P2",
+        "node": "A3_01",
+        "slots": 1,
+        "service_lognorm": [
+          0.3,
+          0.35
+        ]
+      },
+      {
+        "id": "P3",
+        "node": "A4_01",
+        "slots": 1,
+        "service_lognorm": [
+          0.3,
+          0.35
+        ]
+      },
+      {
+        "id": "P4",
+        "node": "A5_01",
+        "slots": 1,
+        "service_lognorm": [
+          0.3,
+          0.35
+        ]
+      },
+      {
+        "id": "P5",
+        "node": "A2_14",
+        "slots": 1,
+        "service_lognorm": [
+          0.3,
+          0.35
+        ]
+      },
+      {
+        "id": "P6",
+        "node": "A3_14",
+        "slots": 1,
+        "service_lognorm": [
+          0.3,
+          0.35
+        ]
+      }
+    ],
+    "pack": [
+      {
+        "id": "K1",
+        "node": "A1_00",
+        "slots": 2,
+        "service_lognorm": [
+          0.45,
+          0.4
+        ]
+      },
+      {
+        "id": "K2",
+        "node": "A1_03",
+        "slots": 2,
+        "service_lognorm": [
+          0.45,
+          0.4
+        ]
+      }
+    ],
+    "charge": [
+      {
+        "id": "C1",
+        "node": "A1_16",
+        "slots": 2
+      },
+      {
+        "id": "C2",
+        "node": "A1_13",
+        "slots": 2
+      }
+    ],
+    "dock": [
+      {
+        "id": "D1",
+        "node": "A6_16"
+      }
+    ]
+  },
+  "fleet": {
+    "amr_count": 6,
+    "speed_mps": 1.5,
+    "battery_capacity_m": 8000,
+    "charge_minutes": 15,
+    "routing": "shortest_path"
+  },
+  "demand": {
+    "arrival_rate_per_min": 1.0,
+    "pack_assignment": "shortest_queue"
+  },
+  "horizon": {
+    "sim_minutes": 480,
+    "warmup_minutes": 30
+  }
+}

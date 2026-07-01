@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "baseline_small",
+  "layout": {
+    "grid": { "aisles": 6, "aisle_length_m": 30, "cross_aisles": [0, 15, 30] },
+    "extra_edges": [],
+    "edge_overrides": []
+  },
+  "stations": {
+    "pick": [
+      { "id": "P1", "node": "A1_05", "slots": 1, "service_lognorm": [0.7, 0.4] },
+      { "id": "P2", "node": "A2_20", "slots": 1, "service_lognorm": [0.7, 0.4] },
+      { "id": "P3", "node": "A4_10", "slots": 1, "service_lognorm": [0.7, 0.4] }
+    ],
+    "pack": [
+      { "id": "K1", "node": "A6_28", "slots": 2, "service_lognorm": [1.0, 0.5] }
+    ],
+    "charge": [
+      { "id": "C1", "node": "A1_00", "slots": 2 }
+    ],
+    "dock": [
+      { "id": "D1", "node": "A6_30" }
+    ]
+  },
+  "fleet": {
+    "amr_count": 4,
+    "speed_mps": 1.5,
+    "battery_capacity_m": 4000,
+    "charge_minutes": 20,
+    "routing": "shortest_path"
+  },
+  "demand": {
+    "arrival_rate_per_min": 3.0,
+    "pack_assignment": "round_robin"
+  },
+  "horizon": {
+    "sim_minutes": 480,
+    "warmup_minutes": 30
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "layout.extra_edges": [
+    { "from": "A3_15", "to": "A4_15", "bidirectional": true }
+  ],
+  "layout.edge_overrides": [
+    { "edge": "A3_15->A4_15", "capacity": 1, "max_speed_mps": 0.2 }
+  ]
+}

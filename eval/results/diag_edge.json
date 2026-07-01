@@ -1,0 +1,24 @@
+{
+  "diagnosis": "diag_edge",
+  "correct_cause": "edge_capacity",
+  "results": {
+    "llm_alone": {
+      "arm": "llm_alone",
+      "diagnosis_id": "diag_edge",
+      "picked": "edge_capacity",
+      "correct_cause": "edge_capacity",
+      "correct": true,
+      "rollouts": 0,
+      "notes": "no sim; confidence=0.9"
+    },
+    "agent": {
+      "arm": "agent",
+      "diagnosis_id": "diag_edge",
+      "picked": "edge_capacity",
+      "correct_cause": "edge_capacity",
+      "correct": true,
+      "rollouts": 60,
+      "notes": "12 turns, $1.01"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+# python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+logs/
+.venv/
+
+# generated / large artifacts (kept on disk, not version-controlled)
+renderer/out/
+ui/out/
+runs/
+data/
+eval/gt_cache/
+node_modules/
+*.sif
+*.usd
+*.usdc
+*.usda
+*.npz
+*.log
+.DS_Store
+.laplace_live.state          # live bring-up runtime state (scripts/live/up.sh)
+
+# nested separate project (has its own .git)
+portfolio-review/

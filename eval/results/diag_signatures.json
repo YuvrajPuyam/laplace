@@ -1,0 +1,30 @@
+{
+  "healthy": {
+    "throughput": 70.4,
+    "p95_latency": 230.2,
+    "worst_station_wait_p95": 28.7,
+    "worst_edge_occupancy_pct": 1.1,
+    "abandonment_pct": 53.4
+  },
+  "edge_cap_down": {
+    "throughput": 69.4,
+    "p95_latency": 233.7,
+    "worst_station_wait_p95": 26.8,
+    "worst_edge_occupancy_pct": 7.9,
+    "abandonment_pct": 54.0
+  },
+  "service_variance_up": {
+    "throughput": 40.1,
+    "p95_latency": 311.1,
+    "worst_station_wait_p95": 46.4,
+    "worst_edge_occupancy_pct": 0.7,
+    "abandonment_pct": 73.4
+  },
+  "demand_up": {
+    "throughput": 65.1,
+    "p95_latency": 299.5,
+    "worst_station_wait_p95": 64.3,
+    "worst_edge_occupancy_pct": 1.3,
+    "abandonment_pct": 69.0
+  }
+}

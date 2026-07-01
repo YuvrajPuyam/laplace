@@ -1,0 +1,19 @@
+{
+  "facility_id": "dc_pickzone_med",
+  "name": "Mid-size AMR pick zone (2-block, Roodbergen layout)",
+  "layout_source": "Roodbergen, K.J. & De Koster, R. (2001), 'Routing methods for warehouses with multiple cross aisles', Int. J. Production Research 39(9):1865-1883 \u2014 standard multi-block parallel-aisle layout. Aisle pitch 3.0 m (sim convention).",
+  "demand_source": "Olist Brazilian E-Commerce Public Dataset (~99,441 real orders, 2016-2018). Intraday shape is real: peak hour 16:00, peak-to-average ratio 1.61 (see facility/demand.py, data/olist_calibration.json). Zone sized for the peak hour; absolute per-zone scale is a stated single-zone assumption.",
+  "notes": "One pick zone of a larger DC. 9 parallel pick aisles x 48 m, 3 cross-aisles (front/middle/back) = 2 storage blocks. ~24 x 48 m footprint. Pick faces distributed through the racks; pack/ship, chargers, and dock at the front depot. Contract A's 10-aisle / 60 m cap means a full DC is modelled one zone at a time.",
+  "footprint_m": {
+    "width": 24.0,
+    "length": 48.0
+  },
+  "cross_aisles": [
+    0,
+    24,
+    48
+  ],
+  "n_pick_faces": 8,
+  "fleet_amr_count": 6,
+  "arrival_rate_per_min": 1.0
+}

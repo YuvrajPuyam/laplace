@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "config_hash": "3fa9c2e81b04",
+  "seed": 17,
+  "metrics": {
+    "throughput_orders_per_hr": 41.2,
+    "p50_order_latency_min": 6.1,
+    "p95_order_latency_min": 14.8,
+    "amr_utilization_pct": 71.0,
+    "station_wait_p95_min": { "P1": 2.2, "P2": 1.8, "P3": 2.6, "K1": 7.9 },
+    "edge_congestion_top5": [
+      { "edge": "A6_27->A6_28", "occupancy_pct": 64.0 },
+      { "edge": "A5_15->A6_15", "occupancy_pct": 51.5 }
+    ],
+    "deadhead_pct": 23.5,
+    "charge_downtime_pct": 4.1,
+    "orders_completed": 309,
+    "orders_abandoned": 2
+  },
+  "event_log_uri": "logs/3fa9c2e81b04_s17.events.parquet"
+}

@@ -1,0 +1,10694 @@
+{
+  "domain": "warehouse",
+  "scenario_id": "dc_pickzone_med",
+  "floor": {
+    "min_x": 0.0,
+    "min_y": 0.0,
+    "max_x": 24.0,
+    "max_y": 48.0,
+    "margin": 3.0
+  },
+  "nodes": [
+    {
+      "id": "A1_00",
+      "x": 0.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_01",
+      "x": 0.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_02",
+      "x": 0.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_03",
+      "x": 0.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_04",
+      "x": 0.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_05",
+      "x": 0.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_06",
+      "x": 0.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_07",
+      "x": 0.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_08",
+      "x": 0.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_09",
+      "x": 0.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_10",
+      "x": 0.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_11",
+      "x": 0.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_12",
+      "x": 0.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_13",
+      "x": 0.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_14",
+      "x": 0.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_15",
+      "x": 0.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_16",
+      "x": 0.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_17",
+      "x": 0.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_18",
+      "x": 0.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_19",
+      "x": 0.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_20",
+      "x": 0.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_21",
+      "x": 0.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_22",
+      "x": 0.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_23",
+      "x": 0.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_24",
+      "x": 0.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_25",
+      "x": 0.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_26",
+      "x": 0.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_27",
+      "x": 0.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_28",
+      "x": 0.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_29",
+      "x": 0.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_30",
+      "x": 0.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_31",
+      "x": 0.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_32",
+      "x": 0.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_33",
+      "x": 0.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_34",
+      "x": 0.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_35",
+      "x": 0.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_36",
+      "x": 0.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_37",
+      "x": 0.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_38",
+      "x": 0.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_39",
+      "x": 0.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_40",
+      "x": 0.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_41",
+      "x": 0.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_42",
+      "x": 0.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_43",
+      "x": 0.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_44",
+      "x": 0.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_45",
+      "x": 0.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_46",
+      "x": 0.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_47",
+      "x": 0.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A1_48",
+      "x": 0.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_00",
+      "x": 3.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_01",
+      "x": 3.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_02",
+      "x": 3.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_03",
+      "x": 3.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_04",
+      "x": 3.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_05",
+      "x": 3.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_06",
+      "x": 3.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_07",
+      "x": 3.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_08",
+      "x": 3.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_09",
+      "x": 3.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_10",
+      "x": 3.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_11",
+      "x": 3.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_12",
+      "x": 3.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_13",
+      "x": 3.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_14",
+      "x": 3.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_15",
+      "x": 3.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_16",
+      "x": 3.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_17",
+      "x": 3.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_18",
+      "x": 3.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_19",
+      "x": 3.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_20",
+      "x": 3.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_21",
+      "x": 3.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_22",
+      "x": 3.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_23",
+      "x": 3.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_24",
+      "x": 3.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_25",
+      "x": 3.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_26",
+      "x": 3.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_27",
+      "x": 3.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_28",
+      "x": 3.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_29",
+      "x": 3.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_30",
+      "x": 3.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_31",
+      "x": 3.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_32",
+      "x": 3.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_33",
+      "x": 3.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_34",
+      "x": 3.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_35",
+      "x": 3.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_36",
+      "x": 3.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_37",
+      "x": 3.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_38",
+      "x": 3.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_39",
+      "x": 3.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_40",
+      "x": 3.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_41",
+      "x": 3.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_42",
+      "x": 3.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_43",
+      "x": 3.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_44",
+      "x": 3.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_45",
+      "x": 3.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_46",
+      "x": 3.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_47",
+      "x": 3.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A2_48",
+      "x": 3.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_00",
+      "x": 6.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_01",
+      "x": 6.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_02",
+      "x": 6.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_03",
+      "x": 6.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_04",
+      "x": 6.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_05",
+      "x": 6.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_06",
+      "x": 6.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_07",
+      "x": 6.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_08",
+      "x": 6.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_09",
+      "x": 6.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_10",
+      "x": 6.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_11",
+      "x": 6.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_12",
+      "x": 6.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_13",
+      "x": 6.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_14",
+      "x": 6.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_15",
+      "x": 6.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_16",
+      "x": 6.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_17",
+      "x": 6.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_18",
+      "x": 6.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_19",
+      "x": 6.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_20",
+      "x": 6.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_21",
+      "x": 6.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_22",
+      "x": 6.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_23",
+      "x": 6.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_24",
+      "x": 6.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_25",
+      "x": 6.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_26",
+      "x": 6.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_27",
+      "x": 6.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_28",
+      "x": 6.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_29",
+      "x": 6.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_30",
+      "x": 6.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_31",
+      "x": 6.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_32",
+      "x": 6.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_33",
+      "x": 6.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_34",
+      "x": 6.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_35",
+      "x": 6.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_36",
+      "x": 6.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_37",
+      "x": 6.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_38",
+      "x": 6.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_39",
+      "x": 6.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_40",
+      "x": 6.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_41",
+      "x": 6.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_42",
+      "x": 6.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_43",
+      "x": 6.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_44",
+      "x": 6.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_45",
+      "x": 6.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_46",
+      "x": 6.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_47",
+      "x": 6.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A3_48",
+      "x": 6.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_00",
+      "x": 9.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_01",
+      "x": 9.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_02",
+      "x": 9.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_03",
+      "x": 9.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_04",
+      "x": 9.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_05",
+      "x": 9.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_06",
+      "x": 9.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_07",
+      "x": 9.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_08",
+      "x": 9.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_09",
+      "x": 9.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_10",
+      "x": 9.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_11",
+      "x": 9.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_12",
+      "x": 9.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_13",
+      "x": 9.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_14",
+      "x": 9.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_15",
+      "x": 9.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_16",
+      "x": 9.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_17",
+      "x": 9.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_18",
+      "x": 9.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_19",
+      "x": 9.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_20",
+      "x": 9.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_21",
+      "x": 9.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_22",
+      "x": 9.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_23",
+      "x": 9.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_24",
+      "x": 9.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_25",
+      "x": 9.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_26",
+      "x": 9.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_27",
+      "x": 9.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_28",
+      "x": 9.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_29",
+      "x": 9.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_30",
+      "x": 9.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_31",
+      "x": 9.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_32",
+      "x": 9.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_33",
+      "x": 9.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_34",
+      "x": 9.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_35",
+      "x": 9.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_36",
+      "x": 9.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_37",
+      "x": 9.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_38",
+      "x": 9.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_39",
+      "x": 9.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_40",
+      "x": 9.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_41",
+      "x": 9.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_42",
+      "x": 9.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_43",
+      "x": 9.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_44",
+      "x": 9.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_45",
+      "x": 9.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_46",
+      "x": 9.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_47",
+      "x": 9.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A4_48",
+      "x": 9.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_00",
+      "x": 12.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_01",
+      "x": 12.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_02",
+      "x": 12.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_03",
+      "x": 12.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_04",
+      "x": 12.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_05",
+      "x": 12.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_06",
+      "x": 12.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_07",
+      "x": 12.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_08",
+      "x": 12.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_09",
+      "x": 12.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_10",
+      "x": 12.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_11",
+      "x": 12.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_12",
+      "x": 12.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_13",
+      "x": 12.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_14",
+      "x": 12.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_15",
+      "x": 12.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_16",
+      "x": 12.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_17",
+      "x": 12.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_18",
+      "x": 12.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_19",
+      "x": 12.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_20",
+      "x": 12.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_21",
+      "x": 12.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_22",
+      "x": 12.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_23",
+      "x": 12.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_24",
+      "x": 12.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_25",
+      "x": 12.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_26",
+      "x": 12.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_27",
+      "x": 12.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_28",
+      "x": 12.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_29",
+      "x": 12.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_30",
+      "x": 12.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_31",
+      "x": 12.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_32",
+      "x": 12.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_33",
+      "x": 12.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_34",
+      "x": 12.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_35",
+      "x": 12.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_36",
+      "x": 12.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_37",
+      "x": 12.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_38",
+      "x": 12.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_39",
+      "x": 12.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_40",
+      "x": 12.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_41",
+      "x": 12.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_42",
+      "x": 12.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_43",
+      "x": 12.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_44",
+      "x": 12.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_45",
+      "x": 12.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_46",
+      "x": 12.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_47",
+      "x": 12.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A5_48",
+      "x": 12.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_00",
+      "x": 15.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_01",
+      "x": 15.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_02",
+      "x": 15.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_03",
+      "x": 15.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_04",
+      "x": 15.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_05",
+      "x": 15.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_06",
+      "x": 15.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_07",
+      "x": 15.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_08",
+      "x": 15.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_09",
+      "x": 15.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_10",
+      "x": 15.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_11",
+      "x": 15.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_12",
+      "x": 15.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_13",
+      "x": 15.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_14",
+      "x": 15.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_15",
+      "x": 15.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_16",
+      "x": 15.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_17",
+      "x": 15.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_18",
+      "x": 15.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_19",
+      "x": 15.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_20",
+      "x": 15.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_21",
+      "x": 15.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_22",
+      "x": 15.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_23",
+      "x": 15.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_24",
+      "x": 15.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_25",
+      "x": 15.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_26",
+      "x": 15.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_27",
+      "x": 15.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_28",
+      "x": 15.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_29",
+      "x": 15.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_30",
+      "x": 15.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_31",
+      "x": 15.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_32",
+      "x": 15.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_33",
+      "x": 15.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_34",
+      "x": 15.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_35",
+      "x": 15.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_36",
+      "x": 15.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_37",
+      "x": 15.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_38",
+      "x": 15.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_39",
+      "x": 15.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_40",
+      "x": 15.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_41",
+      "x": 15.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_42",
+      "x": 15.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_43",
+      "x": 15.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_44",
+      "x": 15.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_45",
+      "x": 15.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_46",
+      "x": 15.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_47",
+      "x": 15.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A6_48",
+      "x": 15.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_00",
+      "x": 18.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_01",
+      "x": 18.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_02",
+      "x": 18.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_03",
+      "x": 18.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_04",
+      "x": 18.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_05",
+      "x": 18.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_06",
+      "x": 18.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_07",
+      "x": 18.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_08",
+      "x": 18.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_09",
+      "x": 18.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_10",
+      "x": 18.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_11",
+      "x": 18.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_12",
+      "x": 18.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_13",
+      "x": 18.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_14",
+      "x": 18.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_15",
+      "x": 18.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_16",
+      "x": 18.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_17",
+      "x": 18.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_18",
+      "x": 18.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_19",
+      "x": 18.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_20",
+      "x": 18.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_21",
+      "x": 18.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_22",
+      "x": 18.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_23",
+      "x": 18.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_24",
+      "x": 18.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_25",
+      "x": 18.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_26",
+      "x": 18.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_27",
+      "x": 18.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_28",
+      "x": 18.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_29",
+      "x": 18.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_30",
+      "x": 18.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_31",
+      "x": 18.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_32",
+      "x": 18.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_33",
+      "x": 18.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_34",
+      "x": 18.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_35",
+      "x": 18.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_36",
+      "x": 18.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_37",
+      "x": 18.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_38",
+      "x": 18.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_39",
+      "x": 18.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_40",
+      "x": 18.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_41",
+      "x": 18.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_42",
+      "x": 18.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_43",
+      "x": 18.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_44",
+      "x": 18.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_45",
+      "x": 18.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_46",
+      "x": 18.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_47",
+      "x": 18.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A7_48",
+      "x": 18.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_00",
+      "x": 21.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_01",
+      "x": 21.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_02",
+      "x": 21.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_03",
+      "x": 21.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_04",
+      "x": 21.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_05",
+      "x": 21.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_06",
+      "x": 21.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_07",
+      "x": 21.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_08",
+      "x": 21.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_09",
+      "x": 21.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_10",
+      "x": 21.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_11",
+      "x": 21.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_12",
+      "x": 21.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_13",
+      "x": 21.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_14",
+      "x": 21.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_15",
+      "x": 21.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_16",
+      "x": 21.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_17",
+      "x": 21.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_18",
+      "x": 21.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_19",
+      "x": 21.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_20",
+      "x": 21.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_21",
+      "x": 21.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_22",
+      "x": 21.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_23",
+      "x": 21.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_24",
+      "x": 21.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_25",
+      "x": 21.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_26",
+      "x": 21.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_27",
+      "x": 21.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_28",
+      "x": 21.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_29",
+      "x": 21.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_30",
+      "x": 21.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_31",
+      "x": 21.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_32",
+      "x": 21.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_33",
+      "x": 21.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_34",
+      "x": 21.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_35",
+      "x": 21.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_36",
+      "x": 21.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_37",
+      "x": 21.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_38",
+      "x": 21.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_39",
+      "x": 21.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_40",
+      "x": 21.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_41",
+      "x": 21.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_42",
+      "x": 21.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_43",
+      "x": 21.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_44",
+      "x": 21.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_45",
+      "x": 21.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_46",
+      "x": 21.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_47",
+      "x": 21.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A8_48",
+      "x": 21.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_00",
+      "x": 24.0,
+      "y": 0.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_01",
+      "x": 24.0,
+      "y": 1.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_02",
+      "x": 24.0,
+      "y": 2.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_03",
+      "x": 24.0,
+      "y": 3.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_04",
+      "x": 24.0,
+      "y": 4.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_05",
+      "x": 24.0,
+      "y": 5.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_06",
+      "x": 24.0,
+      "y": 6.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_07",
+      "x": 24.0,
+      "y": 7.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_08",
+      "x": 24.0,
+      "y": 8.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_09",
+      "x": 24.0,
+      "y": 9.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_10",
+      "x": 24.0,
+      "y": 10.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_11",
+      "x": 24.0,
+      "y": 11.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_12",
+      "x": 24.0,
+      "y": 12.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_13",
+      "x": 24.0,
+      "y": 13.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_14",
+      "x": 24.0,
+      "y": 14.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_15",
+      "x": 24.0,
+      "y": 15.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_16",
+      "x": 24.0,
+      "y": 16.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_17",
+      "x": 24.0,
+      "y": 17.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_18",
+      "x": 24.0,
+      "y": 18.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_19",
+      "x": 24.0,
+      "y": 19.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_20",
+      "x": 24.0,
+      "y": 20.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_21",
+      "x": 24.0,
+      "y": 21.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_22",
+      "x": 24.0,
+      "y": 22.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_23",
+      "x": 24.0,
+      "y": 23.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_24",
+      "x": 24.0,
+      "y": 24.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_25",
+      "x": 24.0,
+      "y": 25.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_26",
+      "x": 24.0,
+      "y": 26.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_27",
+      "x": 24.0,
+      "y": 27.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_28",
+      "x": 24.0,
+      "y": 28.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_29",
+      "x": 24.0,
+      "y": 29.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_30",
+      "x": 24.0,
+      "y": 30.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_31",
+      "x": 24.0,
+      "y": 31.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_32",
+      "x": 24.0,
+      "y": 32.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_33",
+      "x": 24.0,
+      "y": 33.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_34",
+      "x": 24.0,
+      "y": 34.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_35",
+      "x": 24.0,
+      "y": 35.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_36",
+      "x": 24.0,
+      "y": 36.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_37",
+      "x": 24.0,
+      "y": 37.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_38",
+      "x": 24.0,
+      "y": 38.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_39",
+      "x": 24.0,
+      "y": 39.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_40",
+      "x": 24.0,
+      "y": 40.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_41",
+      "x": 24.0,
+      "y": 41.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_42",
+      "x": 24.0,
+      "y": 42.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_43",
+      "x": 24.0,
+      "y": 43.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_44",
+      "x": 24.0,
+      "y": 44.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_45",
+      "x": 24.0,
+      "y": 45.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_46",
+      "x": 24.0,
+      "y": 46.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_47",
+      "x": 24.0,
+      "y": 47.0,
+      "kind": "waypoint"
+    },
+    {
+      "id": "A9_48",
+      "x": 24.0,
+      "y": 48.0,
+      "kind": "waypoint"
+    }
+  ],
+  "lanes": [
+    {
+      "id": "A1_00->A1_01",
+      "polyline": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_01->A1_02",
+      "polyline": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_02->A1_03",
+      "polyline": [
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_03->A1_04",
+      "polyline": [
+        [
+          0.0,
+          3.0
+        ],
+        [
+          0.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_04->A1_05",
+      "polyline": [
+        [
+          0.0,
+          4.0
+        ],
+        [
+          0.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_05->A1_06",
+      "polyline": [
+        [
+          0.0,
+          5.0
+        ],
+        [
+          0.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_06->A1_07",
+      "polyline": [
+        [
+          0.0,
+          6.0
+        ],
+        [
+          0.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_07->A1_08",
+      "polyline": [
+        [
+          0.0,
+          7.0
+        ],
+        [
+          0.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_08->A1_09",
+      "polyline": [
+        [
+          0.0,
+          8.0
+        ],
+        [
+          0.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_09->A1_10",
+      "polyline": [
+        [
+          0.0,
+          9.0
+        ],
+        [
+          0.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_10->A1_11",
+      "polyline": [
+        [
+          0.0,
+          10.0
+        ],
+        [
+          0.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_11->A1_12",
+      "polyline": [
+        [
+          0.0,
+          11.0
+        ],
+        [
+          0.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_12->A1_13",
+      "polyline": [
+        [
+          0.0,
+          12.0
+        ],
+        [
+          0.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_13->A1_14",
+      "polyline": [
+        [
+          0.0,
+          13.0
+        ],
+        [
+          0.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_14->A1_15",
+      "polyline": [
+        [
+          0.0,
+          14.0
+        ],
+        [
+          0.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_15->A1_16",
+      "polyline": [
+        [
+          0.0,
+          15.0
+        ],
+        [
+          0.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_16->A1_17",
+      "polyline": [
+        [
+          0.0,
+          16.0
+        ],
+        [
+          0.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_17->A1_18",
+      "polyline": [
+        [
+          0.0,
+          17.0
+        ],
+        [
+          0.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_18->A1_19",
+      "polyline": [
+        [
+          0.0,
+          18.0
+        ],
+        [
+          0.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_19->A1_20",
+      "polyline": [
+        [
+          0.0,
+          19.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_20->A1_21",
+      "polyline": [
+        [
+          0.0,
+          20.0
+        ],
+        [
+          0.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_21->A1_22",
+      "polyline": [
+        [
+          0.0,
+          21.0
+        ],
+        [
+          0.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_22->A1_23",
+      "polyline": [
+        [
+          0.0,
+          22.0
+        ],
+        [
+          0.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_23->A1_24",
+      "polyline": [
+        [
+          0.0,
+          23.0
+        ],
+        [
+          0.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_24->A1_25",
+      "polyline": [
+        [
+          0.0,
+          24.0
+        ],
+        [
+          0.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_25->A1_26",
+      "polyline": [
+        [
+          0.0,
+          25.0
+        ],
+        [
+          0.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_26->A1_27",
+      "polyline": [
+        [
+          0.0,
+          26.0
+        ],
+        [
+          0.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_27->A1_28",
+      "polyline": [
+        [
+          0.0,
+          27.0
+        ],
+        [
+          0.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_28->A1_29",
+      "polyline": [
+        [
+          0.0,
+          28.0
+        ],
+        [
+          0.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_29->A1_30",
+      "polyline": [
+        [
+          0.0,
+          29.0
+        ],
+        [
+          0.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_30->A1_31",
+      "polyline": [
+        [
+          0.0,
+          30.0
+        ],
+        [
+          0.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_31->A1_32",
+      "polyline": [
+        [
+          0.0,
+          31.0
+        ],
+        [
+          0.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_32->A1_33",
+      "polyline": [
+        [
+          0.0,
+          32.0
+        ],
+        [
+          0.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_33->A1_34",
+      "polyline": [
+        [
+          0.0,
+          33.0
+        ],
+        [
+          0.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_34->A1_35",
+      "polyline": [
+        [
+          0.0,
+          34.0
+        ],
+        [
+          0.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_35->A1_36",
+      "polyline": [
+        [
+          0.0,
+          35.0
+        ],
+        [
+          0.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_36->A1_37",
+      "polyline": [
+        [
+          0.0,
+          36.0
+        ],
+        [
+          0.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_37->A1_38",
+      "polyline": [
+        [
+          0.0,
+          37.0
+        ],
+        [
+          0.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_38->A1_39",
+      "polyline": [
+        [
+          0.0,
+          38.0
+        ],
+        [
+          0.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_39->A1_40",
+      "polyline": [
+        [
+          0.0,
+          39.0
+        ],
+        [
+          0.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_40->A1_41",
+      "polyline": [
+        [
+          0.0,
+          40.0
+        ],
+        [
+          0.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_41->A1_42",
+      "polyline": [
+        [
+          0.0,
+          41.0
+        ],
+        [
+          0.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_42->A1_43",
+      "polyline": [
+        [
+          0.0,
+          42.0
+        ],
+        [
+          0.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_43->A1_44",
+      "polyline": [
+        [
+          0.0,
+          43.0
+        ],
+        [
+          0.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_44->A1_45",
+      "polyline": [
+        [
+          0.0,
+          44.0
+        ],
+        [
+          0.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_45->A1_46",
+      "polyline": [
+        [
+          0.0,
+          45.0
+        ],
+        [
+          0.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_46->A1_47",
+      "polyline": [
+        [
+          0.0,
+          46.0
+        ],
+        [
+          0.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_47->A1_48",
+      "polyline": [
+        [
+          0.0,
+          47.0
+        ],
+        [
+          0.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_00->A2_01",
+      "polyline": [
+        [
+          3.0,
+          0.0
+        ],
+        [
+          3.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_01->A2_02",
+      "polyline": [
+        [
+          3.0,
+          1.0
+        ],
+        [
+          3.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_02->A2_03",
+      "polyline": [
+        [
+          3.0,
+          2.0
+        ],
+        [
+          3.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_03->A2_04",
+      "polyline": [
+        [
+          3.0,
+          3.0
+        ],
+        [
+          3.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_04->A2_05",
+      "polyline": [
+        [
+          3.0,
+          4.0
+        ],
+        [
+          3.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_05->A2_06",
+      "polyline": [
+        [
+          3.0,
+          5.0
+        ],
+        [
+          3.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_06->A2_07",
+      "polyline": [
+        [
+          3.0,
+          6.0
+        ],
+        [
+          3.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_07->A2_08",
+      "polyline": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_08->A2_09",
+      "polyline": [
+        [
+          3.0,
+          8.0
+        ],
+        [
+          3.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_09->A2_10",
+      "polyline": [
+        [
+          3.0,
+          9.0
+        ],
+        [
+          3.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_10->A2_11",
+      "polyline": [
+        [
+          3.0,
+          10.0
+        ],
+        [
+          3.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_11->A2_12",
+      "polyline": [
+        [
+          3.0,
+          11.0
+        ],
+        [
+          3.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_12->A2_13",
+      "polyline": [
+        [
+          3.0,
+          12.0
+        ],
+        [
+          3.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_13->A2_14",
+      "polyline": [
+        [
+          3.0,
+          13.0
+        ],
+        [
+          3.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_14->A2_15",
+      "polyline": [
+        [
+          3.0,
+          14.0
+        ],
+        [
+          3.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_15->A2_16",
+      "polyline": [
+        [
+          3.0,
+          15.0
+        ],
+        [
+          3.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_16->A2_17",
+      "polyline": [
+        [
+          3.0,
+          16.0
+        ],
+        [
+          3.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_17->A2_18",
+      "polyline": [
+        [
+          3.0,
+          17.0
+        ],
+        [
+          3.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_18->A2_19",
+      "polyline": [
+        [
+          3.0,
+          18.0
+        ],
+        [
+          3.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_19->A2_20",
+      "polyline": [
+        [
+          3.0,
+          19.0
+        ],
+        [
+          3.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_20->A2_21",
+      "polyline": [
+        [
+          3.0,
+          20.0
+        ],
+        [
+          3.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_21->A2_22",
+      "polyline": [
+        [
+          3.0,
+          21.0
+        ],
+        [
+          3.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_22->A2_23",
+      "polyline": [
+        [
+          3.0,
+          22.0
+        ],
+        [
+          3.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_23->A2_24",
+      "polyline": [
+        [
+          3.0,
+          23.0
+        ],
+        [
+          3.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_24->A2_25",
+      "polyline": [
+        [
+          3.0,
+          24.0
+        ],
+        [
+          3.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_25->A2_26",
+      "polyline": [
+        [
+          3.0,
+          25.0
+        ],
+        [
+          3.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_26->A2_27",
+      "polyline": [
+        [
+          3.0,
+          26.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_27->A2_28",
+      "polyline": [
+        [
+          3.0,
+          27.0
+        ],
+        [
+          3.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_28->A2_29",
+      "polyline": [
+        [
+          3.0,
+          28.0
+        ],
+        [
+          3.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_29->A2_30",
+      "polyline": [
+        [
+          3.0,
+          29.0
+        ],
+        [
+          3.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_30->A2_31",
+      "polyline": [
+        [
+          3.0,
+          30.0
+        ],
+        [
+          3.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_31->A2_32",
+      "polyline": [
+        [
+          3.0,
+          31.0
+        ],
+        [
+          3.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_32->A2_33",
+      "polyline": [
+        [
+          3.0,
+          32.0
+        ],
+        [
+          3.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_33->A2_34",
+      "polyline": [
+        [
+          3.0,
+          33.0
+        ],
+        [
+          3.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_34->A2_35",
+      "polyline": [
+        [
+          3.0,
+          34.0
+        ],
+        [
+          3.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_35->A2_36",
+      "polyline": [
+        [
+          3.0,
+          35.0
+        ],
+        [
+          3.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_36->A2_37",
+      "polyline": [
+        [
+          3.0,
+          36.0
+        ],
+        [
+          3.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_37->A2_38",
+      "polyline": [
+        [
+          3.0,
+          37.0
+        ],
+        [
+          3.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_38->A2_39",
+      "polyline": [
+        [
+          3.0,
+          38.0
+        ],
+        [
+          3.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_39->A2_40",
+      "polyline": [
+        [
+          3.0,
+          39.0
+        ],
+        [
+          3.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_40->A2_41",
+      "polyline": [
+        [
+          3.0,
+          40.0
+        ],
+        [
+          3.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_41->A2_42",
+      "polyline": [
+        [
+          3.0,
+          41.0
+        ],
+        [
+          3.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_42->A2_43",
+      "polyline": [
+        [
+          3.0,
+          42.0
+        ],
+        [
+          3.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_43->A2_44",
+      "polyline": [
+        [
+          3.0,
+          43.0
+        ],
+        [
+          3.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_44->A2_45",
+      "polyline": [
+        [
+          3.0,
+          44.0
+        ],
+        [
+          3.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_45->A2_46",
+      "polyline": [
+        [
+          3.0,
+          45.0
+        ],
+        [
+          3.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_46->A2_47",
+      "polyline": [
+        [
+          3.0,
+          46.0
+        ],
+        [
+          3.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A2_47->A2_48",
+      "polyline": [
+        [
+          3.0,
+          47.0
+        ],
+        [
+          3.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_00->A3_01",
+      "polyline": [
+        [
+          6.0,
+          0.0
+        ],
+        [
+          6.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_01->A3_02",
+      "polyline": [
+        [
+          6.0,
+          1.0
+        ],
+        [
+          6.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_02->A3_03",
+      "polyline": [
+        [
+          6.0,
+          2.0
+        ],
+        [
+          6.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_03->A3_04",
+      "polyline": [
+        [
+          6.0,
+          3.0
+        ],
+        [
+          6.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_04->A3_05",
+      "polyline": [
+        [
+          6.0,
+          4.0
+        ],
+        [
+          6.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_05->A3_06",
+      "polyline": [
+        [
+          6.0,
+          5.0
+        ],
+        [
+          6.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_06->A3_07",
+      "polyline": [
+        [
+          6.0,
+          6.0
+        ],
+        [
+          6.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_07->A3_08",
+      "polyline": [
+        [
+          6.0,
+          7.0
+        ],
+        [
+          6.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_08->A3_09",
+      "polyline": [
+        [
+          6.0,
+          8.0
+        ],
+        [
+          6.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_09->A3_10",
+      "polyline": [
+        [
+          6.0,
+          9.0
+        ],
+        [
+          6.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_10->A3_11",
+      "polyline": [
+        [
+          6.0,
+          10.0
+        ],
+        [
+          6.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_11->A3_12",
+      "polyline": [
+        [
+          6.0,
+          11.0
+        ],
+        [
+          6.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_12->A3_13",
+      "polyline": [
+        [
+          6.0,
+          12.0
+        ],
+        [
+          6.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_13->A3_14",
+      "polyline": [
+        [
+          6.0,
+          13.0
+        ],
+        [
+          6.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_14->A3_15",
+      "polyline": [
+        [
+          6.0,
+          14.0
+        ],
+        [
+          6.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_15->A3_16",
+      "polyline": [
+        [
+          6.0,
+          15.0
+        ],
+        [
+          6.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_16->A3_17",
+      "polyline": [
+        [
+          6.0,
+          16.0
+        ],
+        [
+          6.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_17->A3_18",
+      "polyline": [
+        [
+          6.0,
+          17.0
+        ],
+        [
+          6.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_18->A3_19",
+      "polyline": [
+        [
+          6.0,
+          18.0
+        ],
+        [
+          6.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_19->A3_20",
+      "polyline": [
+        [
+          6.0,
+          19.0
+        ],
+        [
+          6.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_20->A3_21",
+      "polyline": [
+        [
+          6.0,
+          20.0
+        ],
+        [
+          6.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_21->A3_22",
+      "polyline": [
+        [
+          6.0,
+          21.0
+        ],
+        [
+          6.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_22->A3_23",
+      "polyline": [
+        [
+          6.0,
+          22.0
+        ],
+        [
+          6.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_23->A3_24",
+      "polyline": [
+        [
+          6.0,
+          23.0
+        ],
+        [
+          6.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_24->A3_25",
+      "polyline": [
+        [
+          6.0,
+          24.0
+        ],
+        [
+          6.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_25->A3_26",
+      "polyline": [
+        [
+          6.0,
+          25.0
+        ],
+        [
+          6.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_26->A3_27",
+      "polyline": [
+        [
+          6.0,
+          26.0
+        ],
+        [
+          6.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_27->A3_28",
+      "polyline": [
+        [
+          6.0,
+          27.0
+        ],
+        [
+          6.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_28->A3_29",
+      "polyline": [
+        [
+          6.0,
+          28.0
+        ],
+        [
+          6.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_29->A3_30",
+      "polyline": [
+        [
+          6.0,
+          29.0
+        ],
+        [
+          6.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_30->A3_31",
+      "polyline": [
+        [
+          6.0,
+          30.0
+        ],
+        [
+          6.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_31->A3_32",
+      "polyline": [
+        [
+          6.0,
+          31.0
+        ],
+        [
+          6.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_32->A3_33",
+      "polyline": [
+        [
+          6.0,
+          32.0
+        ],
+        [
+          6.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_33->A3_34",
+      "polyline": [
+        [
+          6.0,
+          33.0
+        ],
+        [
+          6.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_34->A3_35",
+      "polyline": [
+        [
+          6.0,
+          34.0
+        ],
+        [
+          6.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_35->A3_36",
+      "polyline": [
+        [
+          6.0,
+          35.0
+        ],
+        [
+          6.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_36->A3_37",
+      "polyline": [
+        [
+          6.0,
+          36.0
+        ],
+        [
+          6.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_37->A3_38",
+      "polyline": [
+        [
+          6.0,
+          37.0
+        ],
+        [
+          6.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_38->A3_39",
+      "polyline": [
+        [
+          6.0,
+          38.0
+        ],
+        [
+          6.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_39->A3_40",
+      "polyline": [
+        [
+          6.0,
+          39.0
+        ],
+        [
+          6.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_40->A3_41",
+      "polyline": [
+        [
+          6.0,
+          40.0
+        ],
+        [
+          6.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_41->A3_42",
+      "polyline": [
+        [
+          6.0,
+          41.0
+        ],
+        [
+          6.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_42->A3_43",
+      "polyline": [
+        [
+          6.0,
+          42.0
+        ],
+        [
+          6.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_43->A3_44",
+      "polyline": [
+        [
+          6.0,
+          43.0
+        ],
+        [
+          6.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_44->A3_45",
+      "polyline": [
+        [
+          6.0,
+          44.0
+        ],
+        [
+          6.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_45->A3_46",
+      "polyline": [
+        [
+          6.0,
+          45.0
+        ],
+        [
+          6.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_46->A3_47",
+      "polyline": [
+        [
+          6.0,
+          46.0
+        ],
+        [
+          6.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A3_47->A3_48",
+      "polyline": [
+        [
+          6.0,
+          47.0
+        ],
+        [
+          6.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_00->A4_01",
+      "polyline": [
+        [
+          9.0,
+          0.0
+        ],
+        [
+          9.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_01->A4_02",
+      "polyline": [
+        [
+          9.0,
+          1.0
+        ],
+        [
+          9.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_02->A4_03",
+      "polyline": [
+        [
+          9.0,
+          2.0
+        ],
+        [
+          9.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_03->A4_04",
+      "polyline": [
+        [
+          9.0,
+          3.0
+        ],
+        [
+          9.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_04->A4_05",
+      "polyline": [
+        [
+          9.0,
+          4.0
+        ],
+        [
+          9.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_05->A4_06",
+      "polyline": [
+        [
+          9.0,
+          5.0
+        ],
+        [
+          9.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_06->A4_07",
+      "polyline": [
+        [
+          9.0,
+          6.0
+        ],
+        [
+          9.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_07->A4_08",
+      "polyline": [
+        [
+          9.0,
+          7.0
+        ],
+        [
+          9.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_08->A4_09",
+      "polyline": [
+        [
+          9.0,
+          8.0
+        ],
+        [
+          9.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_09->A4_10",
+      "polyline": [
+        [
+          9.0,
+          9.0
+        ],
+        [
+          9.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_10->A4_11",
+      "polyline": [
+        [
+          9.0,
+          10.0
+        ],
+        [
+          9.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_11->A4_12",
+      "polyline": [
+        [
+          9.0,
+          11.0
+        ],
+        [
+          9.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_12->A4_13",
+      "polyline": [
+        [
+          9.0,
+          12.0
+        ],
+        [
+          9.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_13->A4_14",
+      "polyline": [
+        [
+          9.0,
+          13.0
+        ],
+        [
+          9.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_14->A4_15",
+      "polyline": [
+        [
+          9.0,
+          14.0
+        ],
+        [
+          9.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_15->A4_16",
+      "polyline": [
+        [
+          9.0,
+          15.0
+        ],
+        [
+          9.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_16->A4_17",
+      "polyline": [
+        [
+          9.0,
+          16.0
+        ],
+        [
+          9.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_17->A4_18",
+      "polyline": [
+        [
+          9.0,
+          17.0
+        ],
+        [
+          9.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_18->A4_19",
+      "polyline": [
+        [
+          9.0,
+          18.0
+        ],
+        [
+          9.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_19->A4_20",
+      "polyline": [
+        [
+          9.0,
+          19.0
+        ],
+        [
+          9.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_20->A4_21",
+      "polyline": [
+        [
+          9.0,
+          20.0
+        ],
+        [
+          9.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_21->A4_22",
+      "polyline": [
+        [
+          9.0,
+          21.0
+        ],
+        [
+          9.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_22->A4_23",
+      "polyline": [
+        [
+          9.0,
+          22.0
+        ],
+        [
+          9.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_23->A4_24",
+      "polyline": [
+        [
+          9.0,
+          23.0
+        ],
+        [
+          9.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_24->A4_25",
+      "polyline": [
+        [
+          9.0,
+          24.0
+        ],
+        [
+          9.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_25->A4_26",
+      "polyline": [
+        [
+          9.0,
+          25.0
+        ],
+        [
+          9.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_26->A4_27",
+      "polyline": [
+        [
+          9.0,
+          26.0
+        ],
+        [
+          9.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_27->A4_28",
+      "polyline": [
+        [
+          9.0,
+          27.0
+        ],
+        [
+          9.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_28->A4_29",
+      "polyline": [
+        [
+          9.0,
+          28.0
+        ],
+        [
+          9.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_29->A4_30",
+      "polyline": [
+        [
+          9.0,
+          29.0
+        ],
+        [
+          9.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_30->A4_31",
+      "polyline": [
+        [
+          9.0,
+          30.0
+        ],
+        [
+          9.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_31->A4_32",
+      "polyline": [
+        [
+          9.0,
+          31.0
+        ],
+        [
+          9.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_32->A4_33",
+      "polyline": [
+        [
+          9.0,
+          32.0
+        ],
+        [
+          9.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_33->A4_34",
+      "polyline": [
+        [
+          9.0,
+          33.0
+        ],
+        [
+          9.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_34->A4_35",
+      "polyline": [
+        [
+          9.0,
+          34.0
+        ],
+        [
+          9.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_35->A4_36",
+      "polyline": [
+        [
+          9.0,
+          35.0
+        ],
+        [
+          9.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_36->A4_37",
+      "polyline": [
+        [
+          9.0,
+          36.0
+        ],
+        [
+          9.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_37->A4_38",
+      "polyline": [
+        [
+          9.0,
+          37.0
+        ],
+        [
+          9.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_38->A4_39",
+      "polyline": [
+        [
+          9.0,
+          38.0
+        ],
+        [
+          9.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_39->A4_40",
+      "polyline": [
+        [
+          9.0,
+          39.0
+        ],
+        [
+          9.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_40->A4_41",
+      "polyline": [
+        [
+          9.0,
+          40.0
+        ],
+        [
+          9.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_41->A4_42",
+      "polyline": [
+        [
+          9.0,
+          41.0
+        ],
+        [
+          9.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_42->A4_43",
+      "polyline": [
+        [
+          9.0,
+          42.0
+        ],
+        [
+          9.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_43->A4_44",
+      "polyline": [
+        [
+          9.0,
+          43.0
+        ],
+        [
+          9.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_44->A4_45",
+      "polyline": [
+        [
+          9.0,
+          44.0
+        ],
+        [
+          9.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_45->A4_46",
+      "polyline": [
+        [
+          9.0,
+          45.0
+        ],
+        [
+          9.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_46->A4_47",
+      "polyline": [
+        [
+          9.0,
+          46.0
+        ],
+        [
+          9.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A4_47->A4_48",
+      "polyline": [
+        [
+          9.0,
+          47.0
+        ],
+        [
+          9.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_00->A5_01",
+      "polyline": [
+        [
+          12.0,
+          0.0
+        ],
+        [
+          12.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_01->A5_02",
+      "polyline": [
+        [
+          12.0,
+          1.0
+        ],
+        [
+          12.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_02->A5_03",
+      "polyline": [
+        [
+          12.0,
+          2.0
+        ],
+        [
+          12.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_03->A5_04",
+      "polyline": [
+        [
+          12.0,
+          3.0
+        ],
+        [
+          12.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_04->A5_05",
+      "polyline": [
+        [
+          12.0,
+          4.0
+        ],
+        [
+          12.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_05->A5_06",
+      "polyline": [
+        [
+          12.0,
+          5.0
+        ],
+        [
+          12.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_06->A5_07",
+      "polyline": [
+        [
+          12.0,
+          6.0
+        ],
+        [
+          12.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_07->A5_08",
+      "polyline": [
+        [
+          12.0,
+          7.0
+        ],
+        [
+          12.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_08->A5_09",
+      "polyline": [
+        [
+          12.0,
+          8.0
+        ],
+        [
+          12.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_09->A5_10",
+      "polyline": [
+        [
+          12.0,
+          9.0
+        ],
+        [
+          12.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_10->A5_11",
+      "polyline": [
+        [
+          12.0,
+          10.0
+        ],
+        [
+          12.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_11->A5_12",
+      "polyline": [
+        [
+          12.0,
+          11.0
+        ],
+        [
+          12.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_12->A5_13",
+      "polyline": [
+        [
+          12.0,
+          12.0
+        ],
+        [
+          12.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_13->A5_14",
+      "polyline": [
+        [
+          12.0,
+          13.0
+        ],
+        [
+          12.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_14->A5_15",
+      "polyline": [
+        [
+          12.0,
+          14.0
+        ],
+        [
+          12.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_15->A5_16",
+      "polyline": [
+        [
+          12.0,
+          15.0
+        ],
+        [
+          12.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_16->A5_17",
+      "polyline": [
+        [
+          12.0,
+          16.0
+        ],
+        [
+          12.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_17->A5_18",
+      "polyline": [
+        [
+          12.0,
+          17.0
+        ],
+        [
+          12.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_18->A5_19",
+      "polyline": [
+        [
+          12.0,
+          18.0
+        ],
+        [
+          12.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_19->A5_20",
+      "polyline": [
+        [
+          12.0,
+          19.0
+        ],
+        [
+          12.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_20->A5_21",
+      "polyline": [
+        [
+          12.0,
+          20.0
+        ],
+        [
+          12.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_21->A5_22",
+      "polyline": [
+        [
+          12.0,
+          21.0
+        ],
+        [
+          12.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_22->A5_23",
+      "polyline": [
+        [
+          12.0,
+          22.0
+        ],
+        [
+          12.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_23->A5_24",
+      "polyline": [
+        [
+          12.0,
+          23.0
+        ],
+        [
+          12.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_24->A5_25",
+      "polyline": [
+        [
+          12.0,
+          24.0
+        ],
+        [
+          12.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_25->A5_26",
+      "polyline": [
+        [
+          12.0,
+          25.0
+        ],
+        [
+          12.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_26->A5_27",
+      "polyline": [
+        [
+          12.0,
+          26.0
+        ],
+        [
+          12.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_27->A5_28",
+      "polyline": [
+        [
+          12.0,
+          27.0
+        ],
+        [
+          12.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_28->A5_29",
+      "polyline": [
+        [
+          12.0,
+          28.0
+        ],
+        [
+          12.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_29->A5_30",
+      "polyline": [
+        [
+          12.0,
+          29.0
+        ],
+        [
+          12.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_30->A5_31",
+      "polyline": [
+        [
+          12.0,
+          30.0
+        ],
+        [
+          12.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_31->A5_32",
+      "polyline": [
+        [
+          12.0,
+          31.0
+        ],
+        [
+          12.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_32->A5_33",
+      "polyline": [
+        [
+          12.0,
+          32.0
+        ],
+        [
+          12.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_33->A5_34",
+      "polyline": [
+        [
+          12.0,
+          33.0
+        ],
+        [
+          12.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_34->A5_35",
+      "polyline": [
+        [
+          12.0,
+          34.0
+        ],
+        [
+          12.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_35->A5_36",
+      "polyline": [
+        [
+          12.0,
+          35.0
+        ],
+        [
+          12.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_36->A5_37",
+      "polyline": [
+        [
+          12.0,
+          36.0
+        ],
+        [
+          12.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_37->A5_38",
+      "polyline": [
+        [
+          12.0,
+          37.0
+        ],
+        [
+          12.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_38->A5_39",
+      "polyline": [
+        [
+          12.0,
+          38.0
+        ],
+        [
+          12.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_39->A5_40",
+      "polyline": [
+        [
+          12.0,
+          39.0
+        ],
+        [
+          12.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_40->A5_41",
+      "polyline": [
+        [
+          12.0,
+          40.0
+        ],
+        [
+          12.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_41->A5_42",
+      "polyline": [
+        [
+          12.0,
+          41.0
+        ],
+        [
+          12.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_42->A5_43",
+      "polyline": [
+        [
+          12.0,
+          42.0
+        ],
+        [
+          12.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_43->A5_44",
+      "polyline": [
+        [
+          12.0,
+          43.0
+        ],
+        [
+          12.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_44->A5_45",
+      "polyline": [
+        [
+          12.0,
+          44.0
+        ],
+        [
+          12.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_45->A5_46",
+      "polyline": [
+        [
+          12.0,
+          45.0
+        ],
+        [
+          12.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_46->A5_47",
+      "polyline": [
+        [
+          12.0,
+          46.0
+        ],
+        [
+          12.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A5_47->A5_48",
+      "polyline": [
+        [
+          12.0,
+          47.0
+        ],
+        [
+          12.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_00->A6_01",
+      "polyline": [
+        [
+          15.0,
+          0.0
+        ],
+        [
+          15.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_01->A6_02",
+      "polyline": [
+        [
+          15.0,
+          1.0
+        ],
+        [
+          15.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_02->A6_03",
+      "polyline": [
+        [
+          15.0,
+          2.0
+        ],
+        [
+          15.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_03->A6_04",
+      "polyline": [
+        [
+          15.0,
+          3.0
+        ],
+        [
+          15.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_04->A6_05",
+      "polyline": [
+        [
+          15.0,
+          4.0
+        ],
+        [
+          15.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_05->A6_06",
+      "polyline": [
+        [
+          15.0,
+          5.0
+        ],
+        [
+          15.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_06->A6_07",
+      "polyline": [
+        [
+          15.0,
+          6.0
+        ],
+        [
+          15.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_07->A6_08",
+      "polyline": [
+        [
+          15.0,
+          7.0
+        ],
+        [
+          15.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_08->A6_09",
+      "polyline": [
+        [
+          15.0,
+          8.0
+        ],
+        [
+          15.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_09->A6_10",
+      "polyline": [
+        [
+          15.0,
+          9.0
+        ],
+        [
+          15.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_10->A6_11",
+      "polyline": [
+        [
+          15.0,
+          10.0
+        ],
+        [
+          15.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_11->A6_12",
+      "polyline": [
+        [
+          15.0,
+          11.0
+        ],
+        [
+          15.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_12->A6_13",
+      "polyline": [
+        [
+          15.0,
+          12.0
+        ],
+        [
+          15.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_13->A6_14",
+      "polyline": [
+        [
+          15.0,
+          13.0
+        ],
+        [
+          15.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_14->A6_15",
+      "polyline": [
+        [
+          15.0,
+          14.0
+        ],
+        [
+          15.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_15->A6_16",
+      "polyline": [
+        [
+          15.0,
+          15.0
+        ],
+        [
+          15.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_16->A6_17",
+      "polyline": [
+        [
+          15.0,
+          16.0
+        ],
+        [
+          15.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_17->A6_18",
+      "polyline": [
+        [
+          15.0,
+          17.0
+        ],
+        [
+          15.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_18->A6_19",
+      "polyline": [
+        [
+          15.0,
+          18.0
+        ],
+        [
+          15.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_19->A6_20",
+      "polyline": [
+        [
+          15.0,
+          19.0
+        ],
+        [
+          15.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_20->A6_21",
+      "polyline": [
+        [
+          15.0,
+          20.0
+        ],
+        [
+          15.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_21->A6_22",
+      "polyline": [
+        [
+          15.0,
+          21.0
+        ],
+        [
+          15.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_22->A6_23",
+      "polyline": [
+        [
+          15.0,
+          22.0
+        ],
+        [
+          15.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_23->A6_24",
+      "polyline": [
+        [
+          15.0,
+          23.0
+        ],
+        [
+          15.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_24->A6_25",
+      "polyline": [
+        [
+          15.0,
+          24.0
+        ],
+        [
+          15.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_25->A6_26",
+      "polyline": [
+        [
+          15.0,
+          25.0
+        ],
+        [
+          15.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_26->A6_27",
+      "polyline": [
+        [
+          15.0,
+          26.0
+        ],
+        [
+          15.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_27->A6_28",
+      "polyline": [
+        [
+          15.0,
+          27.0
+        ],
+        [
+          15.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_28->A6_29",
+      "polyline": [
+        [
+          15.0,
+          28.0
+        ],
+        [
+          15.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_29->A6_30",
+      "polyline": [
+        [
+          15.0,
+          29.0
+        ],
+        [
+          15.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_30->A6_31",
+      "polyline": [
+        [
+          15.0,
+          30.0
+        ],
+        [
+          15.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_31->A6_32",
+      "polyline": [
+        [
+          15.0,
+          31.0
+        ],
+        [
+          15.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_32->A6_33",
+      "polyline": [
+        [
+          15.0,
+          32.0
+        ],
+        [
+          15.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_33->A6_34",
+      "polyline": [
+        [
+          15.0,
+          33.0
+        ],
+        [
+          15.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_34->A6_35",
+      "polyline": [
+        [
+          15.0,
+          34.0
+        ],
+        [
+          15.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_35->A6_36",
+      "polyline": [
+        [
+          15.0,
+          35.0
+        ],
+        [
+          15.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_36->A6_37",
+      "polyline": [
+        [
+          15.0,
+          36.0
+        ],
+        [
+          15.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_37->A6_38",
+      "polyline": [
+        [
+          15.0,
+          37.0
+        ],
+        [
+          15.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_38->A6_39",
+      "polyline": [
+        [
+          15.0,
+          38.0
+        ],
+        [
+          15.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_39->A6_40",
+      "polyline": [
+        [
+          15.0,
+          39.0
+        ],
+        [
+          15.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_40->A6_41",
+      "polyline": [
+        [
+          15.0,
+          40.0
+        ],
+        [
+          15.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_41->A6_42",
+      "polyline": [
+        [
+          15.0,
+          41.0
+        ],
+        [
+          15.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_42->A6_43",
+      "polyline": [
+        [
+          15.0,
+          42.0
+        ],
+        [
+          15.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_43->A6_44",
+      "polyline": [
+        [
+          15.0,
+          43.0
+        ],
+        [
+          15.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_44->A6_45",
+      "polyline": [
+        [
+          15.0,
+          44.0
+        ],
+        [
+          15.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_45->A6_46",
+      "polyline": [
+        [
+          15.0,
+          45.0
+        ],
+        [
+          15.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_46->A6_47",
+      "polyline": [
+        [
+          15.0,
+          46.0
+        ],
+        [
+          15.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A6_47->A6_48",
+      "polyline": [
+        [
+          15.0,
+          47.0
+        ],
+        [
+          15.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_00->A7_01",
+      "polyline": [
+        [
+          18.0,
+          0.0
+        ],
+        [
+          18.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_01->A7_02",
+      "polyline": [
+        [
+          18.0,
+          1.0
+        ],
+        [
+          18.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_02->A7_03",
+      "polyline": [
+        [
+          18.0,
+          2.0
+        ],
+        [
+          18.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_03->A7_04",
+      "polyline": [
+        [
+          18.0,
+          3.0
+        ],
+        [
+          18.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_04->A7_05",
+      "polyline": [
+        [
+          18.0,
+          4.0
+        ],
+        [
+          18.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_05->A7_06",
+      "polyline": [
+        [
+          18.0,
+          5.0
+        ],
+        [
+          18.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_06->A7_07",
+      "polyline": [
+        [
+          18.0,
+          6.0
+        ],
+        [
+          18.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_07->A7_08",
+      "polyline": [
+        [
+          18.0,
+          7.0
+        ],
+        [
+          18.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_08->A7_09",
+      "polyline": [
+        [
+          18.0,
+          8.0
+        ],
+        [
+          18.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_09->A7_10",
+      "polyline": [
+        [
+          18.0,
+          9.0
+        ],
+        [
+          18.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_10->A7_11",
+      "polyline": [
+        [
+          18.0,
+          10.0
+        ],
+        [
+          18.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_11->A7_12",
+      "polyline": [
+        [
+          18.0,
+          11.0
+        ],
+        [
+          18.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_12->A7_13",
+      "polyline": [
+        [
+          18.0,
+          12.0
+        ],
+        [
+          18.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_13->A7_14",
+      "polyline": [
+        [
+          18.0,
+          13.0
+        ],
+        [
+          18.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_14->A7_15",
+      "polyline": [
+        [
+          18.0,
+          14.0
+        ],
+        [
+          18.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_15->A7_16",
+      "polyline": [
+        [
+          18.0,
+          15.0
+        ],
+        [
+          18.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_16->A7_17",
+      "polyline": [
+        [
+          18.0,
+          16.0
+        ],
+        [
+          18.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_17->A7_18",
+      "polyline": [
+        [
+          18.0,
+          17.0
+        ],
+        [
+          18.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_18->A7_19",
+      "polyline": [
+        [
+          18.0,
+          18.0
+        ],
+        [
+          18.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_19->A7_20",
+      "polyline": [
+        [
+          18.0,
+          19.0
+        ],
+        [
+          18.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_20->A7_21",
+      "polyline": [
+        [
+          18.0,
+          20.0
+        ],
+        [
+          18.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_21->A7_22",
+      "polyline": [
+        [
+          18.0,
+          21.0
+        ],
+        [
+          18.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_22->A7_23",
+      "polyline": [
+        [
+          18.0,
+          22.0
+        ],
+        [
+          18.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_23->A7_24",
+      "polyline": [
+        [
+          18.0,
+          23.0
+        ],
+        [
+          18.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_24->A7_25",
+      "polyline": [
+        [
+          18.0,
+          24.0
+        ],
+        [
+          18.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_25->A7_26",
+      "polyline": [
+        [
+          18.0,
+          25.0
+        ],
+        [
+          18.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_26->A7_27",
+      "polyline": [
+        [
+          18.0,
+          26.0
+        ],
+        [
+          18.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_27->A7_28",
+      "polyline": [
+        [
+          18.0,
+          27.0
+        ],
+        [
+          18.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_28->A7_29",
+      "polyline": [
+        [
+          18.0,
+          28.0
+        ],
+        [
+          18.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_29->A7_30",
+      "polyline": [
+        [
+          18.0,
+          29.0
+        ],
+        [
+          18.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_30->A7_31",
+      "polyline": [
+        [
+          18.0,
+          30.0
+        ],
+        [
+          18.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_31->A7_32",
+      "polyline": [
+        [
+          18.0,
+          31.0
+        ],
+        [
+          18.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_32->A7_33",
+      "polyline": [
+        [
+          18.0,
+          32.0
+        ],
+        [
+          18.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_33->A7_34",
+      "polyline": [
+        [
+          18.0,
+          33.0
+        ],
+        [
+          18.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_34->A7_35",
+      "polyline": [
+        [
+          18.0,
+          34.0
+        ],
+        [
+          18.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_35->A7_36",
+      "polyline": [
+        [
+          18.0,
+          35.0
+        ],
+        [
+          18.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_36->A7_37",
+      "polyline": [
+        [
+          18.0,
+          36.0
+        ],
+        [
+          18.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_37->A7_38",
+      "polyline": [
+        [
+          18.0,
+          37.0
+        ],
+        [
+          18.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_38->A7_39",
+      "polyline": [
+        [
+          18.0,
+          38.0
+        ],
+        [
+          18.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_39->A7_40",
+      "polyline": [
+        [
+          18.0,
+          39.0
+        ],
+        [
+          18.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_40->A7_41",
+      "polyline": [
+        [
+          18.0,
+          40.0
+        ],
+        [
+          18.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_41->A7_42",
+      "polyline": [
+        [
+          18.0,
+          41.0
+        ],
+        [
+          18.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_42->A7_43",
+      "polyline": [
+        [
+          18.0,
+          42.0
+        ],
+        [
+          18.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_43->A7_44",
+      "polyline": [
+        [
+          18.0,
+          43.0
+        ],
+        [
+          18.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_44->A7_45",
+      "polyline": [
+        [
+          18.0,
+          44.0
+        ],
+        [
+          18.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_45->A7_46",
+      "polyline": [
+        [
+          18.0,
+          45.0
+        ],
+        [
+          18.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_46->A7_47",
+      "polyline": [
+        [
+          18.0,
+          46.0
+        ],
+        [
+          18.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A7_47->A7_48",
+      "polyline": [
+        [
+          18.0,
+          47.0
+        ],
+        [
+          18.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_00->A8_01",
+      "polyline": [
+        [
+          21.0,
+          0.0
+        ],
+        [
+          21.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_01->A8_02",
+      "polyline": [
+        [
+          21.0,
+          1.0
+        ],
+        [
+          21.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_02->A8_03",
+      "polyline": [
+        [
+          21.0,
+          2.0
+        ],
+        [
+          21.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_03->A8_04",
+      "polyline": [
+        [
+          21.0,
+          3.0
+        ],
+        [
+          21.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_04->A8_05",
+      "polyline": [
+        [
+          21.0,
+          4.0
+        ],
+        [
+          21.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_05->A8_06",
+      "polyline": [
+        [
+          21.0,
+          5.0
+        ],
+        [
+          21.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_06->A8_07",
+      "polyline": [
+        [
+          21.0,
+          6.0
+        ],
+        [
+          21.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_07->A8_08",
+      "polyline": [
+        [
+          21.0,
+          7.0
+        ],
+        [
+          21.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_08->A8_09",
+      "polyline": [
+        [
+          21.0,
+          8.0
+        ],
+        [
+          21.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_09->A8_10",
+      "polyline": [
+        [
+          21.0,
+          9.0
+        ],
+        [
+          21.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_10->A8_11",
+      "polyline": [
+        [
+          21.0,
+          10.0
+        ],
+        [
+          21.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_11->A8_12",
+      "polyline": [
+        [
+          21.0,
+          11.0
+        ],
+        [
+          21.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_12->A8_13",
+      "polyline": [
+        [
+          21.0,
+          12.0
+        ],
+        [
+          21.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_13->A8_14",
+      "polyline": [
+        [
+          21.0,
+          13.0
+        ],
+        [
+          21.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_14->A8_15",
+      "polyline": [
+        [
+          21.0,
+          14.0
+        ],
+        [
+          21.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_15->A8_16",
+      "polyline": [
+        [
+          21.0,
+          15.0
+        ],
+        [
+          21.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_16->A8_17",
+      "polyline": [
+        [
+          21.0,
+          16.0
+        ],
+        [
+          21.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_17->A8_18",
+      "polyline": [
+        [
+          21.0,
+          17.0
+        ],
+        [
+          21.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_18->A8_19",
+      "polyline": [
+        [
+          21.0,
+          18.0
+        ],
+        [
+          21.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_19->A8_20",
+      "polyline": [
+        [
+          21.0,
+          19.0
+        ],
+        [
+          21.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_20->A8_21",
+      "polyline": [
+        [
+          21.0,
+          20.0
+        ],
+        [
+          21.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_21->A8_22",
+      "polyline": [
+        [
+          21.0,
+          21.0
+        ],
+        [
+          21.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_22->A8_23",
+      "polyline": [
+        [
+          21.0,
+          22.0
+        ],
+        [
+          21.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_23->A8_24",
+      "polyline": [
+        [
+          21.0,
+          23.0
+        ],
+        [
+          21.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_24->A8_25",
+      "polyline": [
+        [
+          21.0,
+          24.0
+        ],
+        [
+          21.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_25->A8_26",
+      "polyline": [
+        [
+          21.0,
+          25.0
+        ],
+        [
+          21.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_26->A8_27",
+      "polyline": [
+        [
+          21.0,
+          26.0
+        ],
+        [
+          21.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_27->A8_28",
+      "polyline": [
+        [
+          21.0,
+          27.0
+        ],
+        [
+          21.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_28->A8_29",
+      "polyline": [
+        [
+          21.0,
+          28.0
+        ],
+        [
+          21.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_29->A8_30",
+      "polyline": [
+        [
+          21.0,
+          29.0
+        ],
+        [
+          21.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_30->A8_31",
+      "polyline": [
+        [
+          21.0,
+          30.0
+        ],
+        [
+          21.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_31->A8_32",
+      "polyline": [
+        [
+          21.0,
+          31.0
+        ],
+        [
+          21.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_32->A8_33",
+      "polyline": [
+        [
+          21.0,
+          32.0
+        ],
+        [
+          21.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_33->A8_34",
+      "polyline": [
+        [
+          21.0,
+          33.0
+        ],
+        [
+          21.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_34->A8_35",
+      "polyline": [
+        [
+          21.0,
+          34.0
+        ],
+        [
+          21.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_35->A8_36",
+      "polyline": [
+        [
+          21.0,
+          35.0
+        ],
+        [
+          21.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_36->A8_37",
+      "polyline": [
+        [
+          21.0,
+          36.0
+        ],
+        [
+          21.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_37->A8_38",
+      "polyline": [
+        [
+          21.0,
+          37.0
+        ],
+        [
+          21.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_38->A8_39",
+      "polyline": [
+        [
+          21.0,
+          38.0
+        ],
+        [
+          21.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_39->A8_40",
+      "polyline": [
+        [
+          21.0,
+          39.0
+        ],
+        [
+          21.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_40->A8_41",
+      "polyline": [
+        [
+          21.0,
+          40.0
+        ],
+        [
+          21.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_41->A8_42",
+      "polyline": [
+        [
+          21.0,
+          41.0
+        ],
+        [
+          21.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_42->A8_43",
+      "polyline": [
+        [
+          21.0,
+          42.0
+        ],
+        [
+          21.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_43->A8_44",
+      "polyline": [
+        [
+          21.0,
+          43.0
+        ],
+        [
+          21.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_44->A8_45",
+      "polyline": [
+        [
+          21.0,
+          44.0
+        ],
+        [
+          21.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_45->A8_46",
+      "polyline": [
+        [
+          21.0,
+          45.0
+        ],
+        [
+          21.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_46->A8_47",
+      "polyline": [
+        [
+          21.0,
+          46.0
+        ],
+        [
+          21.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A8_47->A8_48",
+      "polyline": [
+        [
+          21.0,
+          47.0
+        ],
+        [
+          21.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_00->A9_01",
+      "polyline": [
+        [
+          24.0,
+          0.0
+        ],
+        [
+          24.0,
+          1.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_01->A9_02",
+      "polyline": [
+        [
+          24.0,
+          1.0
+        ],
+        [
+          24.0,
+          2.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_02->A9_03",
+      "polyline": [
+        [
+          24.0,
+          2.0
+        ],
+        [
+          24.0,
+          3.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_03->A9_04",
+      "polyline": [
+        [
+          24.0,
+          3.0
+        ],
+        [
+          24.0,
+          4.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_04->A9_05",
+      "polyline": [
+        [
+          24.0,
+          4.0
+        ],
+        [
+          24.0,
+          5.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_05->A9_06",
+      "polyline": [
+        [
+          24.0,
+          5.0
+        ],
+        [
+          24.0,
+          6.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_06->A9_07",
+      "polyline": [
+        [
+          24.0,
+          6.0
+        ],
+        [
+          24.0,
+          7.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_07->A9_08",
+      "polyline": [
+        [
+          24.0,
+          7.0
+        ],
+        [
+          24.0,
+          8.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_08->A9_09",
+      "polyline": [
+        [
+          24.0,
+          8.0
+        ],
+        [
+          24.0,
+          9.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_09->A9_10",
+      "polyline": [
+        [
+          24.0,
+          9.0
+        ],
+        [
+          24.0,
+          10.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_10->A9_11",
+      "polyline": [
+        [
+          24.0,
+          10.0
+        ],
+        [
+          24.0,
+          11.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_11->A9_12",
+      "polyline": [
+        [
+          24.0,
+          11.0
+        ],
+        [
+          24.0,
+          12.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_12->A9_13",
+      "polyline": [
+        [
+          24.0,
+          12.0
+        ],
+        [
+          24.0,
+          13.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_13->A9_14",
+      "polyline": [
+        [
+          24.0,
+          13.0
+        ],
+        [
+          24.0,
+          14.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_14->A9_15",
+      "polyline": [
+        [
+          24.0,
+          14.0
+        ],
+        [
+          24.0,
+          15.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_15->A9_16",
+      "polyline": [
+        [
+          24.0,
+          15.0
+        ],
+        [
+          24.0,
+          16.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_16->A9_17",
+      "polyline": [
+        [
+          24.0,
+          16.0
+        ],
+        [
+          24.0,
+          17.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_17->A9_18",
+      "polyline": [
+        [
+          24.0,
+          17.0
+        ],
+        [
+          24.0,
+          18.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_18->A9_19",
+      "polyline": [
+        [
+          24.0,
+          18.0
+        ],
+        [
+          24.0,
+          19.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_19->A9_20",
+      "polyline": [
+        [
+          24.0,
+          19.0
+        ],
+        [
+          24.0,
+          20.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_20->A9_21",
+      "polyline": [
+        [
+          24.0,
+          20.0
+        ],
+        [
+          24.0,
+          21.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_21->A9_22",
+      "polyline": [
+        [
+          24.0,
+          21.0
+        ],
+        [
+          24.0,
+          22.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_22->A9_23",
+      "polyline": [
+        [
+          24.0,
+          22.0
+        ],
+        [
+          24.0,
+          23.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_23->A9_24",
+      "polyline": [
+        [
+          24.0,
+          23.0
+        ],
+        [
+          24.0,
+          24.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_24->A9_25",
+      "polyline": [
+        [
+          24.0,
+          24.0
+        ],
+        [
+          24.0,
+          25.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_25->A9_26",
+      "polyline": [
+        [
+          24.0,
+          25.0
+        ],
+        [
+          24.0,
+          26.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_26->A9_27",
+      "polyline": [
+        [
+          24.0,
+          26.0
+        ],
+        [
+          24.0,
+          27.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_27->A9_28",
+      "polyline": [
+        [
+          24.0,
+          27.0
+        ],
+        [
+          24.0,
+          28.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_28->A9_29",
+      "polyline": [
+        [
+          24.0,
+          28.0
+        ],
+        [
+          24.0,
+          29.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_29->A9_30",
+      "polyline": [
+        [
+          24.0,
+          29.0
+        ],
+        [
+          24.0,
+          30.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_30->A9_31",
+      "polyline": [
+        [
+          24.0,
+          30.0
+        ],
+        [
+          24.0,
+          31.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_31->A9_32",
+      "polyline": [
+        [
+          24.0,
+          31.0
+        ],
+        [
+          24.0,
+          32.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_32->A9_33",
+      "polyline": [
+        [
+          24.0,
+          32.0
+        ],
+        [
+          24.0,
+          33.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_33->A9_34",
+      "polyline": [
+        [
+          24.0,
+          33.0
+        ],
+        [
+          24.0,
+          34.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_34->A9_35",
+      "polyline": [
+        [
+          24.0,
+          34.0
+        ],
+        [
+          24.0,
+          35.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_35->A9_36",
+      "polyline": [
+        [
+          24.0,
+          35.0
+        ],
+        [
+          24.0,
+          36.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_36->A9_37",
+      "polyline": [
+        [
+          24.0,
+          36.0
+        ],
+        [
+          24.0,
+          37.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_37->A9_38",
+      "polyline": [
+        [
+          24.0,
+          37.0
+        ],
+        [
+          24.0,
+          38.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_38->A9_39",
+      "polyline": [
+        [
+          24.0,
+          38.0
+        ],
+        [
+          24.0,
+          39.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_39->A9_40",
+      "polyline": [
+        [
+          24.0,
+          39.0
+        ],
+        [
+          24.0,
+          40.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_40->A9_41",
+      "polyline": [
+        [
+          24.0,
+          40.0
+        ],
+        [
+          24.0,
+          41.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_41->A9_42",
+      "polyline": [
+        [
+          24.0,
+          41.0
+        ],
+        [
+          24.0,
+          42.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_42->A9_43",
+      "polyline": [
+        [
+          24.0,
+          42.0
+        ],
+        [
+          24.0,
+          43.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_43->A9_44",
+      "polyline": [
+        [
+          24.0,
+          43.0
+        ],
+        [
+          24.0,
+          44.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_44->A9_45",
+      "polyline": [
+        [
+          24.0,
+          44.0
+        ],
+        [
+          24.0,
+          45.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_45->A9_46",
+      "polyline": [
+        [
+          24.0,
+          45.0
+        ],
+        [
+          24.0,
+          46.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_46->A9_47",
+      "polyline": [
+        [
+          24.0,
+          46.0
+        ],
+        [
+          24.0,
+          47.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A9_47->A9_48",
+      "polyline": [
+        [
+          24.0,
+          47.0
+        ],
+        [
+          24.0,
+          48.0
+        ]
+      ],
+      "width": 0.5,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "aisle"
+    },
+    {
+      "id": "A1_00->A2_00",
+      "polyline": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          3.0,
+          0.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A2_00->A3_00",
+      "polyline": [
+        [
+          3.0,
+          0.0
+        ],
+        [
+          6.0,
+          0.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A3_00->A4_00",
+      "polyline": [
+        [
+          6.0,
+          0.0
+        ],
+        [
+          9.0,
+          0.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A4_00->A5_00",
+      "polyline": [
+        [
+          9.0,
+          0.0
+        ],
+        [
+          12.0,
+          0.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A5_00->A6_00",
+      "polyline": [
+        [
+          12.0,
+          0.0
+        ],
+        [
+          15.0,
+          0.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A6_00->A7_00",
+      "polyline": [
+        [
+          15.0,
+          0.0
+        ],
+        [
+          18.0,
+          0.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A7_00->A8_00",
+      "polyline": [
+        [
+          18.0,
+          0.0
+        ],
+        [
+          21.0,
+          0.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A8_00->A9_00",
+      "polyline": [
+        [
+          21.0,
+          0.0
+        ],
+        [
+          24.0,
+          0.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A1_24->A2_24",
+      "polyline": [
+        [
+          0.0,
+          24.0
+        ],
+        [
+          3.0,
+          24.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A2_24->A3_24",
+      "polyline": [
+        [
+          3.0,
+          24.0
+        ],
+        [
+          6.0,
+          24.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A3_24->A4_24",
+      "polyline": [
+        [
+          6.0,
+          24.0
+        ],
+        [
+          9.0,
+          24.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A4_24->A5_24",
+      "polyline": [
+        [
+          9.0,
+          24.0
+        ],
+        [
+          12.0,
+          24.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A5_24->A6_24",
+      "polyline": [
+        [
+          12.0,
+          24.0
+        ],
+        [
+          15.0,
+          24.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A6_24->A7_24",
+      "polyline": [
+        [
+          15.0,
+          24.0
+        ],
+        [
+          18.0,
+          24.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A7_24->A8_24",
+      "polyline": [
+        [
+          18.0,
+          24.0
+        ],
+        [
+          21.0,
+          24.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A8_24->A9_24",
+      "polyline": [
+        [
+          21.0,
+          24.0
+        ],
+        [
+          24.0,
+          24.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A1_48->A2_48",
+      "polyline": [
+        [
+          0.0,
+          48.0
+        ],
+        [
+          3.0,
+          48.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A2_48->A3_48",
+      "polyline": [
+        [
+          3.0,
+          48.0
+        ],
+        [
+          6.0,
+          48.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A3_48->A4_48",
+      "polyline": [
+        [
+          6.0,
+          48.0
+        ],
+        [
+          9.0,
+          48.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A4_48->A5_48",
+      "polyline": [
+        [
+          9.0,
+          48.0
+        ],
+        [
+          12.0,
+          48.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A5_48->A6_48",
+      "polyline": [
+        [
+          12.0,
+          48.0
+        ],
+        [
+          15.0,
+          48.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A6_48->A7_48",
+      "polyline": [
+        [
+          15.0,
+          48.0
+        ],
+        [
+          18.0,
+          48.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A7_48->A8_48",
+      "polyline": [
+        [
+          18.0,
+          48.0
+        ],
+        [
+          21.0,
+          48.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    },
+    {
+      "id": "A8_48->A9_48",
+      "polyline": [
+        [
+          21.0,
+          48.0
+        ],
+        [
+          24.0,
+          48.0
+        ]
+      ],
+      "width": 0.7,
+      "bidirectional": true,
+      "capacity": 2,
+      "kind": "cross_aisle"
+    }
+  ],
+  "props": [
+    {
+      "id": "P1",
+      "type": "pick_station",
+      "x": 3.0,
+      "y": 6.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "P1"
+    },
+    {
+      "id": "P2",
+      "type": "pick_station",
+      "x": 6.0,
+      "y": 6.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "P2"
+    },
+    {
+      "id": "P3",
+      "type": "pick_station",
+      "x": 9.0,
+      "y": 6.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "P3"
+    },
+    {
+      "id": "P4",
+      "type": "pick_station",
+      "x": 12.0,
+      "y": 6.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "P4"
+    },
+    {
+      "id": "P5",
+      "type": "pick_station",
+      "x": 15.0,
+      "y": 6.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "P5"
+    },
+    {
+      "id": "P6",
+      "type": "pick_station",
+      "x": 18.0,
+      "y": 6.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "P6"
+    },
+    {
+      "id": "P7",
+      "type": "pick_station",
+      "x": 21.0,
+      "y": 6.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "P7"
+    },
+    {
+      "id": "P8",
+      "type": "pick_station",
+      "x": 3.0,
+      "y": 42.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "P8"
+    },
+    {
+      "id": "K1",
+      "type": "pack_station",
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "K1"
+    },
+    {
+      "id": "K2",
+      "type": "pack_station",
+      "x": 12.0,
+      "y": 0.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "K2"
+    },
+    {
+      "id": "K3",
+      "type": "pack_station",
+      "x": 24.0,
+      "y": 0.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "K3"
+    },
+    {
+      "id": "C1",
+      "type": "charger",
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "C1"
+    },
+    {
+      "id": "C2",
+      "type": "charger",
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "C2"
+    },
+    {
+      "id": "D1",
+      "type": "dock",
+      "x": 24.0,
+      "y": 0.0,
+      "z": 0.0,
+      "rot_deg": 0.0,
+      "label": "D1"
+    }
+  ],
+  "agents": [
+    {
+      "id": "amr_00",
+      "type": "amr",
+      "start_node": "A9_00"
+    },
+    {
+      "id": "amr_01",
+      "type": "amr",
+      "start_node": "A9_00"
+    },
+    {
+      "id": "amr_02",
+      "type": "amr",
+      "start_node": "A9_00"
+    },
+    {
+      "id": "amr_03",
+      "type": "amr",
+      "start_node": "A9_00"
+    },
+    {
+      "id": "amr_04",
+      "type": "amr",
+      "start_node": "A9_00"
+    },
+    {
+      "id": "amr_05",
+      "type": "amr",
+      "start_node": "A9_00"
+    }
+  ],
+  "cameras": [
+    {
+      "name": "overview",
+      "eye": [
+        12.0,
+        -19.200000000000003,
+        52.800000000000004
+      ],
+      "target": [
+        12.0,
+        24.0,
+        0.0
+      ]
+    },
+    {
+      "name": "top_down",
+      "eye": [
+        12.0,
+        24.0,
+        76.80000000000001
+      ],
+      "target": [
+        12.0,
+        24.0,
+        0.0
+      ]
+    }
+  ],
+  "catalog": {
+    "amr": {
+      "kind": "prim",
+      "shape": "box",
+      "size": [
+        0.7,
+        0.9,
+        0.35
+      ],
+      "color": [
+        0.9,
+        0.45,
+        0.1
+      ],
+      "metallic": 0.1,
+      "roughness": 0.5,
+      "usd_path": "",
+      "usd_scale": 1.0
+    },
+    "pick_station": {
+      "kind": "prim",
+      "shape": "box",
+      "size": [
+        1.0,
+        1.0,
+        1.6
+      ],
+      "color": [
+        0.2,
+        0.5,
+        0.85
+      ],
+      "metallic": 0.0,
+      "roughness": 0.55,
+      "usd_path": "",
+      "usd_scale": 1.0
+    },
+    "pack_station": {
+      "kind": "prim",
+      "shape": "box",
+      "size": [
+        1.2,
+        1.2,
+        1.4
+      ],
+      "color": [
+        0.3,
+        0.6,
+        0.2
+      ],
+      "metallic": 0.0,
+      "roughness": 0.55,
+      "usd_path": "",
+      "usd_scale": 1.0
+    },
+    "charger": {
+      "kind": "prim",
+      "shape": "box",
+      "size": [
+        0.6,
+        0.6,
+        1.0
+      ],
+      "color": [
+        0.95,
+        0.65,
+        0.1
+      ],
+      "metallic": 0.2,
+      "roughness": 0.4,
+      "usd_path": "",
+      "usd_scale": 1.0
+    },
+    "dock": {
+      "kind": "prim",
+      "shape": "box",
+      "size": [
+        1.4,
+        0.4,
+        0.6
+      ],
+      "color": [
+        0.55,
+        0.55,
+        0.55
+      ],
+      "metallic": 0.0,
+      "roughness": 0.7,
+      "usd_path": "",
+      "usd_scale": 1.0
+    }
+  },
+  "schema_version": "twin-1.0"
+}

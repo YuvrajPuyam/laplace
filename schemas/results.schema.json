@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://laplace.dev/schemas/results.schema.json",
+  "title": "Laplace rollout results (Contract B.1)",
+  "description": "Metrics for ONE rollout (one config, one seed), computed from the event log over [warmup_minutes, sim_minutes]. METRIC NAMES ARE CANONICAL STRINGS — they appear in tool calls, the eval harness, the UI, and the README table. Never rename; only add (with schema_version bump).",
+  "type": "object",
+  "required": ["schema_version", "config_hash", "seed", "metrics", "event_log_uri"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "config_hash": { "type": "string", "pattern": "^[a-f0-9]{12}$", "description": "First 12 hex chars of sha256 of the canonicalized (sorted-keys, defaults-filled) config JSON." },
+    "seed": { "type": "integer", "minimum": 0 },
+    "metrics": {
+      "type": "object",
+      "required": [
+        "throughput_orders_per_hr",
+        "p50_order_latency_min",
+        "p95_order_latency_min",
+        "amr_utilization_pct",
+        "station_wait_p95_min",
+        "edge_congestion_top5",
+        "deadhead_pct",
+        "charge_downtime_pct",
+        "orders_completed",
+        "orders_abandoned"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "throughput_orders_per_hr": { "type": "number", "description": "PRIMARY METRIC unless a scenario overrides. Completed orders / measured hours." },
+        "p50_order_latency_min":   { "type": "number", "description": "Median order_arrived -> order_complete." },
+        "p95_order_latency_min":   { "type": "number" },
+        "amr_utilization_pct":     { "type": "number", "description": "% of measured time AMRs are tasked (moving with purpose or in service), fleet-averaged." },
+        "station_wait_p95_min":    { "type": "object", "additionalProperties": { "type": "number" }, "description": "station_id -> p95 minutes in queue before service_start." },
+        "edge_congestion_top5": {
+          "type": "array", "maxItems": 5,
+          "items": {
+            "type": "object", "required": ["edge", "occupancy_pct"], "additionalProperties": false,
+            "properties": {
+              "edge": { "type": "string" },
+              "occupancy_pct": { "type": "number", "description": "Mean occupancy / capacity over measured window, %." }
+            }
+          }
+        },
+        "deadhead_pct":        { "type": "number", "description": "% of AMR travel distance while untasked." },
+        "charge_downtime_pct": { "type": "number" },
+        "orders_completed":    { "type": "integer" },
+        "orders_abandoned":    { "type": "integer", "description": "Orders still incomplete at sim end. High values invalidate throughput comparisons — compare_configs must flag if >5% of arrivals." }
+      }
+    },
+    "event_log_uri": { "type": "string", "description": "Relative path to the parquet event log (see events.schema.md). Logs may be pruned for GT sweeps (keep 1 in 10 seeds) but MUST exist for any rollout cited as evidence." }
+  }
+}

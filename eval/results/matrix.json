@@ -1,0 +1,24 @@
+{
+  "aggregate": {
+    "n_passes": 0,
+    "scenarios": [
+      "braess_dev",
+      "dc_pickzone_med",
+      "mfc_compact",
+      "real_full_warehouse"
+    ],
+    "stochastic": {},
+    "deterministic": {
+      "grid_search": {
+        "accuracy": 1.0,
+        "mean_regret": 0.0,
+        "n_scenarios": 4
+      },
+      "ocba": {
+        "accuracy": 1.0,
+        "mean_regret": 0.0,
+        "n_scenarios": 4
+      }
+    }
+  }
+}

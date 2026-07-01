@@ -1,0 +1,18 @@
+{
+  "facility_id": "mfc_compact",
+  "name": "Compact micro-fulfilment zone (single-block, Roodbergen layout)",
+  "layout_source": "Roodbergen, K.J. & De Koster, R. (2001), 'Routing methods for warehouses with multiple cross aisles', Int. J. Production Research 39(9):1865-1883 \u2014 standard multi-block parallel-aisle layout. Aisle pitch 3.0 m (sim convention).",
+  "demand_source": "Olist Brazilian E-Commerce Public Dataset (~99,441 real orders, 2016-2018). Intraday shape is real: peak hour 16:00, peak-to-average ratio 1.61 (see facility/demand.py, data/olist_calibration.json). Zone sized for the peak hour; absolute per-zone scale is a stated single-zone assumption.",
+  "notes": "Urban micro-fulfilment centre pick zone. 6 aisles x 30 m, front/back cross-aisles only (single block). 5 pick faces, 2 pack stations. ~15 x 30 m.",
+  "footprint_m": {
+    "width": 15.0,
+    "length": 30.0
+  },
+  "cross_aisles": [
+    0,
+    30
+  ],
+  "n_pick_faces": 5,
+  "fleet_amr_count": 4,
+  "arrival_rate_per_min": 0.6
+}

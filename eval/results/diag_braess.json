@@ -1,0 +1,24 @@
+{
+  "diagnosis": "diag_braess",
+  "correct_cause": "shortcut_added",
+  "results": {
+    "llm_alone": {
+      "arm": "llm_alone",
+      "diagnosis_id": "diag_braess",
+      "picked": "shortcut_added",
+      "correct_cause": "shortcut_added",
+      "correct": true,
+      "rollouts": 0,
+      "notes": "no sim; confidence=0.9"
+    },
+    "agent": {
+      "arm": "agent",
+      "diagnosis_id": "diag_braess",
+      "picked": "shortcut_added",
+      "correct_cause": "shortcut_added",
+      "correct": true,
+      "rollouts": 60,
+      "notes": "18 turns, $1.52"
+    }
+  }
+}

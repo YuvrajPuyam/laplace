@@ -1,0 +1,233 @@
+{
+  "scenarios": [
+    "braess_holdout",
+    "pool_packzone",
+    "pool_pickzone"
+  ],
+  "budget": 60,
+  "seeds": 12,
+  "table": {
+    "grid_search": {
+      "decision_accuracy": 1.0,
+      "mean_regret": 0.0,
+      "total_rollouts": 84,
+      "ci_coverage": null,
+      "n_coverage_scored": 0,
+      "n_identity_mismatch": 0,
+      "mean_interval_score": null,
+      "ece_gap": null,
+      "n": 3
+    },
+    "ocba": {
+      "decision_accuracy": 1.0,
+      "mean_regret": 0.0,
+      "total_rollouts": 84,
+      "ci_coverage": null,
+      "n_coverage_scored": 0,
+      "n_identity_mismatch": 0,
+      "mean_interval_score": null,
+      "ece_gap": null,
+      "n": 3
+    },
+    "llm_alone": {
+      "decision_accuracy": 1.0,
+      "mean_regret": 0.0,
+      "total_rollouts": 0,
+      "ci_coverage": 0.6667,
+      "n_coverage_scored": 3,
+      "n_identity_mismatch": 0,
+      "mean_interval_score": 20.644,
+      "ece_gap": 0.2333,
+      "n": 3
+    },
+    "agent": {
+      "decision_accuracy": 1.0,
+      "mean_regret": 0.0,
+      "total_rollouts": 84,
+      "ci_coverage": 1.0,
+      "n_coverage_scored": 1,
+      "n_identity_mismatch": 2,
+      "mean_interval_score": 4.5606,
+      "ece_gap": 0.1,
+      "n": 3
+    }
+  },
+  "graded": {
+    "grid_search": [
+      {
+        "arm": "grid_search",
+        "scenario_id": "braess_holdout",
+        "picked": "mid_shortcut",
+        "gt_optimum": "mid_shortcut",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 122.0926,
+        "gt_metric": 122.0926,
+        "ci_covered": null,
+        "identity_mismatch": null,
+        "interval_score": null,
+        "rollouts": 24
+      },
+      {
+        "arm": "grid_search",
+        "scenario_id": "pool_packzone",
+        "picked": "pooled_1x4",
+        "gt_optimum": "pooled_1x4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 5.1784,
+        "gt_metric": 5.1784,
+        "ci_covered": null,
+        "identity_mismatch": null,
+        "interval_score": null,
+        "rollouts": 24
+      },
+      {
+        "arm": "grid_search",
+        "scenario_id": "pool_pickzone",
+        "picked": "pooled_1x4",
+        "gt_optimum": "pooled_1x4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 7.6141,
+        "gt_metric": 7.6141,
+        "ci_covered": null,
+        "identity_mismatch": null,
+        "interval_score": null,
+        "rollouts": 36
+      }
+    ],
+    "ocba": [
+      {
+        "arm": "ocba",
+        "scenario_id": "braess_holdout",
+        "picked": "mid_shortcut",
+        "gt_optimum": "mid_shortcut",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 122.0926,
+        "gt_metric": 122.0926,
+        "ci_covered": null,
+        "identity_mismatch": null,
+        "interval_score": null,
+        "rollouts": 24
+      },
+      {
+        "arm": "ocba",
+        "scenario_id": "pool_packzone",
+        "picked": "pooled_1x4",
+        "gt_optimum": "pooled_1x4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 5.1784,
+        "gt_metric": 5.1784,
+        "ci_covered": null,
+        "identity_mismatch": null,
+        "interval_score": null,
+        "rollouts": 24
+      },
+      {
+        "arm": "ocba",
+        "scenario_id": "pool_pickzone",
+        "picked": "pooled_1x4",
+        "gt_optimum": "pooled_1x4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 7.6141,
+        "gt_metric": 7.6141,
+        "ci_covered": null,
+        "identity_mismatch": null,
+        "interval_score": null,
+        "rollouts": 36
+      }
+    ],
+    "llm_alone": [
+      {
+        "arm": "llm_alone",
+        "scenario_id": "braess_holdout",
+        "picked": "mid_shortcut",
+        "gt_optimum": "mid_shortcut",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 122.0926,
+        "gt_metric": 122.0926,
+        "ci_covered": true,
+        "identity_mismatch": false,
+        "interval_score": 35,
+        "rollouts": 0
+      },
+      {
+        "arm": "llm_alone",
+        "scenario_id": "pool_packzone",
+        "picked": "pooled_1x4",
+        "gt_optimum": "pooled_1x4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 5.1784,
+        "gt_metric": 5.1784,
+        "ci_covered": false,
+        "identity_mismatch": false,
+        "interval_score": 15.432,
+        "rollouts": 0
+      },
+      {
+        "arm": "llm_alone",
+        "scenario_id": "pool_pickzone",
+        "picked": "pooled_1x4",
+        "gt_optimum": "pooled_1x4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 7.6141,
+        "gt_metric": 7.6141,
+        "ci_covered": true,
+        "identity_mismatch": false,
+        "interval_score": 11.5,
+        "rollouts": 0
+      }
+    ],
+    "agent": [
+      {
+        "arm": "agent",
+        "scenario_id": "braess_holdout",
+        "picked": "mid_shortcut",
+        "gt_optimum": "mid_shortcut",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 122.0926,
+        "gt_metric": 122.0926,
+        "ci_covered": null,
+        "identity_mismatch": true,
+        "interval_score": 1.6837,
+        "rollouts": 24
+      },
+      {
+        "arm": "agent",
+        "scenario_id": "pool_packzone",
+        "picked": "pooled_1x4",
+        "gt_optimum": "pooled_1x4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 5.1784,
+        "gt_metric": 5.1784,
+        "ci_covered": null,
+        "identity_mismatch": true,
+        "interval_score": 11.1398,
+        "rollouts": 24
+      },
+      {
+        "arm": "agent",
+        "scenario_id": "pool_pickzone",
+        "picked": "pooled_1x4",
+        "gt_optimum": "pooled_1x4",
+        "correct": true,
+        "regret": 0.0,
+        "picked_metric": 7.6141,
+        "gt_metric": 7.6141,
+        "ci_covered": true,
+        "identity_mismatch": false,
+        "interval_score": 0.8582,
+        "rollouts": 36
+      }
+    ]
+  }
+}
