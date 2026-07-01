@@ -1,9 +1,9 @@
-# Laplace — an agent that answers operational questions by running experiments
+# Laplace, an agent that answers operational questions by running experiments
 
-**Name:** `laplace` (after Laplace's demon — the intellect that, knowing a system's state and dynamics, computes the future rather than guessing it). Repo tagline:
+**Name:** `laplace` (after Laplace's demon, the intellect that, knowing a system's state and dynamics, computes the future rather than guessing it). Repo tagline:
 *"LLMs guess at dynamics. Laplace runs the experiment."*
 
-> "An intellect which at a certain moment would know all forces that set nature in motion … for such an intellect nothing would be uncertain." — Laplace, 1814
+> "An intellect which at a certain moment would know all forces that set nature in motion … for such an intellect nothing would be uncertain.", Laplace, 1814
 
 **Author:** Yuvraj Puyam · **Target:** v1 public before SIGGRAPH 2026 (19 July) · **Budget:** ~6 weeks of evenings + Claude Code agents
 
@@ -11,9 +11,9 @@
 
 ## 1. Problem statement
 
-> Operational decisions about physical facilities — fleet sizing, layout, staffing, buffers — are answerable by simulation, but simulation requires a scarce expert to design, run, and interpret the experiments. So the vast majority of these decisions are made by intuition instead, and intuition is systematically wrong about stochastic dynamics (queueing nonlinearity, congestion migration, Braess-type paradoxes). Meanwhile, people have begun asking LLMs these questions because LLMs are accessible — and LLMs answer fluently with fabricated numbers, because language models cannot execute dynamics.
+> Operational decisions about physical facilities, fleet sizing, layout, staffing, buffers, are answerable by simulation, but simulation requires a scarce expert to design, run, and interpret the experiments. So the vast majority of these decisions are made by intuition instead, and intuition is systematically wrong about stochastic dynamics (queueing nonlinearity, congestion migration, Braess-type paradoxes). Meanwhile, people have begun asking LLMs these questions because LLMs are accessible, and LLMs answer fluently with fabricated numbers, because language models cannot execute dynamics.
 
-**Hypothesis (the project exists to test this):** the expert-in-the-loop role decomposes into (a) *computing dynamics* — which the simulator already does — and (b) *reasoning about experiments*: translating questions into designs, allocating budget, judging significance, interpreting results. Part (b) is orchestration and judgment, the class of work LLM agents became competent at. Therefore an agent wrapped around a simulator can deliver expert-grade answers at intuition-grade cost.
+**Hypothesis (the project exists to test this):** the expert-in-the-loop role decomposes into (a) *computing dynamics*, which the simulator already does, and (b) *reasoning about experiments*: translating questions into designs, allocating budget, judging significance, interpreting results. Part (b) is orchestration and judgment, the class of work LLM agents became competent at. Therefore an agent wrapped around a simulator can deliver expert-grade answers at intuition-grade cost.
 
 **Falsifiable form:** on held-out scenarios with computable optima:
 - **H1 (grounding gap):** agent+sim decision accuracy ≫ LLM-alone accuracy.
@@ -62,7 +62,7 @@ If H1 is small, LLMs didn't need the sim. If H2 is small, agency adds nothing ov
                 └──────────────────────────────────────────────────┘
 ```
 
-**Architecture principle:** *thin agent, rich engine.* The agent holds no warehouse knowledge; all intelligence it can't fake lives in tools. Every agent action must be representable visually (constrains the tool schema — see §7).
+**Architecture principle:** *thin agent, rich engine.* The agent holds no warehouse knowledge; all intelligence it can't fake lives in tools. Every agent action must be representable visually (constrains the tool schema, see §7).
 
 **Fidelity tiers:**
 - **Tier-0 (required, authoritative for v1):** custom headless discrete-event/kinematic hybrid sim. Pure Python/NumPy. Deterministic given seed. Target ≥500× realtime per rollout on one CPU core; rollouts parallelize across cores via multiprocessing.
@@ -77,14 +77,14 @@ One environment family, fully specified. Everything the agent can change is in t
 
 ### 3.1 World model (Tier-0 sim semantics)
 
-- **Topology:** aisles + cross-aisles as a directed navgraph. Nodes = waypoints/stations; edges have length, max speed, and capacity (max simultaneous AMRs; exceeding capacity queues entrants — this is the congestion model).
+- **Topology:** aisles + cross-aisles as a directed navgraph. Nodes = waypoints/stations; edges have length, max speed, and capacity (max simultaneous AMRs; exceeding capacity queues entrants, this is the congestion model).
 - **Stations:** `pick` (N slots), `pack` (M slots), `charge`, `dock`. Each station: service time ~ Lognormal(μ, σ), finite queue.
-- **AMRs:** speed, capacity 1 task, simple battery model (drains per meter; below threshold → must visit `charge`). Routing policy: configurable — `shortest_path` | `congestion_aware` (penalize occupied edges).
+- **AMRs:** speed, capacity 1 task, simple battery model (drains per meter; below threshold → must visit `charge`). Routing policy: configurable, `shortest_path` | `congestion_aware` (penalize occupied edges).
 - **Demand:** orders arrive ~ Poisson(λ), each order = pick at random pick-station → deliver to pack-station chosen by policy (`round_robin` | `shortest_queue`).
 - **Task allocation:** nearest-idle-AMR (frozen in v1).
-- **Determinism:** all randomness from a single `numpy.random.Generator(seed)`. Identical (config, seed) ⇒ identical trajectory. **Common random numbers:** the same seed produces the same arrival stream across *different* configs (arrival RNG seeded independently of layout RNG) — this enables paired statistical comparisons.
+- **Determinism:** all randomness from a single `numpy.random.Generator(seed)`. Identical (config, seed) ⇒ identical trajectory. **Common random numbers:** the same seed produces the same arrival stream across *different* configs (arrival RNG seeded independently of layout RNG), this enables paired statistical comparisons.
 
-### 3.2 Config schema (FROZEN WEEK 1 — Contract A)
+### 3.2 Config schema (FROZEN WEEK 1, Contract A)
 
 ```json
 {
@@ -110,7 +110,7 @@ One environment family, fully specified. Everything the agent can change is in t
 
 Rules: configs are expressed as **diffs against a scenario baseline** when the agent proposes them (`{"base": "braess_med", "patch": {"fleet.amr_count": 5}}`). The engine validates patches against a JSON Schema and rejects out-of-bounds values with a machine-readable error (the agent must handle rejection).
 
-### 3.3 Rollout results schema (FROZEN WEEK 1 — Contract B)
+### 3.3 Rollout results schema (FROZEN WEEK 1, Contract B)
 
 ```json
 {
@@ -127,7 +127,7 @@ Rules: configs are expressed as **diffs against a scenario baseline** when the a
 }
 ```
 
-**Event log** (parquet): `(t, entity_id, entity_type, event, node/edge, payload)` rows. This single format drives: Tier-0 metrics computation, the renderer replay, the live rollout board, and side-by-side comparisons. *One log format, four consumers — do not fork it.*
+**Event log** (parquet): `(t, entity_id, entity_type, event, node/edge, payload)` rows. This single format drives: Tier-0 metrics computation, the renderer replay, the live rollout board, and side-by-side comparisons. *One log format, four consumers, do not fork it.*
 
 ---
 
@@ -150,7 +150,7 @@ Rules: configs are expressed as **diffs against a scenario baseline** when the a
 
 ### 4.2 Agent loop (single agent, v1)
 
-System prompt contract: (1) restate the question as a decision space; (2) plan experiments before running any; (3) never report a number that did not come from `compare_configs`; (4) every claim in the final report must cite config hashes + seeds; (5) confidence must come from CIs, not vibes; (6) you may stop early if `power_check` says the budget cannot resolve the remaining uncertainty — say so.
+System prompt contract: (1) restate the question as a decision space; (2) plan experiments before running any; (3) never report a number that did not come from `compare_configs`; (4) every claim in the final report must cite config hashes + seeds; (5) confidence must come from CIs, not vibes; (6) you may stop early if `power_check` says the budget cannot resolve the remaining uncertainty, say so.
 
 Loop: `plan → propose/run → analyze → (follow-up hypotheses | refine) → report`. Cap: 25 tool calls or budget exhaustion. Trace every step (see §7).
 
@@ -158,29 +158,29 @@ Loop: `plan → propose/run → analyze → (follow-up hypotheses | refine) → 
 
 ### 4.3 Question classes (v1: two)
 
-- **Class A — What-if (capacity/layout/policy):** "Is a 5th AMR worth it?" "Should we open a cross-aisle between A3 and A4?" "One-way aisles: better or worse?" Decision space: small discrete set of candidate patches.
-- **Class B — Diagnosis:** "Throughput dropped 18% vs. last quarter — why?" Agent receives degraded scenario + baseline event logs; must isolate cause among planted candidates (service-time variance ↑, an edge capacity ↓, λ ↑) by designing *discriminating* experiments.
+- **Class A, What-if (capacity/layout/policy):** "Is a 5th AMR worth it?" "Should we open a cross-aisle between A3 and A4?" "One-way aisles: better or worse?" Decision space: small discrete set of candidate patches.
+- **Class B, Diagnosis:** "Throughput dropped 18% vs. last quarter, why?" Agent receives degraded scenario + baseline event logs; must isolate cause among planted candidates (service-time variance ↑, an edge capacity ↓, λ ↑) by designing *discriminating* experiments.
 
 Class A ships Week 3; Class B Week 4. No third class in v1.
 
 ---
 
-## 5. Evaluation (the spine — build the harness BEFORE the agent)
+## 5. Evaluation (the spine, build the harness BEFORE the agent)
 
 ### 5.1 Ground truth
 
-Each benchmark scenario defines a **discrete decision space** of K candidate configs (K ≤ 8). GT = exhaustive pre-simulation: every candidate × 200 paired seeds; the optimum is the candidate with best mean primary metric, required to be significant at p<0.01 vs. runner-up (scenarios are tuned until this holds — a scenario whose truth is statistically ambiguous is a broken scenario). GT sweeps are cached and versioned; the suite is **held out** from agent prompt-engineering (dev on a separate dev-scenario set).
+Each benchmark scenario defines a **discrete decision space** of K candidate configs (K ≤ 8). GT = exhaustive pre-simulation: every candidate × 200 paired seeds; the optimum is the candidate with best mean primary metric, required to be significant at p<0.01 vs. runner-up (scenarios are tuned until this holds, a scenario whose truth is statistically ambiguous is a broken scenario). GT sweeps are cached and versioned; the suite is **held out** from agent prompt-engineering (dev on a separate dev-scenario set).
 
 ### 5.2 Scenario suite (15 scenarios, 3 tiers)
 
 | Tier | Count | Design intent | Examples |
 |---|---|---|---|
-| **T1 — Clear** | 5 | Large effect; sanity tier | Add AMR when utilization is 95% (yes); add pick slot at the obvious bottleneck |
-| **T2 — Subtle** | 5 | Effect ≈ noise; tests statistical discipline | 5th AMR when utilization is 78% (marginal); pack policy swap with small true gain |
-| **T3 — Trap** | 5 | The intuitive answer is wrong | **Braess:** opening the attractive cross-aisle shortcut *reduces* throughput (capacity-1 edge concentrates flow). **Utilization cliff:** +10% demand looks linear, p95 latency explodes. **Variance trap:** faster-mean/higher-variance station underperforms slower/consistent one. **Local fix, global hurt:** adding slots at station X starves Y. **More-is-less:** 7th AMR increases congestion past saturation |
+| **T1, Clear** | 5 | Large effect; sanity tier | Add AMR when utilization is 95% (yes); add pick slot at the obvious bottleneck |
+| **T2, Subtle** | 5 | Effect ≈ noise; tests statistical discipline | 5th AMR when utilization is 78% (marginal); pack policy swap with small true gain |
+| **T3, Trap** | 5 | The intuitive answer is wrong | **Braess:** opening the attractive cross-aisle shortcut *reduces* throughput (capacity-1 edge concentrates flow). **Utilization cliff:** +10% demand looks linear, p95 latency explodes. **Variance trap:** faster-mean/higher-variance station underperforms slower/consistent one. **Local fix, global hurt:** adding slots at station X starves Y. **More-is-less:** 7th AMR increases congestion past saturation |
 | Class B (diagnosis) | +5 | Cause isolation | One planted cause among 3 candidates each |
 
-Trap design rule: each T3 scenario must come with a one-paragraph *mechanistic explanation* of why intuition fails — this doubles as demo narration and proves the trap is principled, not adversarial noise. **The Braess scenario is the demo centerpiece; design it first and tune it until the effect is large (≥10% throughput drop) and robust.**
+Trap design rule: each T3 scenario must come with a one-paragraph *mechanistic explanation* of why intuition fails, this doubles as demo narration and proves the trap is principled, not adversarial noise. **The Braess scenario is the demo centerpiece; design it first and tune it until the effect is large (≥10% throughput drop) and robust.**
 
 ### 5.3 Metrics
 
@@ -194,16 +194,16 @@ Trap design rule: each T3 scenario must come with a one-paragraph *mechanistic e
 
 ### 5.4 Baselines (the three-way ablation)
 
-1. **LLM-alone:** same model, same question, scene summary provided, *no sim tools.* Must still output a recommendation + confidence. (Expected: confident, frequently wrong on T2/T3 — quantifies H1.)
-2. **Grid search @ equal budget:** uniformly allocate the rollout budget across the candidate set; pick best mean. No LLM. (Quantifies H2 — does the agent's *allocation and follow-up* beat uniform spend? Honest possibility: on small discrete spaces grid search is strong; the agent should win on budget-constrained T2 and on Class B, where there is no grid.)
+1. **LLM-alone:** same model, same question, scene summary provided, *no sim tools.* Must still output a recommendation + confidence. (Expected: confident, frequently wrong on T2/T3, quantifies H1.)
+2. **Grid search @ equal budget:** uniformly allocate the rollout budget across the candidate set; pick best mean. No LLM. (Quantifies H2, does the agent's *allocation and follow-up* beat uniform spend? Honest possibility: on small discrete spaces grid search is strong; the agent should win on budget-constrained T2 and on Class B, where there is no grid.)
 3. **Agent+sim (ours).**
-4. *(Optional ablation if time: agent without follow-up loop — one round of experiments only.)*
+4. *(Optional ablation if time: agent without follow-up loop, one round of experiments only.)*
 
 Run every arm with 3 question paraphrases × 3 agent seeds; report mean ± sd. Results table is the README centerpiece.
 
 ### 5.5 Statistical protocol (engine-enforced)
 
-Common random numbers (paired seeds) for all config comparisons; paired t-test (fallback Wilcoxon) via `compare_configs`; warmup minutes excluded from metrics; CI reporting mandatory in the final report schema. The harness — not the agent — computes the eval metrics.
+Common random numbers (paired seeds) for all config comparisons; paired t-test (fallback Wilcoxon) via `compare_configs`; warmup minutes excluded from metrics; CI reporting mandatory in the final report schema. The harness, not the agent, computes the eval metrics.
 
 ---
 
@@ -231,14 +231,14 @@ Grid of running/queued rollouts with live counters (throughput, queue depths) fe
   "confidence": 0.93,
   "evidence": [{"type": "side_by_side", "uri": "...", "configs": ["base", "crossaisle"], "seed": 17}],
   "experiments": [{"configs": ["..."], "seeds": "1-40 paired", "tool_calls": 14}],
-  "caveats": ["Holds for arrival rates 2.5–3.5/min; not tested beyond."]
+  "caveats": ["Holds for arrival rates 2.5-3.5/min; not tested beyond."]
 }
 ```
 
 UI renders this as the final report page (plots from results, embedded evidence clips).
 
 ### 6.5 Renderer notes
-Isaac Sim 5.x headless standalone (`SimulationApp({"headless": True})`); container image `nvcr.io/nvidia/isaac-sim` runs headless-only — fine for the render queue. Stock warehouse USD assets. Replay = scripted kinematic playback of event logs (set AMR prim transforms per timestep; no physics). Camera presets: overview, congestion-closeup, follow-AMR. Budget per question: ≤4 clips ≤20 s. **If Isaac fights the schedule (Week 5 gate), fallback renderer = the Three.js board with polished visuals; Isaac becomes post-v1.** The benchmark numbers never depend on the renderer.
+Isaac Sim 5.x headless standalone (`SimulationApp({"headless": True})`); container image `nvcr.io/nvidia/isaac-sim` runs headless-only, fine for the render queue. Stock warehouse USD assets. Replay = scripted kinematic playback of event logs (set AMR prim transforms per timestep; no physics). Camera presets: overview, congestion-closeup, follow-AMR. Budget per question: ≤4 clips ≤20 s. **If Isaac fights the schedule (Week 5 gate), fallback renderer = the Three.js board with polished visuals; Isaac becomes post-v1.** The benchmark numbers never depend on the renderer.
 
 ### 6.6 MCP server
 Expose the §4.1 tool API as an MCP server (`laplace-env`). One day of work, big positioning payoff: the benchmark becomes runnable by any MCP-capable agent, and the repo reads as *agent environment infrastructure*, not a one-off demo.
@@ -247,18 +247,18 @@ Expose the §4.1 tool API as an MCP server (`laplace-env`). One day of work, big
 
 ## 7. Workstreams (for Claude Code execution)
 
-Freeze Contracts A (config schema) + B (results/event-log schema) + the §4.1 tool signatures on Day 1–2, by hand, before any agent writes code. All workstreams build against contracts + mock data; integration risk concentrates at the contracts, which are small.
+Freeze Contracts A (config schema) + B (results/event-log schema) + the §4.1 tool signatures on Day 1-2, by hand, before any agent writes code. All workstreams build against contracts + mock data; integration risk concentrates at the contracts, which are small.
 
 | WS | Scope | Depends on | Agent-buildable? |
 |---|---|---|---|
-| **WS1 — Core sim** | Navgraph, entities, event engine, congestion, CRN seeding, metrics from event logs, multiprocessing runner | Contracts | Yes, with your review of dynamics correctness |
-| **WS2 — Engine API + budget ledger** | FastAPI service wrapping WS1; tool endpoints; validation; MCP server | Contracts | Fully |
-| **WS3 — Agent loop** | Claude tool-use loop, system prompt, trace logging | WS2 (or mocks) | Fully |
-| **WS4 — Eval harness** | Scenario definitions, GT sweep runner + cache, baselines (LLM-alone, grid), metrics, results tables | WS1, WS2 | Fully; **you design the T3 traps** |
-| **WS5 — UI** | Trace panel, diff view, rollout board, replays, report page (React+Three.js — reuse SITL patterns: SSE state machine, no-build frontend if desired) | Contracts (mock data) | Fully |
-| **WS6 — Renderer** | Isaac headless replay service + render queue | Event-log format | Scripts yes; **Isaac wrangling is yours** |
+| **WS1, Core sim** | Navgraph, entities, event engine, congestion, CRN seeding, metrics from event logs, multiprocessing runner | Contracts | Yes, with your review of dynamics correctness |
+| **WS2, Engine API + budget ledger** | FastAPI service wrapping WS1; tool endpoints; validation; MCP server | Contracts | Fully |
+| **WS3, Agent loop** | Claude tool-use loop, system prompt, trace logging | WS2 (or mocks) | Fully |
+| **WS4, Eval harness** | Scenario definitions, GT sweep runner + cache, baselines (LLM-alone, grid), metrics, results tables | WS1, WS2 | Fully; **you design the T3 traps** |
+| **WS5, UI** | Trace panel, diff view, rollout board, replays, report page (React+Three.js, reuse SITL patterns: SSE state machine, no-build frontend if desired) | Contracts (mock data) | Fully |
+| **WS6, Renderer** | Isaac headless replay service + render queue | Event-log format | Scripts yes; **Isaac wrangling is yours** |
 
-**Your non-delegable list:** contract design, sim dynamics validation (does congestion behave like queueing theory says it should — validate WS1 against M/M/c closed forms on degenerate configs as a unit test), T3 trap design + tuning, Isaac setup, judging whether agent traces show real reasoning, final numbers sign-off.
+**Your non-delegable list:** contract design, sim dynamics validation (does congestion behave like queueing theory says it should, validate WS1 against M/M/c closed forms on degenerate configs as a unit test), T3 trap design + tuning, Isaac setup, judging whether agent traces show real reasoning, final numbers sign-off.
 
 Suggested `CLAUDE.md` preamble for the repo: *"This project is built from `docs/laplace-spec.md`. Contracts in `schemas/` are frozen; propose changes via PR description, never silently. Every sim behavior change requires the M/M/c validation tests to pass. The eval suite in `eval/scenarios/` is held out: never tune prompts against it; use `eval/dev_scenarios/`."*
 
