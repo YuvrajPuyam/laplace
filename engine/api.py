@@ -411,7 +411,9 @@ def create_app(store: ScenarioStore | None = None,
         tpl = _P("ui/viewer_template.html").read_text(encoding="utf-8")
         html = (tpl.replace("/*__SCENE__*/", "null")
                 .replace("/*__BOOT__*/", json.dumps({"engine": "", "scenario": scenario})))
-        return HTMLResponse(html)
+        # no-store: the template is re-read per request; a cached copy in the browser would
+        # keep serving a STALE viewer after UI fixes (a plain F5 must always be current).
+        return HTMLResponse(html, headers={"Cache-Control": "no-store"})
 
     # --- live feed (Track L): stream real-time poses to the twin over a WebSocket ---
     @app.websocket("/twin/live")

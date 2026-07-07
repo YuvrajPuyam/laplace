@@ -18,7 +18,7 @@
     "pick": [
       {
         "id": "P1",
-        "node": "A2_01",
+        "node": "A2_03",
         "slots": 1,
         "service_lognorm": [
           0.3,
@@ -27,7 +27,7 @@
       },
       {
         "id": "P2",
-        "node": "A3_01",
+        "node": "A3_06",
         "slots": 1,
         "service_lognorm": [
           0.3,
@@ -36,7 +36,7 @@
       },
       {
         "id": "P3",
-        "node": "A4_01",
+        "node": "A4_10",
         "slots": 1,
         "service_lognorm": [
           0.3,
@@ -45,7 +45,7 @@
       },
       {
         "id": "P4",
-        "node": "A5_01",
+        "node": "A5_13",
         "slots": 1,
         "service_lognorm": [
           0.3,
@@ -54,7 +54,7 @@
       },
       {
         "id": "P5",
-        "node": "A2_14",
+        "node": "A2_11",
         "slots": 1,
         "service_lognorm": [
           0.3,
@@ -63,7 +63,7 @@
       },
       {
         "id": "P6",
-        "node": "A3_14",
+        "node": "A4_05",
         "slots": 1,
         "service_lognorm": [
           0.3,
@@ -74,7 +74,7 @@
     "pack": [
       {
         "id": "K1",
-        "node": "A1_00",
+        "node": "A1_08",
         "slots": 2,
         "service_lognorm": [
           0.45,
@@ -83,7 +83,7 @@
       },
       {
         "id": "K2",
-        "node": "A6_00",
+        "node": "A6_08",
         "slots": 2,
         "service_lognorm": [
           0.45,
@@ -94,19 +94,19 @@
     "charge": [
       {
         "id": "C1",
-        "node": "A1_00",
+        "node": "A1_02",
         "slots": 2
       },
       {
         "id": "C2",
-        "node": "A1_01",
+        "node": "A1_14",
         "slots": 2
       }
     ],
     "dock": [
       {
         "id": "D1",
-        "node": "A6_00"
+        "node": "A6_02"
       }
     ]
   },

@@ -24,14 +24,26 @@ Ask a facility a question in plain English ("should we add a cross-aisle?", "how
 
 If the player above does not load, watch the clip here: [docs/img/demo.mp4](docs/img/demo.mp4).
 
+## The app
+
 <p align="center">
-  <img src="docs/img/twin.jpg" width="640" alt="The decision twin: pick, pack and charge stations with an AMR"><br>
-  <sub>The decision twin (Braess shortcut cell): pick (blue), pack (green), charge / dock (yellow) stations and an AMR.</sub>
+  <img src="screenshots/Screenshot%202026-07-07%20134602.png" width="720" alt="Laplace landing card"><br>
+  <sub>The front door: facility, status, and engine readout on one glass card.</sub>
 </p>
 
 <p align="center">
-  <img src="docs/img/opener.jpg" width="720" alt="Laplace CRT opener (MU-TH-UR style)"><br>
-  <sub>The Three.js front end opens on a Nostromo / MU-TH-UR-style CRT boot screen.</sub>
+  <img src="screenshots/image-1783444027077.webp" width="840" alt="Pre-flight setup: station walkthrough, click-to-place floor plan, fleet and demand"><br>
+  <sub>Pre-flight setup: a guided station walkthrough, a click-to-place floor plan, and the fleet / demand operating point.</sub>
+</p>
+
+<p align="center">
+  <img src="screenshots/image-1783444060049.webp" width="840" alt="Review and run: facility, question, fleet, demand"><br>
+  <sub>Review and run: the facility, the question under study, and the baseline, then launch at 500x real time.</sub>
+</p>
+
+<p align="center">
+  <img src="screenshots/Screenshot%202026-07-07%20134502.png" width="840" alt="The running twin: warm-sand floor, robot status bubbles, fleet panel, command bar"><br>
+  <sub>The running twin: named robots with status bubbles, station zones, a fleet panel explaining why units move, and the command bar taking the next question.</sub>
 </p>
 
 ## Architecture

@@ -24,3 +24,6 @@ node_modules/
 
 # nested separate project (has its own .git)
 portfolio-review/
+
+# screen recordings are too heavy for git history; images are committed
+screenshots/*.mp4

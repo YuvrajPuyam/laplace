@@ -8,13 +8,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-  /* Ad Astra direction: cool, minimal, "high-end tech firm" - one restrained
-     accent, hairlines + negative space + registration ticks, no glow.
-     Spacing on an 8pt grid; one accent matched to the robot emissive. */
+  /* "Agent-twin" direction (arrakis-style): a BRIGHT toy-like 3D world watched
+     through DARK glassy floating panels - rounded pills, soft blur, one purple
+     accent. The scene is light; the chrome is night-glass. */
   :root{ color-scheme:dark;
-    --bg:#0a0e13; --bg2:#0c1118; --panel:rgba(13,18,24,.72); --line:#1d2730; --line2:#161d24;
-    --accent:#6fb2d6; --accent-dim:#3a566a; --txt:#d6dee6; --dim:#76828f; --dim2:#5a6571;
-    --ok:#5fae8a; --alert:#e0a23a; --bad:#d2705f;
+    --bg:#0e1018; --bg2:#12141d; --panel:rgba(15,16,24,.85); --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.06);
+    --accent:#7c7ff2; --accent-dim:#4d4f9e; --txt:#e8eaf4; --dim:#9298ad; --dim2:#6b7186;
+    --ok:#3ec98e; --alert:#f0b03c; --bad:#ef6a6a;
     --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px;
     --drawer-w:368px;   /* decision-drawer width; the right column shifts by this when it opens */
     --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace; }
@@ -25,8 +25,9 @@
      No CSS gradient - a radial glow reads as "AI-generated"; a low-contrast dither reads as
      considered texture. It sits at the LOWEST layer, behind the 3D canvas and every panel, and
      is pointer-events:none so it never intercepts drag/orbit. */
-  #bgdither{position:fixed;inset:0;z-index:0;pointer-events:none;
-    background-color:#0a0d11;background-repeat:no-repeat;background-size:cover;}
+  /* NB: a canvas is a replaced element - inset:0 alone does NOT stretch it; size it explicitly */
+  #bgdither{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;
+    background-color:#d9d2c3;background-repeat:no-repeat;background-size:cover;}
   /* premium honesty pass: fidelity-tier/provenance badge + KPI hierarchy */
   #hud .srcrow{display:flex;align-items:center;gap:6px;margin:2px 0 9px;}
   .srcbadge{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
@@ -45,13 +46,14 @@
   .lbl{font-family:var(--sans);text-transform:uppercase;letter-spacing:.16em;}
   .num{font-family:var(--mono);font-variant-numeric:tabular-nums;}
   .panel{position:relative;z-index:10;background:var(--panel);border:1px solid var(--line);
-    padding:13px 15px;border-radius:12px;backdrop-filter:blur(14px) saturate(118%);
+    padding:14px 16px;border-radius:16px;backdrop-filter:blur(18px) saturate(130%);
+    box-shadow:0 12px 40px -18px rgba(5,7,14,.65);
     transition:opacity .5s ease;pointer-events:auto;}
   /* docked panel columns: fixed containers that pass pointer events THROUGH the gaps to the
      canvas (so OrbitControls/DragControls are unaffected); the .panel children opt back in. The
      columns stack their panels with a gap and scroll internally instead of overlapping. */
-  .pcol{position:fixed;top:48px;z-index:10;display:flex;flex-direction:column;gap:12px;
-    max-height:calc(100vh - 48px - 86px);overflow-y:auto;overflow-x:hidden;pointer-events:none;
+  .pcol{position:fixed;top:62px;z-index:10;display:flex;flex-direction:column;gap:12px;
+    max-height:calc(100vh - 62px - 128px);overflow-y:auto;overflow-x:hidden;pointer-events:none;
     transition:transform .28s ease,opacity .28s ease;scrollbar-width:thin;}
   .pcol::-webkit-scrollbar{width:6px;} .pcol::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
   #colL{left:18px;width:240px;}
@@ -61,23 +63,28 @@
   /* drawer open: slide the RIGHT column clear of the decision drawer so fleet-status / live
      params are never buried. The LEFT column (KPIs the user came to watch) stays put. */
   body.decide-open #colR{transform:translateX(calc(-1 * var(--drawer-w, 368px)));}
-  /* thin registration ticks at opposite corners - monochrome, no glow */
-  .panel::before,.panel::after{content:"";position:absolute;width:7px;height:7px;border:0;}
-  .panel::before{top:6px;left:6px;border-left:1px solid var(--dim2);border-top:1px solid var(--dim2);}
-  .panel::after{bottom:6px;right:6px;border-right:1px solid var(--dim2);border-bottom:1px solid var(--dim2);}
+  /* clean rounded glass - no corner ticks in this direction */
   .panel h2{margin:0 0 10px;font-family:var(--sans);font-size:10px;font-weight:600;
     letter-spacing:.2em;color:var(--dim);text-transform:uppercase;
     border-bottom:1px solid var(--line2);padding-bottom:7px;}
-  /* running-UI is hidden until the sim is launched */
-  body.preflight .panel,body.preflight #decbtn,body.preflight #status{opacity:0;pointer-events:none;}
-  #top{position:fixed;top:0;left:0;right:0;height:38px;display:flex;align-items:center;z-index:50;
-    justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);
-    background:rgba(10,14,19,.62);backdrop-filter:blur(10px);}
-  #top .brand{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;}
+  /* running-UI is hidden until the sim is launched (Live too: it acts on a launched floor,
+     and a permanently-grayed pill on the wizard screens reads as a defect) */
+  body.preflight .panel,body.preflight #decbtn,body.preflight #status,
+  body.preflight #newrun{opacity:0;pointer-events:none;}
+  /* !important: the script sets an inline opacity on #livebtn (its disabled look) */
+  body.preflight #livebtn{opacity:0 !important;pointer-events:none;}
+  /* top chrome: a transparent strip of floating dark PILLS (video-style), not a solid bar */
+  #top{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;z-index:50;
+    justify-content:space-between;padding:10px 16px;background:transparent;pointer-events:none;}
+  #top>*{pointer-events:auto;}
+  .toppill{background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    backdrop-filter:blur(14px) saturate(130%);box-shadow:0 8px 26px -14px rgba(5,7,14,.6);}
+  #top .brand{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    padding:8px 16px;}
   #top .brand span{color:var(--accent);font-weight:400;}
-  #top .sub{font-size:11px;color:var(--dim);letter-spacing:.14em;}
-  #status{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent);transition:opacity .4s ease;}
+  #top .sub{font-size:11px;color:var(--dim);letter-spacing:.14em;padding:8px 14px;}
+  #status{display:flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);transition:opacity .4s ease;padding:8px 14px;}
   #dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2.4s infinite ease-in-out;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
   /* status semantics - three meanings, three colors:
@@ -100,24 +107,64 @@
   #legend .k{display:flex;align-items:center;gap:9px;margin:6px 0;font-size:10px;
     color:var(--dim);letter-spacing:.1em;text-transform:uppercase;}
   #legend .sw{width:10px;height:2px;border-radius:2px;}
+  /* per-state bubble-pin toggles */
+  #lblchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;}
+  .lchip{display:inline-flex;align-items:center;gap:6px;background:transparent;
+    border:1px solid var(--line);color:var(--dim);border-radius:999px;padding:4px 10px;
+    font-family:var(--sans);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
+  .lchip .d{width:7px;height:7px;border-radius:50%;flex:0 0 auto;opacity:.55;}
+  .lchip:hover{border-color:var(--accent-dim);color:var(--txt);}
+  .lchip.on{border-color:var(--accent);color:var(--txt);background:rgba(124,127,242,.13);}
+  .lchip.on .d{opacity:1;}
   #edits{min-width:0;}
   #edits .e{font-family:var(--mono);color:var(--accent);font-size:12px;margin:4px 0;}
   #edits .hint{color:var(--dim);font-size:10px;letter-spacing:.1em;text-transform:uppercase;}
-  #bar{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:11;display:flex;align-items:center;
-    gap:18px;width:min(540px,78vw);}
+  /* ── bottom command bar: ask-anything input + suggestion chips (the video's signature) ── */
+  #cmdbar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:31;
+    width:min(660px,88vw);display:flex;flex-direction:column;gap:9px;align-items:center;
+    transition:left .28s ease,opacity .4s ease;}
+  body.decide-open #cmdbar{left:calc(50% - (var(--drawer-w) + 24px)/2);}
+  body.preflight #cmdbar,body.landing #cmdbar{opacity:0;pointer-events:none;}
+  #chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .qchip{background:var(--panel);border:1px solid var(--line);color:var(--dim);
+    font-family:var(--sans);font-size:11.5px;border-radius:999px;padding:7px 14px;cursor:pointer;
+    backdrop-filter:blur(12px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46vw;}
+  .qchip:hover{border-color:var(--accent);color:var(--txt);}
+  #cmdrow{display:flex;gap:9px;width:100%;background:var(--panel);border:1px solid var(--line);
+    border-radius:16px;padding:9px;backdrop-filter:blur(18px) saturate(130%);
+    box-shadow:0 14px 44px -18px rgba(5,7,14,.7);}
+  #cmdrow input{flex:1;min-width:0;background:transparent;color:var(--txt);border:0;
+    font-family:var(--sans);font-size:13.5px;padding:8px 10px;}
+  #cmdrow input::placeholder{color:var(--dim2);}
+  #cmdrow input:focus{outline:none;}
+  #cmdrow button{background:var(--accent);border:1px solid var(--accent);color:#0d0f1a;font-weight:600;
+    border-radius:11px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    padding:0 20px;cursor:pointer;}
+  #cmdrow button:hover{background:#9598f6;}
+  #cmdrow button:disabled{background:transparent;color:var(--dim);border-color:var(--line);cursor:default;}
+  /* playback merged INTO the readout panel - the bottom edge belongs to the command bar alone */
+  #playrow{display:flex;align-items:center;gap:9px;margin-top:13px;padding-top:12px;
+    border-top:1px solid var(--line2);}
   #hold{cursor:pointer;background:transparent;border:1px solid var(--accent-dim);color:var(--accent);
     font-family:var(--sans);letter-spacing:.16em;font-size:11px;font-weight:500;text-transform:uppercase;
-    padding:8px 16px;min-width:108px;border-radius:8px;}
+    padding:8px 10px;min-width:0;flex:1;border-radius:8px;}
   #hold:hover{border-color:var(--accent);}
-  .clock{flex:1;}
-  .clock .t{font-family:var(--mono);font-size:18px;color:var(--txt);letter-spacing:.04em;
-    font-variant-numeric:tabular-nums;}
+  #rst{cursor:pointer;background:transparent;border:1px solid var(--accent-dim);color:var(--accent);
+    width:34px;height:34px;border-radius:8px;font-size:15px;flex:0 0 auto;padding:0;
+    display:flex;align-items:center;justify-content:center;}   /* the ⟲ glyph's font metrics sit high-left otherwise */
+  #rst:hover{border-color:var(--accent);}
+  #rst:disabled{color:var(--dim);border-color:var(--line);cursor:default;}
+  .clock{margin-top:10px;}
+  .clock .t{font-family:var(--mono);font-size:15px;color:var(--txt);letter-spacing:.04em;
+    font-variant-numeric:tabular-nums;white-space:nowrap;}
   .clock .meta{display:flex;justify-content:space-between;font-size:9px;color:var(--dim);
     letter-spacing:.14em;text-transform:uppercase;margin-top:3px;}
   .clock .track{height:3px;background:var(--line);margin-top:6px;border-radius:3px;overflow:hidden;}
   .clock .fill{height:100%;width:0;background:var(--accent);}
-  #rate{background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:8px;
-    font-family:var(--mono);font-size:12px;height:32px;padding:0 6px;}
+  #rate{background:var(--bg2);color:var(--txt);border:1px solid var(--line);border-radius:8px;
+    font-family:var(--mono);font-size:12px;height:32px;padding:0 6px;flex:0 0 auto;}
+  /* native dropdown popups follow the select's background - keep them dark everywhere */
+  select option{background:var(--bg2);color:var(--txt);}
   #ctrl{min-width:0;}
   #ctrl .grp{margin:11px 0 9px;}
   #ctrl .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:10px;
@@ -135,33 +182,28 @@
     margin-top:6px;border-top:1px solid var(--line2);padding-top:7px;}
   #ctrl.off{opacity:.62;}
   /* staged-streaming decision replay */
-  .topbtn{background:transparent;border:1px solid var(--accent-dim);color:var(--accent);
-    font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;border-radius:8px;
-    padding:6px 12px;cursor:pointer;transition:opacity .4s ease;} .topbtn:hover{border-color:var(--accent);}
+  .topbtn{background:var(--panel);border:1px solid var(--line);color:var(--txt);
+    font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;border-radius:999px;
+    padding:8px 15px;cursor:pointer;transition:opacity .4s ease;
+    backdrop-filter:blur(14px) saturate(130%);box-shadow:0 8px 26px -14px rgba(5,7,14,.6);}
+  .topbtn:hover{border-color:var(--accent);color:#fff;}
   /* three-state Live button: hollow=idle/unavailable, filled+pulse=streaming */
   #livebtn.streaming{background:var(--accent-dim);color:#0a0e13;border-color:var(--accent);
     animation:livepulse 1.4s infinite ease-in-out;}
   @keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(111,178,214,.35)}50%{box-shadow:0 0 0 4px rgba(111,178,214,0)}}
-  #decide{position:fixed;top:38px;right:0;bottom:0;width:368px;max-width:90vw;z-index:30;
-    background:var(--panel);border-left:1px solid var(--line);backdrop-filter:blur(14px);
-    transform:translateX(101%);transition:transform .28s ease;
-    display:flex;flex-direction:column;}
+  #decide{position:fixed;top:62px;right:12px;bottom:12px;width:368px;max-width:90vw;z-index:30;
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    backdrop-filter:blur(18px) saturate(130%);box-shadow:0 16px 48px -20px rgba(5,7,14,.7);
+    transform:translateX(calc(101% + 12px));transition:transform .28s ease;
+    display:flex;flex-direction:column;overflow:hidden;}
   #decide.open{transform:none;}
   #decide .dh{display:flex;align-items:center;justify-content:space-between;
     padding:13px 16px;border-bottom:1px solid var(--line);}
   #decide .dh h2{margin:0;font-size:11px;letter-spacing:.2em;color:var(--dim);
     text-transform:uppercase;font-weight:600;}
   #decclose{background:none;border:0;color:var(--dim);font-size:17px;cursor:pointer;line-height:1;}
-  #askctl{display:flex;gap:8px;padding:12px 16px 8px;}
-  #askq{flex:1;min-width:0;background:var(--bg);color:var(--txt);border:1px solid var(--line);border-radius:8px;
-    font-family:var(--sans);font-size:12px;padding:8px 10px;}
-  #askq:focus{outline:none;border-color:var(--accent-dim);}
   #askq:disabled{opacity:.5;}
-  #ask{background:var(--accent-dim);border:1px solid var(--accent-dim);color:#0a0e13;font-weight:600;border-radius:8px;
-    font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:0 14px;cursor:pointer;}
-  #ask:hover{background:var(--accent);border-color:var(--accent);}
-  #ask:disabled{background:transparent;color:var(--dim);border-color:var(--line);cursor:default;}
-  #decctl{display:flex;gap:8px;align-items:center;padding:0 16px 11px;border-bottom:1px solid var(--line2);}
+  #decctl{display:flex;gap:8px;align-items:center;padding:12px 16px 11px;border-bottom:1px solid var(--line2);}
   .orlbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);white-space:nowrap;}
   #epsel{flex:1;min-width:0;background:var(--bg);color:var(--txt);border:1px solid var(--line);border-radius:8px;
     font-family:var(--mono);font-size:11px;padding:6px;}
@@ -211,52 +253,50 @@
     font-variant-numeric:tabular-nums;}
   .cmp .dlt .p{font-family:var(--mono);font-size:9.5px;color:var(--dim);margin-left:7px;}
 
-  /* ── landing screen (shown first, on the dither) ───────────────────────────── */
+  /* ── landing screen (shown first, on the LIGHT dither) ─────────────────────── */
+  /* Opener matches the app it reveals: one dark glass card floating on the bright
+     backdrop, purple accent, station-palette dots. Same readout content as before. */
   #landing{position:fixed;inset:0;z-index:45;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;text-align:center;padding:24px;
+    align-items:center;justify-content:center;padding:24px;
     transition:opacity .5s ease;}
   body:not(.landing) #landing{opacity:0;pointer-events:none;}
   /* while the landing is up, hold the wizard hidden underneath (it fades in on Enter) */
   body.landing #wiz{opacity:0;pointer-events:none;}
-  /* opener: a MU-TH-UR / Nostromo-style CRT terminal (Alien homage). Green phosphor, scanlines,
-     glow, a blinking block cursor. Its own identity; dissolves into the clean app on enter. */
-  #landing.crt{--grn:#5cf2a2;}
   body.landing #top{opacity:0;pointer-events:none;}      /* hide the chrome during the opener */
-  #term{position:relative;z-index:3;font-family:var(--mono);font-size:14px;line-height:1.95;
-    width:min(470px,92vw);color:var(--grn);text-align:left;text-shadow:0 0 6px rgba(92,242,162,.45);}
-  #term .tbig{font-size:clamp(38px,8vw,60px);font-weight:700;letter-spacing:.14em;line-height:1;
-    margin-bottom:10px;text-shadow:0 0 16px rgba(92,242,162,.55);}
-  #term .tl{white-space:pre-wrap;}
-  #term .td{color:rgba(92,242,162,.58);}                  /* dim log text */
-  #term .tv{color:var(--grn);}
-  #term .tbtn{font:inherit;background:none;border:0;color:var(--grn);cursor:pointer;padding:0;
-    text-shadow:0 0 6px rgba(92,242,162,.45);}
-  #term .tbtn:hover{text-decoration:underline;text-underline-offset:3px;}
-  #term .tcur{display:inline-block;width:9px;height:17px;background:var(--grn);margin-left:8px;
-    vertical-align:-3px;box-shadow:0 0 8px var(--grn);animation:tblink 1.05s steps(1) infinite;}
-  @keyframes tblink{50%{opacity:0;}}
-  #term .th{margin-top:18px;font-size:12px;letter-spacing:.08em;color:rgba(92,242,162,.58);}
-  #term .tlink{font:inherit;font-size:12px;background:none;border:0;color:rgba(92,242,162,.58);
-    cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;}
-  #term .tlink:hover{color:var(--grn);}
-  /* CRT scanlines + a subtle edge vignette over the opener (a screen curvature cue, not a glow) */
-  #landing .scan{position:absolute;inset:0;pointer-events:none;z-index:4;
-    background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.20) 2px 3px);}
-  #landing .scan::after{content:"";position:absolute;inset:0;
-    background:radial-gradient(135% 100% at 50% 50%, transparent 62%, rgba(0,0,0,.5));}
+  .lcard{width:min(400px,92vw);background:var(--panel);border:1px solid var(--line);
+    border-radius:22px;backdrop-filter:blur(20px) saturate(130%);
+    box-shadow:0 24px 80px -28px rgba(5,7,14,.75);padding:34px 36px 30px;}
+  .ldots{display:flex;gap:7px;margin-bottom:22px;}
+  .ldots i{width:9px;height:9px;border-radius:50%;}
+  .lbig{font-size:clamp(38px,7vw,52px);font-weight:600;letter-spacing:.12em;color:#f2f4fa;line-height:1;}
+  .lsub{font-size:11px;letter-spacing:.3em;color:var(--dim);text-transform:uppercase;margin-top:10px;}
+  .lrows{margin:24px 0 26px;border-top:1px solid var(--line2);}
+  .lr{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+    padding:10px 0;border-bottom:1px solid var(--line2);}
+  .lr span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);white-space:nowrap;}
+  .lr b{font-family:var(--mono);font-size:11.5px;color:var(--txt);font-weight:500;letter-spacing:.04em;text-align:right;}
+  .lr b.on{color:var(--ok);}
+  .lr .ld{display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;
+    margin-right:7px;animation:pulse 2.4s infinite ease-in-out;}
+  .lbtn{width:100%;background:var(--accent);border:1px solid var(--accent);color:#0d0f1a;font-weight:600;
+    font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;border-radius:12px;
+    padding:13px 0;cursor:pointer;}
+  .lbtn:hover{background:#9598f6;}
+  .lhint{text-align:center;margin-top:14px;font-size:11px;color:var(--dim2);letter-spacing:.06em;}
+  .llink{font:inherit;background:none;border:0;color:var(--dim);cursor:pointer;padding:0;
+    text-decoration:underline;text-underline-offset:3px;}
+  .llink:hover{color:var(--txt);}
   /* ── pre-flight wizard ─────────────────────────────────────────────────── */
   #wiz{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;
     padding:24px;transition:opacity .5s ease;overflow-y:auto;}
   body:not(.preflight) #wiz{opacity:0;pointer-events:none;}
   /* max-height + scroll so a tall step (e.g. the guided station setup) is never clipped off-screen */
+  /* solid card, NO backdrop-filter: Chrome tiles large blurred backdrops and shows seam bands */
   .wcard{width:min(580px,94vw);max-height:calc(100vh - 48px);overflow-y:auto;margin:auto;
-    background:rgba(13,18,24,.82);border:1px solid var(--line);
-    border-radius:18px;backdrop-filter:blur(20px) saturate(120%);padding:28px 30px 24px;
+    background:rgba(24,26,34,.97);border:1px solid var(--line);
+    border-radius:18px;padding:28px 30px 24px;
     box-shadow:0 24px 80px -24px rgba(0,0,0,.7);position:relative;}
   .wcard::-webkit-scrollbar{width:6px;} .wcard::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
-  .wcard::before,.wcard::after{content:"";position:absolute;width:9px;height:9px;}
-  .wcard::before{top:9px;left:9px;border-left:1px solid var(--dim2);border-top:1px solid var(--dim2);}
-  .wcard::after{bottom:9px;right:9px;border-right:1px solid var(--dim2);border-bottom:1px solid var(--dim2);}
   .weyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);
     display:flex;align-items:center;gap:8px;margin-bottom:18px;}
   .weyebrow span{color:var(--accent);}
@@ -360,9 +400,7 @@
     border:1px solid var(--line);border-radius:16px;padding:26px 28px 24px;position:relative;
     box-shadow:0 24px 80px -24px rgba(0,0,0,.7);scrollbar-width:thin;}
   #about .acard::-webkit-scrollbar{width:7px;} #about .acard::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
-  #about .acard::before,#about .acard::after{content:"";position:absolute;width:9px;height:9px;}
-  #about .acard::before{top:9px;left:9px;border-left:1px solid var(--dim2);border-top:1px solid var(--dim2);}
-  #about .acard::after{bottom:9px;right:9px;border-right:1px solid var(--dim2);border-bottom:1px solid var(--dim2);}
+  /* (corner ticks removed - clean rounded glass direction) */
   #about .aeyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
   #about .aeyebrow span{color:var(--accent);}
   #about h1{font-size:22px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em;color:#eef3f8;}
@@ -408,13 +446,14 @@
   .wbtn.primary:disabled{background:transparent;color:var(--dim);border-color:var(--line);cursor:default;}
   .wbtn.ghost{visibility:hidden;}
   .werr{color:var(--bad);font-size:12px;margin-top:12px;min-height:16px;letter-spacing:.02em;}
+  .werr:empty{display:none;}   /* no dead band under short steps (e.g. Review & run) */
   .spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(8,17,26,.35);
     border-top-color:#08111a;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-1px;margin-right:7px;}
   @keyframes sp{to{transform:rotate(360deg)}}
   /* ── non-blocking scene overlay (simulate / apply) ───────────────────────── */
   /* a centered pill; the wrap is pointer-events:none so it never blocks canvas drag/orbit.
      Only an explicit action inside the pill (e.g. a retry button) re-enables pointer events. */
-  #scrim{position:fixed;inset:38px 0 0 0;z-index:35;display:none;align-items:center;justify-content:center;
+  #scrim{position:fixed;inset:62px 0 0 0;z-index:35;display:none;align-items:center;justify-content:center;
     pointer-events:none;}
   body.scrim-on #scrim{display:flex;}
   #scrim .pill{display:inline-flex;align-items:center;gap:10px;background:var(--panel);
@@ -427,8 +466,10 @@
     border-radius:7px;padding:4px 10px;cursor:pointer;margin-left:6px;} #scrim .pill button:hover{border-color:var(--accent);}
   /* station drag affordance: the canvas shows a grab cursor when hovering a draggable workcell */
   body.can-grab #c{cursor:grab;} body.grabbing #c{cursor:grabbing;}
+  /* robot hover affordance: pointing at an AMR reveals its status bubble */
+  body.can-peek #c{cursor:pointer;}
   /* one-time dismissible coach tip */
-  #coach{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:12;
+  #coach{position:fixed;left:50%;bottom:136px;transform:translateX(-50%);z-index:12;
     background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 12px;
     font-family:var(--sans);font-size:11px;letter-spacing:.04em;color:var(--txt);
     backdrop-filter:blur(14px);display:none;align-items:center;gap:10px;}
@@ -441,7 +482,9 @@
   /* The two columns become side-by-side halves of a bottom sheet (so they NEVER overlap) and
      are off-screen until the sheet is toggled open from #top. Each half scrolls on its own. */
   @media (max-width:900px), (max-height:680px){
-    #colL,#colR{min-width:0;max-width:none;top:auto;bottom:64px;width:auto;
+    #chips{display:none;}
+    #cmdbar{width:94vw;}
+    #colL,#colR{min-width:0;max-width:none;top:auto;bottom:140px;width:auto;
       max-height:46vh;align-items:stretch;
       transform:translateY(125%);opacity:0;}            /* off-screen until the sheet is opened */
     #colL{left:10px;right:calc(50% + 5px);}             /* left half */
@@ -457,7 +500,7 @@
   /* cinematic / present mode - a clean, recordable reel */
   body.preflight #presentbtn{opacity:0;pointer-events:none;}
   body.present #top, body.present .panel, body.present #decide, body.present .pcol,
-  body.present #scrim, body.present #sheettab{opacity:0!important;pointer-events:none;}
+  body.present #scrim, body.present #sheettab, body.present #cmdbar{opacity:0!important;pointer-events:none;}
   #cine{position:fixed;inset:0;z-index:36;pointer-events:none;opacity:0;transition:opacity .6s ease;
     background:radial-gradient(125% 95% at 50% 48%, transparent 52%, rgba(4,7,11,.62) 100%);}
   body.present #cine{opacity:1;}
@@ -481,32 +524,33 @@
   <div class="exit">P or Esc to exit</div>
 </div>
 <div id="top">
-  <div class="brand">LAPLACE <span>·</span> FACILITY DECISION TWIN</div>
-  <div class="sub" id="sub" style="opacity:0"></div>
-  <div style="display:flex;align-items:center;gap:18px;">
+  <div class="brand toppill">LAPLACE <span>·</span> FACILITY DECISION TWIN</div>
+  <div class="sub toppill" id="sub" style="opacity:0"></div>
+  <div style="display:flex;align-items:center;gap:8px;">
     <button id="sheettab" class="topbtn" title="Show readouts">Panels</button>
+    <button id="newrun" class="topbtn" title="Start over: choose the facility and operating point">↺ New run</button>
     <button id="aboutbtn" class="topbtn" title="What is this? How it works">? About</button>
     <button id="presentbtn" class="topbtn">Present</button>
     <button id="livebtn" class="topbtn">● Live</button>
     <button id="decbtn" class="topbtn">Decision</button>
-    <div id="status"><span id="dot"></span><span id="statxt">SHOWING FAST MODEL</span></div>
+    <div id="status" class="toppill"><span id="dot"></span><span id="statxt">SHOWING FAST MODEL</span></div>
   </div>
 </div>
 
-<!-- opener: a MU-TH-UR-style CRT terminal (Alien homage); Enter / PROCEED reveals the pre-flight wizard -->
-<div id="landing" class="crt">
-  <div id="term">
-    <div class="tbig">LAPLACE</div>
-    <div class="tl td">DECISION TWIN &nbsp;·&nbsp; INTERFACE 2037</div>
-    <div class="tl">&nbsp;</div>
-    <div class="tl td">&gt; WAREHOUSE DECISION TWIN</div>
-    <div class="tl td">&gt; FACILITY ........ <span id="tfac" class="tv">-</span></div>
-    <div class="tl td">&gt; STATUS .......... <span class="tv">OPERATIONAL</span></div>
-    <div class="tl">&nbsp;</div>
-    <div class="tl">READY FOR INQUIRY<span class="tcur"></span></div>
-    <div class="th"><button id="lenter" class="tbtn">[ PRESS ENTER TO PROCEED ]</button> &nbsp;·&nbsp; <button id="laboutlink" class="tlink">ABOUT</button></div>
+<!-- opener: one dark glass card on the light dither; Enter reveals the pre-flight wizard -->
+<div id="landing">
+  <div class="lcard">
+    <div class="ldots"><i style="background:#7c7ff2"></i><i style="background:#3ec98e"></i><i style="background:#f0b03c"></i><i style="background:#55a9f2"></i></div>
+    <div class="lbig">LAPLACE</div>
+    <div class="lsub">Facility decision twin</div>
+    <div class="lrows">
+      <div class="lr"><span>Facility</span><b id="tfac">-</b></div>
+      <div class="lr"><span>Status</span><b class="on"><i class="ld"></i>OPERATIONAL</b></div>
+      <div class="lr"><span>Engine</span><b>DETERMINISTIC · 500&times; REALTIME</b></div>
+    </div>
+    <button id="lenter" class="lbtn">Enter the floor</button>
+    <div class="lhint">press Enter &nbsp;·&nbsp; <button id="laboutlink" class="llink">what is this?</button></div>
   </div>
-  <div class="scan"></div>
 </div>
 
 <!-- pre-flight wizard: Facility -> Question -> Configure -> Run -->
@@ -519,8 +563,9 @@
     <!-- step 1: facility -->
     <section class="wstep" data-step="1">
       <h1>Choose a facility</h1>
-      <p class="lede">Laplace doesn't guess at warehouse dynamics - it <b>runs the experiment</b>
-        in a fast deterministic twin and reports what actually happens. Pick a facility to study.</p>
+      <p class="lede">Pick a floor to study. Ask it a question and Laplace <b>runs the
+        experiment</b> in a fast, deterministic twin of that floor, then shows you what
+        actually happens.</p>
       <div class="field">
         <label>Facility</label>
         <select id="wscenario" class="wsel"></select>
@@ -619,6 +664,18 @@
     <div class="row"><span>carrying a load</span><b id="carry"> - </b></div>
     <div class="row"><span>fleet</span><b id="fleet"> - </b></div>
     <div class="row"><span>elapsed</span><b id="simt" class="hl"> - </b></div>
+    <!-- playback lives WITH the numbers it drives (merged from the old bottom pill) -->
+    <div id="playrow">
+      <button id="rst" title="Restart the run from T+0">⟲</button>
+      <button id="hold">HOLD</button>
+      <select id="rate"><option value="0.5">×0.5</option><option value="1" selected>×1</option>
+        <option value="2">×2</option><option value="4">×4</option></select>
+    </div>
+    <div class="clock">
+      <div class="t" id="clock">T+0.0 MIN</div>
+      <div class="meta"><span title="current sampled frame of the run">frame</span><span id="cyc"> - </span></div>
+      <div class="track"><div class="fill" id="fill"></div></div>
+    </div>
   </div>
   <div id="edits" class="panel">
     <h2>Manual edits</h2>
@@ -630,6 +687,8 @@
     <h2>Fleet status · why units move</h2>
     <div id="fleetrows"></div>
     <div class="k" style="margin-top:12px;padding-top:9px;border-top:1px solid var(--line)">Chargers&nbsp;<b class="fc" id="chg" style="float:right"> - </b></div>
+    <div class="k" style="margin-top:12px;padding-top:9px;border-top:1px solid var(--line)" title="Pin the floating name bubbles for every robot in a given state. Hovering a robot always shows its bubble.">Pin bubbles for</div>
+    <div id="lblchips"></div>
   </div>
   <div id="ctrl" class="panel">
     <h2>Live parameters</h2>
@@ -650,21 +709,19 @@
      pointer-events:none on the wrap so it never blocks canvas drag/orbit. -->
 <div id="scrim" aria-live="polite"><div class="pill"><span class="spin"></span><span id="scrimtxt">Running the experiment…</span></div></div>
 <div id="coach"><span>Drag a station to test moving it.</span><button id="coachx" title="dismiss">×</button></div>
-<div id="bar" class="panel">
-  <button id="hold">HOLD</button>
-  <div class="clock">
-    <div class="t" id="clock">T+0.0 MIN</div>
-    <div class="meta"><span title="current sampled frame of the run">frame</span><span id="cyc"> - </span></div>
-    <div class="track"><div class="fill" id="fill"></div></div>
+
+<!-- bottom command bar (video-style): ask the twin from here; the drawer shows the evidence feed -->
+<div id="cmdbar">
+  <div id="chips"></div>
+  <div id="cmdrow">
+    <input id="askq" type="text" maxlength="2000" placeholder="Ask the twin anything… e.g. Should we add a cross-aisle between A3 and A4?"/>
+    <button id="ask">Ask</button>
   </div>
-  <select id="rate"><option value="0.5">×0.5</option><option value="1" selected>×1</option>
-    <option value="2">×2</option><option value="4">×4</option></select>
 </div>
 
 <div id="decide">
   <div class="dh"><h2>Decision</h2><button id="decclose" title="close">×</button></div>
-  <div id="askctl"><input id="askq" type="text" maxlength="2000" placeholder="e.g. Should we add a cross-aisle between A3 and A4?"/><button id="ask">Ask</button></div>
-  <div id="decctl"><span class="orlbl">or replay</span><select id="epsel"></select><button id="replay">▶</button></div>
+  <div id="decctl"><span class="orlbl">replay</span><select id="epsel"></select><button id="replay">▶</button></div>
   <div id="feed"><div class="dhint" id="feedintro"></div></div>
 </div>
 
@@ -684,8 +741,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const SCENE_INLINE = /*__SCENE__*/;
 const BOOT = /*__BOOT__*/;
 const LIVE = !!(BOOT && BOOT.engine !== null && BOOT.engine !== undefined);
-// cool, restrained station palette (one accent; functional, desaturated)
-const stationColor = { pick:0x6fb2d6, pack:0x5fae8a, charge:0x5a7fb0, dock:0x8893a0 };
+// department palette (warm-sand world: one vivid hue per zone, read against a bone floor)
+const stationColor = { pick:0x7c7ff2, pack:0x3aa87e, charge:0xd99a3d, dock:0x5a9bd8 };
 
 // ════════════════════════════════════════════════════════════════════════════
 // COPY - every user-facing string lives here so the wording is auditable in one
@@ -853,35 +910,36 @@ function stationHexOf(kind){ const c=stationColor[kind]!=null?stationColor[kind]
 // curated decision framing per facility (client-side; falls back gracefully)
 const QUESTIONS = {
   braess_dev:{ q:"Should we open a cross-aisle shortcut between the pick and pack zones?",
-    why:"A shortcut looks like it should only help - but on a congested floor it can pull every robot onto the same lane and make throughput <b>worse</b> (a Braess paradox). The only way to know is to run both layouts." },
+    why:"A shortcut looks like it should only help. On a congested floor it can pull every robot onto the same lane and make throughput <b>worse</b> (a Braess paradox). The only way to know is to run both layouts." },
   corridor_med:{ q:"The floor funnels through a single cross-aisle. Is that corridor the bottleneck?",
     why:"When one edge carries most of the traffic, adding robots stops helping and starts queuing. The twin shows where the contention actually sits." },
   dc_pickzone_med:{ q:"How many AMRs does this pick zone need to keep p95 latency under target?",
-    why:"Too few robots and orders pile up; too many and they congest each other. There's a sweet spot - and it moves with demand." },
-  real_full_warehouse:{ q:"A real NVIDIA warehouse layout - how does throughput respond to fleet and demand?",
-    why:"Layout extracted from a production <i>full_warehouse.usd</i>. Watch how a real footprint behaves as you push the operating point." },
-  baseline_small:{ q:"A clean baseline cell - how does fleet size trade off against latency?",
+    why:"Too few robots and orders pile up; too many and they congest each other. There's a sweet spot, and it moves with demand." },
+  real_full_warehouse:{ q:"How does throughput respond to fleet size and demand on this floor?",
+    why:"A real warehouse footprint, extracted from a production <i>full_warehouse.usd</i>. Watch how it behaves as you push the operating point." },
+  baseline_small:{ q:"How many robots does this cell need before they start blocking each other?",
     why:"The simplest facility, useful for building intuition before the harder layouts: more robots cut latency only up to the point where they start blocking each other." },
-  mfc_compact:{ q:"A compact micro-fulfilment cell - where does congestion appear as demand rises?",
+  mfc_compact:{ q:"At what demand does this compact cell tip into gridlock?",
     why:"Small floors saturate fast. The twin reveals the demand level at which the cell tips from free-flowing to gridlocked." },
 };
 function questionFor(sid){ return QUESTIONS[sid] ||
   { q:"How does this facility respond to changes in fleet and demand?",
-    why:"Adjust the operating point and watch the dynamics - Laplace runs the experiment instead of guessing." }; }
+    why:"Adjust the operating point and watch the dynamics. Laplace measures the answer by running it." }; }
 
 let SCENE=SCENE_INLINE, META=null, renderer, scene, cam, controls, drag, W, pmrem, composer=null;
 let stationMeshes=[], amrs=[], amrIds=[], laneMeshes=[], frame=0, running=true, cfg=null, playIntent=true, tNow=0;
 let goodEdits={}, resimSeq=0, launched=false, idleSpin=true, blobTex=null;
 let hoverPad=null;                         // currently hovered draggable station (for grab cursor + ring brighten)
-const _ray=new THREE.Raycaster(), _ptr=new THREE.Vector2(); let _hoverScheduled=false, _lastPtrEv=null;
+const _ray=new THREE.Raycaster(), _ptr=new THREE.Vector2(); let _lastPtrEv=null;
 const edits={}; const $=id=>document.getElementById(id);
 
 // ── background: subtle Bayer 4x4 ordered-dither with a faint dithered vignette ──
 // Drawn ONCE per size to an offscreen canvas, cached as a data-URL, and set as the
-// background image of the fixed #bgdither layer. Very low contrast between two near-black
-// shades so it reads as texture, not a loud pattern. Redrawn (debounced) on resize.
+// background image of the fixed #bgdither layer. Very low contrast between two near-white
+// shades (matching the bright twin floor) so it reads as texture, not a loud pattern.
+// Redrawn (debounced) on resize.
 const BAYER4=[[0,8,2,10],[12,4,14,6],[3,11,1,9],[15,7,13,5]];   // classic 4x4 index matrix
-const DITHER_A=[0x0c,0x10,0x16], DITHER_B=[0x0a,0x0d,0x11];      // near-black: shadeA lighter, shadeB darker
+const DITHER_A=[0xde,0xd7,0xc9], DITHER_B=[0xd4,0xcc,0xbc];      // warm sand (matches the floor): shadeA lighter, shadeB darker
 let _ditherURL=null;
 function drawDither(){
   const el=$('bgdither'); if(!el) return;
@@ -926,12 +984,71 @@ async function fetchScene(){
 function blobTexture(){ if(blobTex) return blobTex;
   const c=document.createElement('canvas'); c.width=c.height=128; const x=c.getContext('2d');
   const g=x.createRadialGradient(64,64,6,64,64,64);
-  g.addColorStop(0,'rgba(0,0,0,0.55)'); g.addColorStop(0.6,'rgba(0,0,0,0.22)'); g.addColorStop(1,'rgba(0,0,0,0)');
+  g.addColorStop(0,'rgba(62,54,40,0.38)'); g.addColorStop(0.6,'rgba(62,54,40,0.15)'); g.addColorStop(1,'rgba(62,54,40,0)');
   x.fillStyle=g; x.fillRect(0,0,128,128);
   blobTex=new THREE.CanvasTexture(c); blobTex.colorSpace=THREE.SRGBColorSpace; return blobTex; }
 function groundBlob(w,d,op=0.5){ const m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),
     new THREE.MeshBasicMaterial({map:blobTexture(),transparent:true,opacity:op,depthWrite:false}));
   m.rotation.x=-Math.PI/2; m.scale.set(w,d,1); m.renderOrder=-1; m.raycast=()=>{}; return m; }
+
+// ── floating pill labels (video-style): a dark rounded pill + colored dot + text that
+// tracks each robot/station. Textures are CACHED per (name,status,dot) so a status flip
+// swaps a pre-drawn texture; nothing re-rasterizes per frame. depthTest:false so labels
+// always read over the bright floor, like the reference UI.
+const AMR_NAMES=['Atlas','Vega','Milo','Echo','Wren','Nova','Rio','Pax','Cade','Iris','Quill','Sena'];
+const STATUS_DOT={carrying:'#3aa87e','at station':'#5a9bd8',moving:'#7c7ff2',idle:'#a89f92',live:'#3aa87e'};
+// per-state bubble pinning: when a state is toggled on, every robot CURRENTLY in that state
+// keeps its bubble up (it follows the robot's state changes live). Hover always reveals one.
+const lblShow={carrying:false,'at station':false,moving:false,idle:false};
+function buildLabelToggles(){ const el=$('lblchips'); if(!el||el.childElementCount) return;
+  // ?pins=carrying,moving pre-enables toggles (demo/screenshot knob, same spirit as ?boot=)
+  for(const p of (new URLSearchParams(location.search).get('pins')||'').split(','))
+    if(p.trim() in lblShow) lblShow[p.trim()]=true;
+  for(const k of Object.keys(lblShow)){ const b=document.createElement('button'); b.className='lchip';
+    if(lblShow[k]) b.classList.add('on');
+    b.innerHTML='<span class="d" style="background:'+STATUS_DOT[k]+'"></span>'+k;
+    b.title='Pin bubbles for every robot that is '+k+' right now';
+    b.addEventListener('click',()=>{ lblShow[k]=!lblShow[k]; b.classList.toggle('on',lblShow[k]); });
+    el.appendChild(b); } }
+const _lblCache={};
+function _rrPath(x,X,Y,Wp,Hp,r){ x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+Wp,Y,X+Wp,Y+Hp,r);
+  x.arcTo(X+Wp,Y+Hp,X,Y+Hp,r); x.arcTo(X,Y+Hp,X,Y,r); x.arcTo(X,Y,X+Wp,Y,r); x.closePath(); }
+function labelTexture(name,status,dotHex){
+  const key=name+'|'+(status||'')+'|'+dotHex;
+  if(_lblCache[key]) return _lblCache[key];
+  const c=document.createElement('canvas'), x=c.getContext('2d');
+  const fs=44, fs2=36, pad=26, dot=22, gap=15, H=96;    // 2x raster so the screen-fixed pill stays crisp
+  x.font='600 '+fs+'px "IBM Plex Sans",system-ui,sans-serif';
+  const w1=x.measureText(name).width;
+  x.font='400 '+fs2+'px "IBM Plex Sans",system-ui,sans-serif';
+  const w2=status?x.measureText(status).width:0;
+  const Wp=Math.ceil(pad+dot+gap+w1+(status?gap+w2:0)+pad);
+  c.width=Wp; c.height=H;
+  x.fillStyle='rgba(13,15,22,0.92)'; _rrPath(x,1,1,Wp-2,H-2,(H-2)/2); x.fill();
+  x.strokeStyle='rgba(255,255,255,0.10)'; x.lineWidth=1.5; _rrPath(x,1,1,Wp-2,H-2,(H-2)/2); x.stroke();
+  x.fillStyle=dotHex; x.beginPath(); x.arc(pad+dot/2+2,H/2,dot/2,0,Math.PI*2); x.fill();
+  x.textBaseline='middle';
+  x.fillStyle='#f2f4fa'; x.font='600 '+fs+'px "IBM Plex Sans",system-ui,sans-serif';
+  x.fillText(name,pad+dot+gap,H/2+1);
+  if(status){ x.fillStyle='rgba(186,192,212,0.85)'; x.font='400 '+fs2+'px "IBM Plex Sans",system-ui,sans-serif';
+    x.fillText(status,pad+dot+gap+w1+gap,H/2+1); }
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace;
+  t.generateMipmaps=false; t.minFilter=THREE.LinearFilter;
+  const e={tex:t,aspect:Wp/H}; _lblCache[key]=e; return e;
+}
+function makeLabelSprite(name,status,dotHex,h){       // h = pill height as a SCREEN fraction (sizeAttenuation off)
+  const e=labelTexture(name,status,dotHex);
+  const m=new THREE.SpriteMaterial({map:e.tex,transparent:true,depthTest:false,
+    sizeAttenuation:false,fog:false,toneMapped:false});   // constant screen size + true dark pill (no ACES lift)
+  const s=new THREE.Sprite(m); s.renderOrder=999; s.raycast=()=>{};
+  s.scale.set(e.aspect*h,h,1); s.userData.h=h; return s;
+}
+function setLabel(sprite,name,status,dotHex){
+  const e=labelTexture(name,status,dotHex);
+  if(sprite.material.map===e.tex) return;             // unchanged: zero work
+  sprite.material.map=e.tex;
+  sprite.scale.set(e.aspect*sprite.userData.h,sprite.userData.h,1);
+}
 
 // ── upgraded render pipeline (ACES + sRGB + IBL + key/fill rig) ─────────────
 function setupWorld(){
@@ -943,20 +1060,21 @@ function setupWorld(){
   renderer=new THREE.WebGLRenderer({canvas:$('c'),antialias:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.toneMapping=THREE.ACESFilmicToneMapping;        // filmic shoulder, no blowouts
-  renderer.toneMappingExposure=1.12;
+  renderer.toneMappingExposure=0.86;
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   if(!heavy){ renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; }
 
-  scene=new THREE.Scene(); scene.background=new THREE.Color(0x0a0e13);
-  scene.fog=new THREE.Fog(0x0a0e13,span*1.5,span*3.4);     // far aisles dissolve into bg
+  // BRIGHT world (video direction): near-white floor, soft daylight, matte pastel props.
+  scene=new THREE.Scene(); scene.background=new THREE.Color(0xd2cabb);
+  scene.fog=new THREE.Fog(0xd2cabb,span*2.6,span*5.4);     // fog well past the floor: the twin reads crisp
   // image-based ambient + soft reflections from a procedural room - no asset, huge lift
   pmrem=new THREE.PMREMGenerator(renderer);
   scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
 
   cam=new THREE.PerspectiveCamera(40,1,0.1,span*12);
-  // auto-frame: back the camera off the bounding sphere along an iso direction
+  // auto-frame: back the camera off the bounding sphere along a HIGH iso direction (video framing)
   const radius=span*0.62, fit=radius/Math.sin((40*Math.PI/180)/2);
-  const dir=new THREE.Vector3(0.5,0.62,1.0).normalize();       // lower, closer 3/4 looking down the aisles (preferred framing)
+  const dir=new THREE.Vector3(0.62,0.92,0.85).normalize();     // high 3/4 looking down at the floor
   cam.position.set(cx,0,cy).addScaledVector(dir,fit*0.66);
   controls=new OrbitControls(cam,renderer.domElement); controls.target.set(cx,0,cy);
   controls.enableDamping=true; controls.dampingFactor=0.05;
@@ -965,26 +1083,26 @@ function setupWorld(){
   controls.addEventListener('start',()=>{ idleSpin=false; controls.autoRotate=false; });
   renderer.domElement.addEventListener('pointermove',onPointerMove);   // station hover affordance (rAF-coalesced)
 
-  // three-part rig: sky/ground fill + shadow-casting key + soft fill (r0.160 intensities)
-  const hemi=new THREE.HemisphereLight(0xc2d4e8,0x1a2230,1.15); hemi.position.set(cx,span,cy); scene.add(hemi);
-  const key=new THREE.DirectionalLight(0xfff2e6,3.0); key.position.set(cx-span*0.7,span*1.1,cy-span*0.45);
+  // soft-daylight rig: bright white sky fill + a gentle warm key (matte toy-world, no drama)
+  const hemi=new THREE.HemisphereLight(0xfffdf8,0xcfc5b2,0.68); hemi.position.set(cx,span,cy); scene.add(hemi);
+  const key=new THREE.DirectionalLight(0xfff6ec,1.9); key.position.set(cx-span*0.7,span*1.1,cy-span*0.45);
   if(!heavy){ key.castShadow=true; key.shadow.mapSize.set(2048,2048); key.shadow.bias=-0.0004; key.shadow.normalBias=0.06;
     const d=span*0.75; Object.assign(key.shadow.camera,{left:-d,right:d,top:d,bottom:-d,near:1,far:span*4});
     key.shadow.camera.updateProjectionMatrix(); }
   scene.add(key);
-  const fill=new THREE.DirectionalLight(0xdfe8f2,0.55); fill.position.set(cx+span*0.6,span*0.5,cy+span*0.7); scene.add(fill);
+  const fill=new THREE.DirectionalLight(0xeef2fa,0.5); fill.position.set(cx+span*0.6,span*0.5,cy+span*0.7); scene.add(fill);
 
   W=(x,y,h=0)=>new THREE.Vector3(x,h,y);
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(span*2.4,span*2.4),
-    new THREE.MeshStandardMaterial({color:0x10151c,roughness:0.94,metalness:0.0}));
+    new THREE.MeshStandardMaterial({color:0xdfd8cb,roughness:0.96,metalness:0.0}));
   floor.rotation.x=-Math.PI/2; floor.position.set(cx,-0.02,cy); floor.receiveShadow=!heavy; scene.add(floor);
-  const grid=new THREE.GridHelper(span*2.4,44,0x2a3a4a,0x161d26);
-  grid.material.opacity=0.34; grid.material.transparent=true; grid.position.set(cx,0,cy); scene.add(grid);
+  const grid=new THREE.GridHelper(span*2.4,44,0xb2a996,0xcdc4b2);   // tile lines on a bone floor
+  grid.material.opacity=0.6; grid.material.transparent=true; grid.position.set(cx,0,cy); scene.add(grid);
 
-  const steel=new THREE.MeshStandardMaterial({color:0x39434f,metalness:0.35,roughness:0.62});  // dimmed: racks are CONTEXT, the congestion lanes are the hero
-  const beam=new THREE.MeshStandardMaterial({color:0x2b333c,metalness:0.3,roughness:0.65});
-  // colored product totes give the shelves life while the floor/structure stay neutral
-  const toteCols=[0x5a6878,0x847467,0x5e7064,0x786068,0x6b7480,0x726a5e];
+  const steel=new THREE.MeshStandardMaterial({color:0xaca396,metalness:0.1,roughness:0.7});    // greige frames: readable against the bone floor
+  const beam=new THREE.MeshStandardMaterial({color:0x9c9284,metalness:0.1,roughness:0.72});
+  // warm product totes give the shelves life while the floor/structure stay neutral
+  const toteCols=[0xd98a70,0x9dbb8e,0xe3bd72,0x8fa8c8,0xcf9490,0xb3aa9c];
   const toteMats=toteCols.map(c=>new THREE.MeshStandardMaterial({color:c,roughness:0.85}));
   const toteGeo=new THREE.BoxGeometry(0.5,0.42,0.62);
   // Racks are INSTANCED - one draw call for every upright, one for every shelf - so the real
@@ -1000,14 +1118,15 @@ function setupWorld(){
       for(const sx of[-1,1])for(const sz of[-1,1]){ T.position.set(r.cx+sx*rw/2,H/2,r.cy+sz*rd/2); T.rotation.set(0,0,0); T.scale.set(1,1,1); T.updateMatrix(); upMesh.setMatrixAt(ui++,T.matrix); }
       for(const y of lv){ T.position.set(r.cx,y,r.cy); T.rotation.set(0,0,0); T.scale.set(rw,1,rd); T.updateMatrix(); shMesh.setMatrixAt(si++,T.matrix);
         if(!heavy){ const n=Math.max(2,Math.floor(rd/1.7));                     // colored totes spaced along the rack length
-          for(let i=0;i<n;i++){const t=new THREE.Mesh(toteGeo,toteMats[(i*2+Math.round(y*3))%toteMats.length]);
+          // i (not i*2): i*2 + round(y*3) was always even, so odd-indexed tote colors never appeared
+          for(let i=0;i<n;i++){const t=new THREE.Mesh(toteGeo,toteMats[(i+Math.round(y*3))%toteMats.length]);
             t.position.set(r.cx+(i%2?0.15:-0.15)*rw, y+0.24, r.cy-rd/2+0.55+i*(rd-1.1)/Math.max(1,n-1||1));scene.add(t);} } }
-      const b=groundBlob(rw*2.1, rd*1.12, 0.5); b.position.set(r.cx,0.012,r.cy); scene.add(b); }
+      const b=groundBlob(rw*2.1, rd*1.12, 0.32); b.position.set(r.cx,0.012,r.cy); scene.add(b); }
     upMesh.instanceMatrix.needsUpdate=true; shMesh.instanceMatrix.needsUpdate=true;
     scene.add(upMesh); scene.add(shMesh);
   }
   // TWO lane lines per aisle at +-the data's lane offset, so the bots visibly travel two lanes
-  const laneMat=new THREE.LineBasicMaterial({color:0x2c3e4f}), ctrMat=new THREE.LineBasicMaterial({color:0x1a2530});
+  const laneMat=new THREE.LineBasicMaterial({color:0xb1a891}), ctrMat=new THREE.LineBasicMaterial({color:0xccc3af});
   const loff=Math.min(0.95,Math.max(0.4,(SCENE.__aisleSp||3)*0.18));   // == export_tracks _apply_lanes offset
   for(const x of SCENE.aisle_x){
     scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([W(x,0,0.02),W(x,SCENE.length,0.02)]),ctrMat)); // faint centre
@@ -1021,7 +1140,10 @@ function setupWorld(){
 // breaks; ?fx=0 disables it; skipped on heavy scenes.
 async function setupFX(){
   if(SCENE.__heavy) return;
-  if(new URLSearchParams(location.search).get('fx')==='0') return;
+  // OPT-IN (?fx=1): the composer's OutputPass tone-maps the whole framebuffer, which grays out
+  // the label pills (their toneMapped:false only applies to the direct render path). The flat
+  // matte look doesn't need GTAO/bloom, so the plain render is the default now.
+  if(new URLSearchParams(location.search).get('fx')!=='1') return;
   try{
     const w=innerWidth, h=innerHeight;
     const {EffectComposer}=await import('three/addons/postprocessing/EffectComposer.js');
@@ -1035,7 +1157,7 @@ async function setupFX(){
       c.addPass(g);
     }catch(_){ }
     try{ const {UnrealBloomPass}=await import('three/addons/postprocessing/UnrealBloomPass.js');  // whisper on highlights
-      c.addPass(new UnrealBloomPass(new THREE.Vector2(w,h),0.34,0.6,0.5));
+      c.addPass(new UnrealBloomPass(new THREE.Vector2(w,h),0.16,0.5,0.9));   // high threshold: the bright floor must NOT bloom
     }catch(_){ }
     c.addPass(new OutputPass());                              // tone map + sRGB at the very end
     c.setSize(w,h); composer=c; console.log('[fx] composer active, passes='+c.passes.length);
@@ -1056,42 +1178,49 @@ function placeStations(){
         if(Math.hypot(a.x[0]-s.x, a.y[0]-s.y) < 2.6) cnt++; }
       R=Math.min(1.5, Math.max(1, 0.7+0.45*cnt)); }   // busy zone -> larger status ring (capped)
     const lights=[];
-    const steel=(c=0x2b333d,r=0.62,mt=0.45)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:mt});
+    // video furniture language: white/light-gray structure, dark slate "screens", one vivid
+    // kind color on the zone mat + ring + accent strips.
+    const steel=(c=0xcdd3de,r=0.7,mt=0.08)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:mt});
     const part=(geo,mat,x,y,z)=>{ const me=new THREE.Mesh(geo,mat); me.position.set(x,y,z);
       me.castShadow=!heavy; me.receiveShadow=!heavy; me.raycast=()=>{}; return me; };
-    const accent=(geo,x,y,z)=>{ const m=new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:0.5,roughness:0.5,metalness:0.3});
+    const accent=(geo,x,y,z)=>{ const m=new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:0.35,roughness:0.5,metalness:0.1});
       const me=new THREE.Mesh(geo,m); me.position.set(x,y,z); me.raycast=()=>{}; lights.push(m); return me; };
-    // draggable dark base plate (the click/drag target) + the colored status ring (the handle)
-    const pad=new THREE.Mesh(new THREE.CylinderGeometry(1.02,1.06,0.06,40),
-      new THREE.MeshStandardMaterial({color:0x10161d,roughness:0.7,metalness:0.25}));
+    // draggable PASTEL ZONE MAT (the click/drag target) + the colored status ring (the handle)
+    const matCol=new THREE.Color(col).lerp(new THREE.Color(0xffffff),0.45);
+    const pad=new THREE.Mesh(new THREE.CylinderGeometry(1.5,1.53,0.06,44),
+      new THREE.MeshStandardMaterial({color:matCol,roughness:0.9,metalness:0.0}));
     pad.receiveShadow=!heavy;
     const kids=[];
-    const ring=new THREE.Mesh(new THREE.TorusGeometry(0.95,0.05,12,48),
-      new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:0.55,roughness:0.5,metalness:0.3}));
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(1.42,0.05,12,56),
+      new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:0.4,roughness:0.5,metalness:0.1}));
     ring.rotation.x=Math.PI/2; ring.position.y=0.065; ring.scale.set(R,R,1); ring.raycast=()=>{};
     lights.push(ring.material); kids.push(ring);
+    const slate=0x2a2f3a;                                             // dark "screen/panel" accents (video monitors)
     if(s.kind==='charge'){
-      kids.push(part(new THREE.BoxGeometry(1.5,0.04,0.6), steel(0x222a32,0.7,0.3), 0,0.05,0));      // dock footprint
-      kids.push(part(new THREE.BoxGeometry(0.24,0.95,0.24), steel(), 0,0.52,-0.5));                  // charge pillar
-      kids.push(part(new THREE.BoxGeometry(0.34,0.2,0.18), steel(0x363f49), 0,0.98,-0.42));          // connector head
+      kids.push(part(new THREE.BoxGeometry(1.5,0.04,0.6), steel(0xdfe3ec,0.8,0.02), 0,0.05,0));      // dock footprint
+      kids.push(part(new THREE.BoxGeometry(0.24,0.95,0.24), steel(0xf1f3f7), 0,0.52,-0.5));           // charge pillar
+      kids.push(part(new THREE.BoxGeometry(0.34,0.2,0.18), steel(slate,0.6,0.2), 0,0.98,-0.42));      // connector head
       kids.push(accent(new THREE.BoxGeometry(0.06,0.6,0.03), 0,0.55,-0.37));                          // charge-status strip
     } else if(s.kind==='pack'){
-      kids.push(part(new THREE.BoxGeometry(1.4,0.06,0.74), steel(0x3a434e,0.5,0.35), 0,0.66,0));     // bench top
+      kids.push(part(new THREE.BoxGeometry(1.4,0.06,0.74), steel(0xf1f3f7,0.6,0.05), 0,0.66,0));     // bench top (white desk)
       for(const sx of [-0.62,0.62]) for(const sz of [-0.3,0.3])
         kids.push(part(new THREE.BoxGeometry(0.07,0.62,0.07), steel(), sx,0.33,sz));                  // legs
-      kids.push(part(new THREE.BoxGeometry(1.4,0.5,0.05), steel(0x222a32,0.7,0.3), 0,0.95,-0.36));    // back panel
-      kids.push(part(new THREE.BoxGeometry(0.42,0.3,0.42), steel(0x4a525c,0.8,0.1), -0.35,0.84,0.02));// tote on bench
+      kids.push(part(new THREE.BoxGeometry(1.4,0.5,0.05), steel(slate,0.6,0.2), 0,0.95,-0.36));       // back "screen" panel
+      kids.push(part(new THREE.BoxGeometry(0.42,0.3,0.42), steel(0xf2c063,0.85,0.0), -0.35,0.84,0.02));// pastel tote on bench
     } else {                                                                                          // pick / dock -> P&D stand
-      kids.push(part(new THREE.BoxGeometry(1.1,0.05,0.84), steel(0x3a434e,0.55,0.3), 0,0.52,0));     // shelf
+      kids.push(part(new THREE.BoxGeometry(1.1,0.05,0.84), steel(0xf1f3f7,0.6,0.05), 0,0.52,0));     // shelf (white)
       for(const sx of [-0.5,0.5])
         kids.push(part(new THREE.BoxGeometry(0.07,0.95,0.07), steel(), sx,0.5,-0.36));                // back posts
-      kids.push(part(new THREE.BoxGeometry(1.1,0.14,0.09), steel(0x222a32,0.7,0.3), 0,1.0,-0.36));    // sign bar
+      kids.push(part(new THREE.BoxGeometry(1.1,0.14,0.09), steel(slate,0.6,0.2), 0,1.0,-0.36));       // sign bar (dark)
       kids.push(accent(new THREE.BoxGeometry(1.06,0.06,0.04), 0,1.0,-0.31));                           // accent header strip
-      for(const rx of [-0.32,0,0.32]){ const r=part(new THREE.CylinderGeometry(0.04,0.04,0.78,12), steel(0x2b333d,0.6,0.5), rx,0.56,0);
+      for(const rx of [-0.32,0,0.32]){ const r=part(new THREE.CylinderGeometry(0.04,0.04,0.78,12), steel(0xb6becc,0.6,0.15), rx,0.56,0);
         r.rotation.x=Math.PI/2; kids.push(r); }                                                       // conveyor rollers
     }
+    // floating zone label: dark pill + kind-colored dot, hovering over the workcell (video-style)
+    const zlbl=makeLabelSprite(String(s.id).toUpperCase(),null,stationHexOf(s.kind),0.018);
+    zlbl.material.opacity=0.85; zlbl.position.y=1.7; kids.push(zlbl);
     for(const c of kids) pad.add(c);
-    const sblob=groundBlob(2.6,2.6,0.42); sblob.position.y=-0.022; pad.add(sblob);   // always-on contact shadow grounds the workcell
+    const sblob=groundBlob(2.6,2.6,0.3); sblob.position.y=-0.022; pad.add(sblob);   // always-on contact shadow grounds the workcell
     pad.position.copy(W(s.x,s.y,0.04));
     pad.userData={id:s.id,kind:s.kind,lights,baseE:lights.map(m=>m.emissiveIntensity),spin:null};
     scene.add(pad); stationMeshes.push(pad); }
@@ -1109,9 +1238,9 @@ function placeStations(){
 function laneLerp(a,b,t){ const ar=(a>>16)&255,ag=(a>>8)&255,ab=a&255,br=(b>>16)&255,bg=(b>>8)&255,bb=b&255;
   return (Math.round(ar+(br-ar)*t)<<16)|(Math.round(ag+(bg-ag)*t)<<8)|Math.round(ab+(bb-ab)*t); }
 function laneColor(ratio){                                            // occupancy/capacity -> {hex, emissiveIntensity}
-  if(ratio<=0.001) return {c:0x16202b, e:0.05};                      // idle: dim cool
-  if(ratio<=1) return {c:laneLerp(0x294a63,0xe0a23a,ratio), e:0.12+0.30*ratio};         // busy: steel -> amber (on-palette)
-  return {c:laneLerp(0xe0a23a,0xd2705f,Math.min(ratio-1,1)), e:0.42+0.30*Math.min(ratio-1,1)}; }  // over capacity: muted brick, not neon
+  if(ratio<=0.001) return {c:0xcfc7b8, e:0.0};                       // idle: quiet sand lane
+  if(ratio<=1) return {c:laneLerp(0xcfc7b8,0xd99a3d,ratio), e:0.10+0.20*ratio};         // busy: sand -> amber (reads on the bone floor)
+  return {c:laneLerp(0xd99a3d,0xc25b4a,Math.min(ratio-1,1)), e:0.28+0.25*Math.min(ratio-1,1)}; }  // over capacity: brick red, not neon
 function buildLanes(){
   for(const m of laneMeshes){ scene.remove(m); m.geometry.dispose(); m.material.dispose(); } laneMeshes=[];
   const edges=SCENE.edges||[];
@@ -1120,9 +1249,9 @@ function buildLanes(){
     const isSc=e.kind==='shortcut';
     const w = isSc ? 0.6 : Math.min(1.1, 0.4*(e.cap||2));                    // width hints capacity
     const h = isSc ? 0.10 : 0.04;
-    const base = isSc ? 0x5fae8a : 0x16202b;                                  // shortcuts = palette "ok" green: an ADDED lane reads as infrastructure, on-palette
-    const mat=new THREE.MeshStandardMaterial({color:base,emissive:base,emissiveIntensity:isSc?0.42:0.05,
-                                              roughness:0.5,metalness:0.0,transparent:true,opacity:0.95});
+    const base = isSc ? 0x3aa87e : 0xcfc7b8;                                  // shortcuts = pack green; idle lanes = quiet sand
+    const mat=new THREE.MeshStandardMaterial({color:base,emissive:base,emissiveIntensity:isSc?0.3:0.0,
+                                              roughness:0.6,metalness:0.0,transparent:true,opacity:0.95});
     const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,L),mat);
     m.rotation.y=Math.atan2(dx,dy);                                  // box depth (L) aligns to the edge direction
     m.position.set((e.x0+e.x1)/2, h/2+0.012, (e.y0+e.y1)/2);
@@ -1140,18 +1269,18 @@ function updateLanes(i){
 // with a flat lifting deck that rises under a payload (not a 2-wheel rounded box).
 function makeAMR(){ const heavy=SCENE&&SCENE.__heavy;
   const g=new THREE.Group();
-  const steel=0x586273, dark=new THREE.MeshStandardMaterial({color:0x1b1f25,roughness:0.8,metalness:0.2});
-  const chassis=new THREE.Mesh(new RoundedBoxGeometry(0.94,0.22,1.34,4,0.05),        // squat drive chassis (amber iw_hub)
-    new THREE.MeshStandardMaterial({color:0xdb8f3c,roughness:0.5,metalness:0.3}));
+  const steel=0xdcd7cc, dark=new THREE.MeshStandardMaterial({color:0x2b2822,roughness:0.8,metalness:0.1});
+  const chassis=new THREE.Mesh(new RoundedBoxGeometry(0.94,0.22,1.34,4,0.05),        // squat drive chassis (warm-white toy-bot)
+    new THREE.MeshStandardMaterial({color:0xf6f4ee,roughness:0.55,metalness:0.05}));
   chassis.position.y=0.15; chassis.castShadow=!heavy; g.add(chassis);
   const skirt=new THREE.Mesh(new THREE.BoxGeometry(0.96,0.05,1.36),dark);            // dark bumper skirt grounds it
   skirt.position.y=0.05; g.add(skirt);
   const wheelGeo=new THREE.CylinderGeometry(0.085,0.085,0.10,16);                    // four corner casters
-  const rubber=new THREE.MeshStandardMaterial({color:0x14171c,roughness:0.85,metalness:0.0});
+  const rubber=new THREE.MeshStandardMaterial({color:0x1a1d24,roughness:0.85,metalness:0.0});
   for(const sx of[-1,1])for(const sz of[-1,1]){ const w=new THREE.Mesh(wheelGeo,rubber); w.rotation.z=Math.PI/2;
     w.position.set(sx*0.42,0.085,sz*0.50); g.add(w); }
   const plate=new THREE.Mesh(new RoundedBoxGeometry(0.84,0.06,1.18,2,0.025),         // lifting deck (reads intent color)
-    new THREE.MeshStandardMaterial({color:steel,roughness:0.5,metalness:0.4}));
+    new THREE.MeshStandardMaterial({color:steel,roughness:0.55,metalness:0.1}));
   plate.position.y=0.31; plate.castShadow=!heavy; g.add(plate);
   const postGeo=new THREE.BoxGeometry(0.05,0.06,0.05);                               // four lift posts under the deck
   for(const sx of[-1,1])for(const sz of[-1,1]){ const p=new THREE.Mesh(postGeo,dark);
@@ -1162,11 +1291,21 @@ function makeAMR(){ const heavy=SCENE&&SCENE.__heavy;
   const pip=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,0.07,12),acc);       // status beacon
   pip.position.set(0,0.30,-0.40); g.add(pip);
   const pod=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.4,0.6),                         // KLT tote payload (~0.5x0.4x0.6 m)
-    new THREE.MeshStandardMaterial({color:0x9a7b50,roughness:0.8})); pod.position.y=0.54; pod.visible=false; pod.castShadow=!heavy; g.add(pod);
-  const blob=groundBlob(1.55,1.95,0.45); blob.position.y=0.02; g.add(blob);          // always-on contact shadow grounds the unit
+    new THREE.MeshStandardMaterial({color:0xe3bd72,roughness:0.8})); pod.position.y=0.54; pod.visible=false; pod.castShadow=!heavy; g.add(pod);
+  // intent-colored ground DISC (the video's colored circle under every agent)
+  const disc=new THREE.Mesh(new THREE.CircleGeometry(0.85,32),
+    new THREE.MeshBasicMaterial({color:0xa89f92,transparent:true,opacity:0.55,depthWrite:false}));
+  disc.rotation.x=-Math.PI/2; disc.position.y=0.035; disc.raycast=()=>{}; g.add(disc);
+  const blob=groundBlob(1.55,1.95,0.32); blob.position.y=0.02; g.add(blob);          // always-on contact shadow grounds the unit
+  // floating name pill (video-style): "Atlas · carrying", dot tinted by live intent
+  const name=AMR_NAMES[amrs.length%AMR_NAMES.length];
+  const lbl=makeLabelSprite(name,'idle','#a89f92',0.046);                            // screen-fraction; group scale halves it
+  lbl.material.opacity=0; lbl.position.y=2.35; g.add(lbl);                          // hidden; hovering the robot reveals it
   g.scale.setScalar(0.5);                                                            // AMR at HALF the iw_hub footprint
+  g.userData.amr=amrs.length;                                                        // index for the hover raycast climb
   scene.add(g);
-  return {g,acc,plate:plate.material,pod,yaw:0,rx:0,rz:0,rinit:false,podScale:0,lag:0,lhx:0,lhz:1};
+  return {g,acc,plate:plate.material,pod,disc:disc.material,lbl,name,lblStatus:'idle',hovered:false,
+          yaw:0,rx:0,rz:0,rinit:false,podScale:0,lag:0,lhx:0,lhz:1};
 }
 function buildAgents(){
   for(const u of amrs){u.g.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});scene.remove(u.g);} amrs=[]; amrIds=Object.keys(SCENE.agents);
@@ -1195,19 +1334,17 @@ function updateFleet(i){ const fl=SCENE.fleet&&SCENE.fleet[i], el=$('fleetrows')
   if(co&&cap){ let busy=0,tot=0; for(const k in cap){ tot+=cap[k]; busy+=(co[k]&&co[k][i])||0; }
     const e=$('chg'); if(e) e.textContent=busy+' / '+tot; } }
 
-// Station hover: a grab cursor + a subtle ring brighten so the draggable workcells read as
-// interactive. Driven by pointermove but the raycast is COALESCED to one per animation frame
-// (rAF-debounced) so dragging the pointer across the full warehouse can't tank FPS. Only the
-// station pad groups are tested (the decorative children all set raycast=()=>{}), so the cost
-// is ~one ray vs. a handful of pads, never the thousands of instanced racks/totes.
-function onPointerMove(ev){ _lastPtrEv=ev;
-  if(_hoverScheduled) return; _hoverScheduled=true;
-  requestAnimationFrame(()=>{ _hoverScheduled=false; updateHover(); }); }
-function updateHover(){ const ev=_lastPtrEv; if(!ev||!cam||!stationMeshes.length){ return; }
+// Hover: stations get a grab cursor + ring brighten (drag affordance); robots get their
+// status bubble revealed. The raycast runs ONCE PER FRAME from the loop against the last
+// pointer position - pointer-driven scheduling isn't enough because robots MOVE under a
+// still cursor. Cost is one ray vs. a handful of pads + ≤12 robot groups (decorative
+// children all set raycast=()=>{}), never the thousands of instanced racks/totes.
+function onPointerMove(ev){ _lastPtrEv=ev; }
+function updateHover(){ const ev=_lastPtrEv; if(!ev||!cam){ return; }
   const r=renderer.domElement.getBoundingClientRect();
   _ptr.x=((ev.clientX-r.left)/r.width)*2-1; _ptr.y=-((ev.clientY-r.top)/r.height)*2+1;
   _ray.setFromCamera(_ptr,cam);
-  const hit=_ray.intersectObjects(stationMeshes,true)[0];
+  const hit=stationMeshes.length?_ray.intersectObjects(stationMeshes,true)[0]:null;
   let pad=hit?hit.object:null; while(pad&&!pad.userData.id) pad=pad.parent;   // climb to the pad group that owns the id
   if(pad!==hoverPad){
     // restore the previously hovered cell's ring in live mode (DES mode is restored by applyFrame)
@@ -1217,7 +1354,15 @@ function updateHover(){ const ev=_lastPtrEv; if(!ev||!cam||!stationMeshes.length
     if(liveMode&&hoverPad&&hoverPad.userData.lights)
       hoverPad.userData.lights.forEach((m,li)=>{ m.emissiveIntensity=hoverPad.userData.baseE[li]*1.6; });
   }
-  document.body.classList.toggle('can-grab', !!pad); }
+  document.body.classList.toggle('can-grab', !!pad);
+  // robots: hovering one reveals its name/status bubble (applyFrame eases the opacity)
+  let hov=-1;
+  if(!pad&&amrs.length){ const vis=amrs.filter(u=>u.g.visible).map(u=>u.g);
+    const h2=vis.length?_ray.intersectObjects(vis,true)[0]:null;
+    if(h2){ let o=h2.object; while(o&&o.userData.amr===undefined) o=o.parent;
+      if(o) hov=o.userData.amr; } }
+  for(let k=0;k<amrs.length;k++) amrs[k].hovered=(k===hov);
+  document.body.classList.toggle('can-peek', hov>=0); }
 function snapStation(o){
   let ax=SCENE.aisle_x.reduce((b,x)=>Math.abs(x-o.position.x)<Math.abs(b-o.position.x)?x:b,SCENE.aisle_x[0]);
   const pos=Math.max(0,Math.min(SCENE.length,Math.round(o.position.z)));
@@ -1287,8 +1432,15 @@ function applyFrame(fr){ const N=SCENE.meta.n_frames; fr=Math.max(0,Math.min(N-1
       const working=c[2]>=c[0] && c[2]>=c[1] && c[2]>0.55;           // blue/cyan band = at a station (servicing/charging)
       const pulse=working?(0.5+0.5*Math.abs(Math.sin(tNow*0.005))):1.0;
       u.acc.color.setRGB(c[0],c[1],c[2]); u.acc.emissive.setRGB(c[0]*pulse,c[1]*pulse,c[2]*pulse);
-      if(u.plate){ u.plate.color.setRGB(0.18+0.45*c[0],0.22+0.45*c[1],0.26+0.45*c[2]);   // deck reads the intent color
-        u.plate.emissive.setRGB(c[0]*0.45,c[1]*0.45,c[2]*0.45); u.plate.emissiveIntensity=0.55; }
+      if(u.plate){ u.plate.color.setRGB(0.68+0.3*c[0],0.66+0.3*c[1],0.60+0.3*c[2]);      // warm light deck TINTED by intent
+        u.plate.emissive.setRGB(c[0]*0.2,c[1]*0.2,c[2]*0.2); u.plate.emissiveIntensity=0.4; }
+      if(u.disc) u.disc.color.setRGB(c[0],c[1],c[2]);                // ground disc reads the intent color (video cue)
+      // floating pill: name + plain-language status. The dot uses a FIXED status color (band
+      // floats vary continuously - keying on them would rasterize a new texture every frame).
+      const stTxt=carrying?'carrying':working?'at station':(mv[k]?'moving':'idle');
+      if(u.lbl && u.lblStatus!==stTxt){ u.lblStatus=stTxt;
+        setLabel(u.lbl,u.name,stTxt,STATUS_DOT[stTxt]||'#9aa6b0'); }
+      // (bubble visibility is hover-driven; the loop eases opacity so it works even on HOLD)
       const ts=carrying?1:0; u.podScale+=(ts-u.podScale)*0.16;       // pod pops in on pick-up, shrinks out on drop-off
       u.pod.visible=u.podScale>0.02; u.pod.scale.setScalar(Math.max(0.02,u.podScale));
       u.g.position.y=working?0.07*Math.abs(Math.sin(tNow*0.006)):0; } }   // a small bob while it works
@@ -1376,13 +1528,16 @@ function setSource(kind, hz){ const b=$('srcbadge'), t=$('srctxt'); if(!b||!t) r
 // small debug accessor (watchable-twin diagnostics): lane/shortcut counts from the live scene
 window.__twinDebug=()=>({lanes:laneMeshes.length,
   shortcuts:laneMeshes.filter(m=>m&&m.userData&&m.userData.kind==='shortcut').length,
-  edges:(SCENE&&SCENE.edges||[]).length, aisles:(SCENE&&SCENE.aisle_x||[]).length, live:liveMode, hz:liveHz, samples:_lhT.length});
+  edges:(SCENE&&SCENE.edges||[]).length, aisles:(SCENE&&SCENE.aisle_x||[]).length, live:liveMode, hz:liveHz, samples:_lhT.length,
+  hovered:amrs.findIndex(u=>u.hovered), lblO:amrs.map(u=>u.lbl?+u.lbl.material.opacity.toFixed(2):null)});
 function applyLiveEase(){ for(let k=0;k<amrs.length;k++){ const u=amrs[k]; if(u.ltx===undefined||!u.g.visible) continue;
     if(!u.liveInit){ u.rx=u.ltx; u.rz=u.ltz; u.yaw=u.ltyaw; u.liveInit=true; }
     else { u.rx+=(u.ltx-u.rx)*0.22; u.rz+=(u.ltz-u.rz)*0.22;
       let dd=u.ltyaw-u.yaw; dd=Math.atan2(Math.sin(dd),Math.cos(dd)); u.yaw+=dd*0.2; }
     u.g.position.set(u.rx,0,u.rz); u.g.rotation.y=u.yaw;
-    if(u.acc){ u.acc.color.setRGB(0.32,0.71,0.62); u.acc.emissive.setRGB(0.16,0.55,0.45); } } }
+    if(u.acc){ u.acc.color.setRGB(0.32,0.71,0.62); u.acc.emissive.setRGB(0.16,0.55,0.45); }
+    if(u.disc) u.disc.color.setRGB(0.32,0.71,0.62);
+    if(u.lbl&&u.lblStatus!=='live'){ u.lblStatus='live'; setLabel(u.lbl,u.name,'live','#3aa87e'); } } }
 // three-state Live button: idle (hollow) -> connecting (hollow, working status)
 // -> streaming (filled + pulse, ONLY after the first frame). Driven by real state.
 function setLiveButton(state){ const b=$('livebtn'); if(!b) return;
@@ -1402,7 +1557,7 @@ async function connectLive(){ if(!LIVE) return;
   if(!launched){ setStatus('working',COPY.status.launching); await launch(); if(!launched) return; }   // one-click: launch the facility, then go live
   const url=location.origin.replace(/^http/,'ws')+'/twin/live?scenario='+encodeURIComponent(BOOT.scenario)+'&robots='+amrIds.length+'&source=physx';
   try{ liveWS=new WebSocket(url); }catch(_){ setStatus('error',COPY.status.liveUnreachable); return; }
-  liveWS.onopen=()=>{ liveMode=true; running=false; _lhT=[]; liveHz=0;
+  liveWS.onopen=()=>{ liveMode=true; running=false; _lhT=[]; liveHz=0; $('rst').disabled=true;
     _liveFirstFrame=false; _liveLastFrame=performance.now(); _liveLink='connecting';
     ensureLiveFleet(LIVE_MAX);                                                   // pre-spawn meshes so live resize is instant
     refreshLiveStatus();                                                         // "connecting…" - badge stays FAST MODEL until first frame
@@ -1417,7 +1572,7 @@ async function connectLive(){ if(!LIVE) return;
     if(_lhT.length>=6){ const span=(_lhT[_lhT.length-1]-_lhT[0])/1000; if(span>0) liveHz=Math.round((_lhT.length-1)/span); }
     if(m&&m.agents) applyLivePoses(m.agents); if(m&&m.kpis) updateFleetLive(m.kpis);
     refreshLiveStatus(); };
-  liveWS.onclose=()=>{ liveMode=false; liveWS=null;
+  liveWS.onclose=()=>{ liveMode=false; liveWS=null; $('rst').disabled=false;
     if(_liveStaleTimer){ clearInterval(_liveStaleTimer); _liveStaleTimer=null; }
     setLiveButton('idle');
     buildAgents(); setSource('des');                                            // restore DES-count meshes + tier badge
@@ -1425,7 +1580,7 @@ async function connectLive(){ if(!LIVE) return;
   liveWS.onerror=()=>{ setStatus('error',COPY.status.liveUnreachable); }; }
 function exitLive(){ if(liveWS){ try{liveWS.close();}catch(_){} } liveWS=null; liveMode=false;
   if(_liveStaleTimer){ clearInterval(_liveStaleTimer); _liveStaleTimer=null; }
-  _liveFirstFrame=false; setLiveButton('idle'); }
+  _liveFirstFrame=false; setLiveButton('idle'); const rb=$('rst'); if(rb) rb.disabled=false; }
 // node 'A3_10' -> floor xy, using the same aisle x-positions the scene was built with.
 function nodeXY(name){ const m=/^A(\d+)_(\d+)$/.exec(String(name||'')); if(!m) return null;
   const ax=SCENE.aisle_x&&SCENE.aisle_x[(+m[1])-1]; if(ax===undefined) return null; return {x:ax,y:+m[2]}; }
@@ -1464,6 +1619,10 @@ async function applyAgentRecommendation(patch){
 function loop(now){ const dt=(now-loop.last)/1000; loop.last=now; tNow=now;
   if(liveMode){ applyLiveEase(); }
   else if(running){ const N=SCENE.meta.n_frames; frame+=dt*2.4*(+$('rate').value); if(frame>=N) frame=0; applyFrame(frame); }
+  updateHover();                                   // per-frame: robots move under a still cursor
+  for(const u of amrs) if(u.lbl){                  // hover OR a pinned state shows the bubble; works on HOLD + live too
+    const on=u.hovered||(u.g.visible&&lblShow[u.lblStatus]);
+    u.lbl.material.opacity+=((on?1:0)-u.lbl.material.opacity)*0.25; }
   controls.update(); (composer?composer.render():renderer.render(scene,cam)); requestAnimationFrame(loop); }
 
 // --- staged-streaming decision replay (SSE) --------------------------------
@@ -1553,8 +1712,16 @@ function startReplay(){ if(!LIVE) return; const eid=$('epsel').value; if(!eid) r
     if(st.kind==='final'&&st.detail&&st.detail.config_patch){ applyAgentRecommendation(st.detail.config_patch); } };
   es.onerror=()=>{ if(es){es.close();es=null;} restore();
     if(!cleanDone){ $('feed').insertAdjacentHTML('beforeend',`<div class="scard err">${esc(COPY.feed.streamEnded)}</div>`); } }; }
+// suggestion chips under the command bar (video-style): one facility-specific question + evergreens
+function buildChips(){ const el=$('chips'); if(!el) return; el.innerHTML='';
+  const qs=[questionFor(SCENE.scenario).q,'How many AMRs do we actually need?','Where does congestion appear first?'];
+  for(const q of qs){ const b=document.createElement('button'); b.className='qchip'; b.textContent=q; b.title=q;
+    b.addEventListener('click',()=>{ const i=$('askq'); if(i&&!i.disabled){ i.value=q; i.focus(); } });
+    el.appendChild(b); } }
+function openDecisionDrawer(){ $('decide').classList.add('open'); document.body.classList.add('decide-open'); }
 function startAsk(){ if(!LIVE) return; const q=$('askq').value.trim();
-  if(!q){ $('feed').insertAdjacentHTML('beforeend',`<div class="scard dim">${esc(ERROR_COPY.missing_question)}</div>`); return; }
+  if(!q){ openDecisionDrawer(); $('feed').insertAdjacentHTML('beforeend',`<div class="scard dim">${esc(ERROR_COPY.missing_question)}</div>`); return; }
+  openDecisionDrawer();                                            // the evidence feed streams into the drawer
   if(es){es.close();es=null;} lastCmp=null; let cleanDone=false; $('feed').innerHTML=''; $('ask').disabled=true; $('ask').textContent='Running'; $('replay').disabled=true;
   es=new EventSource(BOOT.engine+'/twin/ask?scenario='+encodeURIComponent(BOOT.scenario)+'&q='+encodeURIComponent(q));
   const restore=()=>{ $('ask').disabled=false; $('ask').textContent='Ask'; $('replay').disabled=false; };
@@ -1806,7 +1973,7 @@ async function launch(){
   setupFX();                                      // fire-and-forget: composer swaps in when ready
   $('sub').textContent='FACILITY · '+facilityTitle(SCENE.scenario);   // human title; raw scenario_id stays the engine value
   $('sub').style.opacity='';                                          // reveal only once loaded
-  setupControls(); loadEpisodes();
+  setupControls(); loadEpisodes(); buildChips();
   document.body.classList.remove('preflight');
   setStatus(null,COPY.status.online); renderEdits();
   // one-time coach tip, only when there are stations to drag and the user hasn't dismissed it
@@ -1826,7 +1993,8 @@ async function init(){
   // small-screen bottom-sheet toggle for the readout columns
   $('sheettab').addEventListener('click',()=>document.body.classList.toggle('sheet-open'));
   // Landing screen (terminal boot): shown first; "begin" (or Enter) reveals the pre-flight wizard.
-  $('tfac').textContent=(BOOT.scenario||'-').toUpperCase();
+  const _fac=(BOOT&&BOOT.scenario)||(SCENE&&SCENE.scenario)||null;   // static exports carry it on SCENE
+  $('tfac').textContent=_fac?facilityTitle(_fac).toUpperCase():'-';
   const enterApp=()=>{ if(!document.body.classList.contains('landing')) return;
     document.body.classList.remove('landing'); };   // fades landing out, wizard (already built) in
   $('lenter').addEventListener('click',enterApp);
@@ -1845,6 +2013,14 @@ async function init(){
   if(!LIVE){ $('askq').disabled=true; $('ask').disabled=true;
     $('askq').placeholder='Open the live viewer to ask your own questions'; }
   $('hold').addEventListener('click',()=>setRunning(!running));
+  buildLabelToggles();                             // per-state bubble pins in the fleet-status panel
+  // ⟲ restart the DES replay from T+0 (inert while the live physics feed drives poses)
+  $('rst').addEventListener('click',()=>{ if(liveMode||!launched) return;
+    frame=0; applyFrame(0); setRunning(true); });
+  // "New run" = back to the pre-flight wizard (facility / fleet / demand), via a clean reload.
+  // launch() builds the renderer+scene once; a reload is the honest restart path.
+  $('newrun').addEventListener('click',()=>{ const u=new URL(location.href);
+    u.searchParams.set('boot','wizard'); location.href=u.toString(); });
   $('presentbtn').addEventListener('click',()=>togglePresent());
   // '● Live' = the real physics feed. Three button states reflect real availability:
   // hollow+disabled when no feed is set up OR set up but unreachable; hollow+enabled when
@@ -1885,6 +2061,19 @@ async function init(){
   if(!LIVE && (SCENE===null||SCENE===undefined)){ $('werr').textContent='This snapshot has no scene data. Try re-exporting it.'; return; }
   if(SCENE && SCENE.error){ console.warn('[laplace] boot error:', SCENE.error); $('werr').textContent=errorSentence(SCENE.error); return; }
   await initWizard();
+  // boot modes: ?boot=fast skips opener + wizard and launches directly (dev/demo);
+  // ?boot=wizard skips just the opener (the "New run" restart path).
+  const bootMode=new URLSearchParams(location.search).get('boot');
+  if(bootMode==='fast'){
+    $('landing').style.display='none';               // no fades: screenshots/demos start clean
+    $('c').style.transition='none';
+    document.body.classList.remove('landing'); launch(); }
+  else if(bootMode==='wizard'){
+    $('landing').style.display='none';
+    document.body.classList.remove('landing');
+    // &step=N jumps straight to a wizard step (docs/screenshot knob)
+    const st=+(new URLSearchParams(location.search).get('step')||0);
+    if(st>=1&&st<=STEPS.length) showStep(st); }
 }
 init();
 </script>
