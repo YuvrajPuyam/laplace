@@ -36,11 +36,22 @@ ARMS = {  # CPU-only, no LLM budget — the default for `make eval`
     "ocba": lambda d, budget, gt: baselines.ocba(d, budget=budget, gt=gt),
 }
 # The Max arms (spend the Claude Max window). Only run with --live so `make eval`
-# never spends budget by accident.
-MAX_ARMS = {
-    "llm_alone": lambda d, budget, gt: baselines.llm_alone(d, budget=budget, gt=gt),
-    "agent": lambda d, budget, gt: baselines.agent(d, budget=budget, gt=gt),
-}
+# never spends budget by accident. The model is ALWAYS pinned explicitly: a None
+# model falls through to the SDK session default, which silently tracks whatever
+# powers the surrounding session — benchmark rows must not depend on that.
+DEFAULT_LIVE_MODEL = "claude-opus-4-8"
+
+
+def max_arms(model: str) -> dict:
+    return {
+        "llm_alone": lambda d, budget, gt:
+            baselines.llm_alone(d, budget=budget, gt=gt, model=model),
+        "agent": lambda d, budget, gt:
+            baselines.agent(d, budget=budget, gt=gt, model=model),
+    }
+
+
+MAX_ARMS = max_arms(DEFAULT_LIVE_MODEL)  # back-compat: importable, pinned default
 CPU_ARMS = ARMS  # back-compat alias
 
 
@@ -74,9 +85,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--live", action="store_true",
                     help="ALSO run the Max arms (llm_alone, agent) — spends the "
                          "Claude Max window. Default: grid_search only (CPU).")
+    ap.add_argument("--model", default=DEFAULT_LIVE_MODEL,
+                    help="model id for the live arms (pinned; never the session default)")
     args = ap.parse_args(argv)
 
-    arms = {**ARMS, **MAX_ARMS} if args.live else ARMS
+    arms = {**ARMS, **max_arms(args.model)} if args.live else ARMS
     scenarios = [args.scenario] if args.scenario else sorted(SUITES[args.suite])
     table, graded = run(scenarios, args.seeds, args.budget, arms=arms)
 
@@ -93,6 +106,7 @@ def main(argv: list[str] | None = None) -> int:
     out = RESULTS_DIR / f"{args.suite}_table.json"
     out.write_text(json.dumps(
         {"scenarios": scenarios, "budget": args.budget, "seeds": args.seeds,
+         "live_model": args.model if args.live else None,   # provenance for the Max arms
          "table": table, "graded": graded}, indent=2), encoding="utf-8")
     print(f"  -> {out}")
     return 0
